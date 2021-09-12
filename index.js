@@ -27,6 +27,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+  io.sockets.emit('message', { id: 'connected' });
 });
 
 app.get('/', (req, res) => {
