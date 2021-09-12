@@ -1,7 +1,6 @@
 const Item = require('../models/item-model');
 
 upsert = (req, res, io) => {
-  console.log(io);
   const body = req.body;
 
   if (!body) {
