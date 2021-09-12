@@ -1,6 +1,7 @@
 const Item = require('../models/item-model');
 
-upsert = (req, res) => {
+upsert = (req, res, io) => {
+  console.log(io);
   const body = req.body;
 
   if (!body) {
@@ -18,6 +19,7 @@ upsert = (req, res) => {
   Item.updateOne({ name }, { $push: { tracks: date } }, { upsert: true })
     .then((item) => {
       console.log('success');
+      io.sockets.emit('message', { id: 'update', data: item });
       return res.status(200).json({
         success: true,
         id: item._id,

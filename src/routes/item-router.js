@@ -2,12 +2,14 @@ const express = require('express');
 
 const ItemCtrl = require('../controllers/item-ctrl');
 
-const router = express.Router();
+module.exports = (io) => {
+  const router = express.Router();
 
-router.post('/item', ItemCtrl.upsert);
-router.put('/item/:id', ItemCtrl.updateItem);
-router.delete('/item/:id', ItemCtrl.deleteItem);
-router.get('/item/:id', ItemCtrl.getItemById);
-router.get('/items', ItemCtrl.getItems);
+  router.post('/item', (req, res) => ItemCtrl.upsert(req, res, io));
+  router.put('/item/:id', ItemCtrl.updateItem);
+  router.delete('/item/:id', ItemCtrl.deleteItem);
+  router.get('/item/:id', ItemCtrl.getItemById);
+  router.get('/items', (req, res) => ItemCtrl.getItems(req, res, io));
 
-module.exports = router;
+  return router;
+};

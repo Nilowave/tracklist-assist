@@ -7,6 +7,7 @@ const http = require('http');
 const server = http.createServer(app);
 const cors = require('cors');
 const { Server } = require('socket.io');
+
 const io = require('socket.io')(server, {
   cors: {
     origin: 'http://localhost:3000',
@@ -34,7 +35,7 @@ app.get('/', (req, res) => {
   res.send('Tracklist');
 });
 
-app.use('/api', itemRouter);
+app.use('/api', itemRouter(io));
 
 app.post('/api/item', (req, res, next) => {
   io.sockets.emit('message', { id: 'update', data: req.body });
