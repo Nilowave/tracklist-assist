@@ -1,5 +1,36 @@
 const Item = require('../models/item-model');
 
+upsert = (req, res) => {
+  const body = req.body;
+
+  if (!body) {
+    return res.status(400).json({
+      success: false,
+      error: 'You must provide a body to update',
+    });
+  }
+
+  const { name } = req.body;
+  const date = new Date().toString();
+
+  Item.updateOne({ name }, { $push: { tracks: date } }, { upsert: true })
+    .then((item) => {
+      console.log('success');
+      return res.status(200).json({
+        success: true,
+        id: item._id,
+        message: 'Item updated!',
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(404).json({
+        error,
+        message: 'Item not updated!',
+      });
+    });
+};
+
 createItem = (req, res) => {
   const body = req.body;
 
@@ -116,4 +147,5 @@ module.exports = {
   deleteItem,
   getItems,
   getItemById,
+  upsert,
 };
