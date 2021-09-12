@@ -10,6 +10,8 @@ upsert = (req, res) => {
     });
   }
 
+  console.log(req.body);
+
   const { name } = req.body;
   const date = new Date().toString();
 
