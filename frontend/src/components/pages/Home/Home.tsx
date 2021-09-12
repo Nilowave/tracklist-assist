@@ -8,8 +8,8 @@ import { ItemInput } from '../../organisms/ItemInput/ItemInput';
 import * as S from './Home.styles';
 import { ItemDetails } from '../../organisms/ItemDetails/ItemDetails';
 
-const endpoint = 'http://localhost:1337/api/';
-// const endpoint = 'https://tracklist-assist.herokuapp.com/api/';
+// const endpoint = 'http://localhost:1337/api/';
+const endpoint = 'https://tracklist-assist.herokuapp.com/api/';
 
 export const Home = (): ReactElement => {
   const [items, setItems] = useState<Array<ItemData> | null>(null);
