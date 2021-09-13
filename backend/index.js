@@ -34,8 +34,9 @@ io.on('connection', (socket) => {
   io.sockets.emit('message', { id: 'connected' });
 });
 
+// app.get('/', (req, res) => res.send('Tracklist'));
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'));
+  // res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'));
 });
 
 app.use('/api', itemRouter(io));

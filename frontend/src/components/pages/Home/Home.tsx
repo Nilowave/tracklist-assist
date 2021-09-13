@@ -9,8 +9,8 @@ import * as S from './Home.styles';
 import { ItemDetails } from '../../organisms/ItemDetails/ItemDetails';
 
 // const endpoint = 'http://localhost:1337/api/';
-const basepath = 'https://tracklist-assist.herokuapp.com/';
-const endpoint = 'https://tracklist-assist.herokuapp.com/api/';
+const basepath = '/';
+const endpoint = '/api/';
 
 export const Home = (): ReactElement => {
   const [items, setItems] = useState<Array<ItemData> | null>(null);
