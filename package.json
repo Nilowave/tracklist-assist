@@ -4,7 +4,7 @@
   "main": "backend/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "npx nodemon backend/index.js",
+    "start": "node backend/index.js",
     "build": "cd frontend && npm install && npm run build"
   },
   "engines": {
