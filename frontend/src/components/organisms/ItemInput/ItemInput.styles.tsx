@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { respondTo } from '../../../styles/helpers/respondTo';
-import { MediaQuery } from '../../../styles/mediaQuery';
 import { typeStyles } from '../../../styles/typeStyles';
 
 export const Title = styled.h3`
@@ -26,13 +24,26 @@ export const Input = styled.input`
   text-align: center;
   border-bottom: solid 4px ${({ theme }) => theme.hexToRgba(theme.colors.primary, 1)};
   box-shadow: 0 3px 10px ${({ theme }) => theme.colors.primary};
-  margin-bottom: 20%;
+  margin-bottom: 2rem;
 
   &::placeholder {
     color: ${({ theme }) => theme.hexToRgba(theme.colors.secondary, 0.5)};
   }
+`;
 
-  @media ${respondTo(MediaQuery.MAX_1023)} {
-    margin-bottom: 40%;
-  }
+export const Error = styled.div`
+  ${typeStyles.bold};
+  color: ${({ theme }) => theme.colors.white};
+`;
+
+export const Wrapper = styled.div`
+  flex: 1;
+`;
+
+export const StyledForm = styled.form`
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
 `;

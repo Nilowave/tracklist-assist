@@ -10,6 +10,8 @@ export const colors = {
   primary: '#ff79c6',
   secondary: '#bd93f9',
   red: '#ff5555',
+  green: '#50fa7b',
+  yellow: '#f1fa8c',
   comment: '#6272a4',
 };
 

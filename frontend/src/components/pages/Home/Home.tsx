@@ -1,12 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
 import io from 'socket.io-client';
 import { ReactElement, useEffect, useMemo, useState } from 'react';
-import { AddButton } from '../../organisms/AddButton/AddButton';
 import { Empty } from '../../organisms/Empty/Empty';
 import { Item, ItemData } from '../../organisms/Item/Item';
 import { ItemInput } from '../../organisms/ItemInput/ItemInput';
 import * as S from './Home.styles';
 import { ItemDetails } from '../../organisms/ItemDetails/ItemDetails';
+import { staggerChildren } from '../../../utils/motionTransitions';
+import { AnimatePresence } from 'framer-motion';
 
 // const endpoint = 'http://localhost:1337/api/';
 const basepath = '/';
@@ -72,19 +73,23 @@ export const Home = (): ReactElement => {
 
   return (
     <S.Home>
-      <S.Heading>TrackList</S.Heading>
-      {items ? (
-        <S.ItemList>
-          {items.map((item) => (
-            <Item onClick={() => setDetailsModal(item)} key={item.name} data={item} />
-          ))}
-        </S.ItemList>
-      ) : (
-        <Empty />
-      )}
-      <AddButton onClick={() => setAddModal(true)} />
-      {addModal && <ItemInput submit={submitNewItem} onClose={() => setAddModal(false)} />}
-      {detailsModal && <ItemDetails data={detailsModal} onDelete={deleteItem} onClose={() => setDetailsModal(null)} />}
+      <S.Content $blur={!!detailsModal || !!addModal}>
+        <S.Heading>TrackList</S.Heading>
+        {items ? (
+          <S.ItemList layout {...staggerChildren()}>
+            {items.map((item) => (
+              <Item onClick={() => setDetailsModal(item)} key={item._id} data={item} />
+            ))}
+          </S.ItemList>
+        ) : (
+          <Empty />
+        )}
+        <S.AddButton icon="Plus" color="primary" onClick={() => setAddModal(true)} />
+      </S.Content>
+      <AnimatePresence exitBeforeEnter>
+        {addModal && <ItemInput submit={submitNewItem} onClose={() => setAddModal(false)} />}
+        {detailsModal && <ItemDetails data={detailsModal} onDelete={deleteItem} onClose={() => setDetailsModal(null)} />}
+      </AnimatePresence>
     </S.Home>
   );
 };

@@ -1,10 +1,10 @@
 import { ReactElement, useEffect, useState } from 'react';
 import * as S from './ItemDetails.styles';
-import { CloseButton } from '../CloseButton/CloseButton';
 import { ItemData } from '../Item/Item';
-import { DeleteButton } from '../DeleteButton/DeleteButton';
 import { formatDistance, formatRelative, intervalToDuration, formatDuration, add } from 'date-fns';
 import { limitDuration } from '../../../utils/limitDuration';
+import { Button } from '../../atoms/Button/Button';
+import { Modal } from '../Modal/Modal';
 
 interface ItemDetailsProps {
   onClose: () => void;
@@ -16,8 +16,10 @@ export const ItemDetails = ({ onClose, data, onDelete }: ItemDetailsProps): Reac
   const [averageDuration, setAverageDuration] = useState<string | null>(null);
 
   const handleDelete = () => {
-    data._id && onDelete(data._id);
-    onClose();
+    if (confirm(`Are you sure you want to delete "${data.name}"`)) {
+      data._id && onDelete(data._id);
+      onClose();
+    }
   };
 
   const date = new Date(data.tracks?.slice(-1)[0] || '');
@@ -50,7 +52,7 @@ export const ItemDetails = ({ onClose, data, onDelete }: ItemDetailsProps): Reac
   }, []);
 
   return (
-    <S.Modal>
+    <Modal onClose={onClose}>
       <S.Content>
         <S.Title>{data.name}</S.Title>
         <S.Card>
@@ -80,10 +82,8 @@ export const ItemDetails = ({ onClose, data, onDelete }: ItemDetailsProps): Reac
                     diff = formatDuration(limitDuration(interval));
                   }
                   return (
-                    <div key={d}>
-                      <S.HistoryDate index={index + 1} key={d}>
-                        {date}
-                      </S.HistoryDate>
+                    <div key={`history-date-${index}`}>
+                      <S.HistoryDate index={index + 1}>{date}</S.HistoryDate>
                       {diff && <S.Diff>{diff}</S.Diff>}
                     </div>
                   );
@@ -91,9 +91,11 @@ export const ItemDetails = ({ onClose, data, onDelete }: ItemDetailsProps): Reac
             </S.StyledHistory>
           </S.Detail>
         </S.Card>
+        <S.Menu>
+          <Button color="red" icon="Delete" onClick={handleDelete} label="Delete" />
+          <Button color="yellow" disable icon="Edit" onClick={() => console.log('edit')} label="Edit" />
+        </S.Menu>
       </S.Content>
-      <DeleteButton onClick={handleDelete} label="Delete" />
-      <CloseButton onClick={onClose} />
-    </S.Modal>
+    </Modal>
   );
 };

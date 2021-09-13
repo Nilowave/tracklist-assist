@@ -4,35 +4,18 @@ import { MediaQuery } from '../../../styles/mediaQuery';
 import { typeStyles } from '../../../styles/typeStyles';
 import { Date } from '../Item/Item.styles';
 
-export const Modal = styled.div`
-  display: flex;
-  padding: ${({ theme }) => `${theme.sitePaddings.desktop}`};
-  flex-direction: column;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  position: fixed;
-  z-index: 5;
-  background-color: ${({ theme }) => theme.hexToRgba(theme.colors.secondary, 0.9)};
-  color: ${({ theme }) => theme.colors.black};
-
-  @media ${respondTo(MediaQuery.MAX_1023)} {
-    padding: ${({ theme }) => `${theme.sitePaddings.desktop} ${theme.sitePaddings.mobile}`};
-  }
-`;
-
 export const Content = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
   max-height: 100%;
+  height: 100%;
+  grid-gap: 3rem;
 `;
 
 export const Title = styled.h3`
   ${typeStyles.h1};
-  padding: 0 0 ${({ theme }) => theme.sitePaddings.mobile};
+
   text-transform: capitalize;
   text-align: center;
 `;
@@ -41,14 +24,18 @@ export const SubTitle = styled.p`
   ${typeStyles.h3};
   text-transform: capitalize;
   max-width: 50%;
+
+  @media ${respondTo(MediaQuery.MAX_1023)} {
+    font-size: 2.4rem;
+    min-width: 100%;
+  }
 `;
 
 export const Card = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 50rem;
-  flex: 1;
+  max-width: 70rem;
   border: solid 1px ${({ theme }) => theme.colors.primary};
   border-radius: 0.8rem;
   box-shadow: 0 3px 6px ${({ theme }) => theme.colors.primary};
@@ -66,6 +53,13 @@ export const Detail = styled.div<{ align?: string }>`
   display: flex;
   justify-content: space-between;
   align-items: ${({ align }) => (align ? align : 'center')};
+
+  @media ${respondTo(MediaQuery.MAX_1023)} {
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: flex-end;
+    grid-gap: 2rem;
+  }
 `;
 
 export const StyledDate = styled(Date)<{ variant?: boolean }>`
@@ -124,4 +118,13 @@ export const Diff = styled.p`
     height: 1rem;
     margin-right: 2rem;
   }
+`;
+
+export const Menu = styled.div`
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  max-width: 70rem;
 `;

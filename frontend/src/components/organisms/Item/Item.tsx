@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { formatDistance } from 'date-fns';
-
+import { slideFade } from '../../../utils/motionTransitions';
 import * as S from './Item.styles';
 
 export type ItemData = {
@@ -27,7 +27,7 @@ export const Item = ({ data, onClick }: ItemProps): ReactElement => {
     data._id && onClick(data._id);
   };
   return (
-    <S.Item onClick={handleClick}>
+    <S.Item layout variants={{ ...slideFade('x', 0.7).variants }} onClick={handleClick}>
       <S.Title>{data.name}</S.Title>
       <S.Date>{distance}</S.Date>
       {count > 1 && (
