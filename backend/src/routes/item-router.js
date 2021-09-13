@@ -7,7 +7,7 @@ module.exports = (io) => {
 
   router.post('/item', (req, res) => ItemCtrl.upsert(req, res, io));
   router.put('/item/:id', ItemCtrl.updateItem);
-  router.delete('/item/:id', ItemCtrl.deleteItem);
+  router.delete('/item/:id', (req, res) => ItemCtrl.deleteItem(req, res, io));
   router.get('/item/:id', ItemCtrl.getItemById);
   router.get('/items', (req, res) => ItemCtrl.getItems(req, res, io));
 

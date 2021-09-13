@@ -17,6 +17,7 @@ upsert = (req, res, io) => {
     .then((item) => {
       console.log('success');
       io.sockets.emit('message', { id: 'update', data: item });
+
       return res.status(200).json({
         success: true,
         id: item._id,
@@ -103,7 +104,7 @@ updateItem = async (req, res) => {
   });
 };
 
-deleteItem = async (req, res) => {
+deleteItem = async (req, res, io) => {
   await Item.findOneAndDelete({ _id: req.params.id }, (err, item) => {
     if (err) {
       return res.status(400).json({ success: false, error: err });
@@ -112,6 +113,8 @@ deleteItem = async (req, res) => {
     if (!item) {
       return res.status(404).json({ success: false, error: `Item not found` });
     }
+
+    io.sockets.emit('message', { id: 'update', data: item });
 
     return res.status(200).json({ success: true, data: item });
   }).catch((err) => console.log(err));
