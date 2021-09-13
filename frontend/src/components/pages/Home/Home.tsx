@@ -15,6 +15,7 @@ const endpoint = '/api/';
 
 export const Home = (): ReactElement => {
   const [items, setItems] = useState<Array<ItemData> | null>(null);
+  const [isEmpty, setIsEmpty] = useState<boolean>(false);
   const [detailsModal, setDetailsModal] = useState<ItemData | null>(null);
   const [addModal, setAddModal] = useState(false);
   const [refresh, setRefresh] = useState(false);
@@ -33,7 +34,14 @@ export const Home = (): ReactElement => {
 
   const onApiResponse = useMemo(
     () => (response: AxiosResponse) => {
-      if (!response.data) return;
+      if (!response.data) {
+        setIsEmpty(true);
+        return;
+      }
+
+      if (response.data.length === 0) {
+        setIsEmpty(true);
+      }
 
       // console.log(response.data);
       setItems(response.data);
@@ -54,6 +62,7 @@ export const Home = (): ReactElement => {
       .get(itemsEndpoint)
       .then((response) => onApiResponse(response.data))
       .catch((error) => {
+        setIsEmpty(true);
         console.log(error);
       });
   };
@@ -75,15 +84,14 @@ export const Home = (): ReactElement => {
     <S.Home>
       <S.Content $blur={!!detailsModal || !!addModal}>
         <S.Heading>TrackList</S.Heading>
-        {items ? (
+        {items && !isEmpty && (
           <S.ItemList layout {...staggerChildren()}>
             {items.map((item) => (
               <Item onClick={() => setDetailsModal(item)} key={item._id} data={item} />
             ))}
           </S.ItemList>
-        ) : (
-          <Empty />
         )}
+        {isEmpty && <Empty />}
         <S.AddButton icon="Plus" color="primary" onClick={() => setAddModal(true)} />
       </S.Content>
       <AnimatePresence exitBeforeEnter>
