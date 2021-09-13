@@ -9,6 +9,7 @@ import * as S from './Home.styles';
 import { ItemDetails } from '../../organisms/ItemDetails/ItemDetails';
 
 // const endpoint = 'http://localhost:1337/api/';
+const basepath = 'https://tracklist-assist.herokuapp.com/';
 const endpoint = 'https://tracklist-assist.herokuapp.com/api/';
 
 export const Home = (): ReactElement => {
@@ -33,7 +34,7 @@ export const Home = (): ReactElement => {
     () => (response: AxiosResponse) => {
       if (!response.data) return;
 
-      console.log(response.data);
+      // console.log(response.data);
       setItems(response.data);
     },
     []
@@ -58,7 +59,7 @@ export const Home = (): ReactElement => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   useEffect((): any => {
-    const socket = io('https://tracklist-assist.herokuapp.com/');
+    const socket = io(basepath);
 
     socket.on('message', socketListener);
 

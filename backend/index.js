@@ -9,13 +9,13 @@ const server = http.createServer(app);
 const cors = require('cors');
 const { Server } = require('socket.io');
 
-const io = new Server(server);
-// const io = require('socket.io')(server, {
-//   cors: {
-//     origin: 'http://localhost:3000',
-//     methods: ['GET', 'POST'],
-//   },
-// });
+// const io = new Server(server);
+const io = require('socket.io')(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+  },
+});
 
 const db = require('./db');
 const itemRouter = require('./src/routes/item-router');
@@ -39,9 +39,5 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', itemRouter(io));
-
-app.post('/api/item', (req, res, next) => {
-  io.sockets.emit('message', { id: 'update', data: req.body });
-});
 
 server.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
