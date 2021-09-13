@@ -9,13 +9,13 @@ const server = http.createServer(app);
 const cors = require('cors');
 const { Server } = require('socket.io');
 
-// const io = new Server(server);
-const io = require('socket.io')(server, {
-  cors: {
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST'],
-  },
-});
+const io = new Server(server);
+// const io = require('socket.io')(server, {
+//   cors: {
+//     origin: 'http://localhost:3000',
+//     methods: ['GET', 'POST'],
+//   },
+// });
 
 const db = require('./db');
 const itemRouter = require('./src/routes/item-router');
@@ -34,9 +34,8 @@ io.on('connection', (socket) => {
   io.sockets.emit('message', { id: 'connected' });
 });
 
-// app.get('/', (req, res) => res.send('Tracklist'));
 app.get('/', (req, res) => {
-  // res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'));
 });
 
 app.use('/api', itemRouter(io));

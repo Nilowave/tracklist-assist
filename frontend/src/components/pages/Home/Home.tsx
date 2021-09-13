@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import io from 'socket.io-client';
+import { AnimatePresence } from 'framer-motion';
 import { ReactElement, useEffect, useMemo, useState } from 'react';
 import { Empty } from '../../organisms/Empty/Empty';
 import { Item, ItemData } from '../../organisms/Item/Item';
@@ -7,7 +8,6 @@ import { ItemInput } from '../../organisms/ItemInput/ItemInput';
 import * as S from './Home.styles';
 import { ItemDetails } from '../../organisms/ItemDetails/ItemDetails';
 import { staggerChildren } from '../../../utils/motionTransitions';
-import { AnimatePresence } from 'framer-motion';
 
 // const endpoint = 'http://localhost:1337/api/';
 const basepath = '/';
