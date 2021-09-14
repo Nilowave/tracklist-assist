@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Plus = styled.div`
-  width: 6rem;
-  height: 6rem;
+  width: 100%;
+  height: 100%;
   position: relative;
 
   &:after,
@@ -10,7 +10,7 @@ export const Plus = styled.div`
     content: '';
     width: 50%;
     height: 0.2rem;
-    background-color: ${({ theme }) => theme.colors.black};
+    background-color: currentColor;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -32,7 +32,7 @@ export const Delete = styled.div`
     content: '';
     width: 50%;
     height: 0.2rem;
-    background-color: ${({ theme }) => theme.colors.black};
+    background-color: currentColor;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -51,7 +51,7 @@ export const Close = styled.div`
     content: '';
     width: 50%;
     height: 0.2rem;
-    background-color: ${({ theme }) => theme.colors.black};
+    background-color: currentColor;
     position: absolute;
     top: 50%;
     left: 50%;

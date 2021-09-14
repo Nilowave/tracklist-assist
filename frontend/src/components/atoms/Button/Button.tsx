@@ -11,11 +11,19 @@ interface StyledButtonProps extends S.ButtonProps {
   animate?: boolean;
 }
 
-export const Button = ({ className, onClick, label, icon, color, textColor, animate, disable }: StyledButtonProps): ReactElement => {
+export const Button = ({ className, onClick, label, icon, color, textColor, animate, disable, size }: StyledButtonProps): ReactElement => {
   const Icon = icon && icons[icon];
 
   return (
-    <S.StyledButton {...(animate && scale())} className={className} color={color} disable={disable} textColor={textColor} onClick={onClick}>
+    <S.StyledButton
+      {...(animate && scale())}
+      size={size}
+      className={className}
+      color={color}
+      disable={disable}
+      textColor={textColor}
+      onClick={onClick}
+    >
       {label && <S.Label>{label}</S.Label>}
       {Icon && (
         <S.Icon>

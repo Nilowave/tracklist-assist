@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { respondTo } from '../../../styles/helpers/respondTo';
 import { MediaQuery } from '../../../styles/mediaQuery';
@@ -31,7 +32,7 @@ export const SubTitle = styled.p`
   }
 `;
 
-export const Card = styled.div`
+export const Card = styled(motion.div)`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -99,25 +100,6 @@ export const StyledHistory = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-`;
-
-export const Diff = styled.p`
-  font-size: 1rem;
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-end;
-  grid-gap: 0.5rem;
-
-  &:after,
-  &:before {
-    content: '';
-    background-color: ${({ theme }) => theme.colors.comment};
-    width: 1px;
-    height: 1rem;
-    margin-right: 2rem;
-  }
 `;
 
 export const Menu = styled.div`

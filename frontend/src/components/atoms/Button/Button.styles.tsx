@@ -7,15 +7,19 @@ export type ButtonProps = {
   color?: ColorKey;
   textColor?: ColorKey;
   disable?: boolean;
+  size?: 'small' | 'regular';
 };
 
 export const StyledButton = styled(motion.button)<ButtonProps>`
+  --size: ${({ size }) => (size === 'small' ? '3rem' : '6rem')};
+
   display: flex;
   align-items: center;
-  min-width: 6rem;
-  height: 6rem;
-  border-radius: 6rem;
+  min-width: var(--size);
+  height: var(--size);
+  border-radius: var(--size);
   background-color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.white)};
+  color: ${({ theme, textColor }) => (textColor ? theme.colors[textColor] : theme.colors.black)};
   border: solid 1px ${({ theme }) => theme.colors.selection};
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
   z-index: 1;
@@ -31,6 +35,13 @@ export const StyledButton = styled(motion.button)<ButtonProps>`
     filter: ${({ color }) => (color === 'white' || !color ? `brightness(0.9)` : `brightness(1.5)`)};
   }
 
+  ${({ size }) =>
+    size === 'small' &&
+    css`
+      min-width: 3rem;
+      height: 3rem;
+    `};
+
   ${({ disable, theme }) =>
     disable &&
     css`
@@ -45,12 +56,12 @@ export const StyledButton = styled(motion.button)<ButtonProps>`
 
 export const Label = styled.span`
   ${typeStyles.button}
-  margin-left: 3rem;
+  margin-left: calc(var(--size) / 2);
 `;
 
 export const Icon = styled.div`
-  width: 6rem;
-  height: 6rem;
+  width: var(--size);
+  height: var(--size);
   position: relative;
   display: flex;
   justify-content: center;

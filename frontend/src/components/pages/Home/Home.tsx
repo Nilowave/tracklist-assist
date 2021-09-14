@@ -6,7 +6,7 @@ import { Empty } from '../../organisms/Empty/Empty';
 import { Item, ItemData } from '../../organisms/Item/Item';
 import { ItemInput } from '../../organisms/ItemInput/ItemInput';
 import * as S from './Home.styles';
-import { ItemDetails } from '../../organisms/ItemDetails/ItemDetails';
+import { ItemDetailsModal } from '../../organisms/ItemDetailsModal/ItemDetailsModal';
 import { staggerChildren } from '../../../utils/motionTransitions';
 
 // const endpoint = 'http://localhost:1337/api/';
@@ -96,7 +96,7 @@ export const Home = (): ReactElement => {
       </S.Content>
       <AnimatePresence exitBeforeEnter>
         {addModal && <ItemInput submit={submitNewItem} onClose={() => setAddModal(false)} />}
-        {detailsModal && <ItemDetails data={detailsModal} onDelete={deleteItem} onClose={() => setDetailsModal(null)} />}
+        {detailsModal && <ItemDetailsModal data={detailsModal} onDelete={deleteItem} onClose={() => setDetailsModal(null)} />}
       </AnimatePresence>
     </S.Home>
   );

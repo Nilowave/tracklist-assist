@@ -1,11 +1,6 @@
 import type { ReactElement } from 'react';
 import * as S from './Empty.styles';
 
-export type ItemData = {
-  name: string;
-  tracks: Array<string>;
-};
-
 export const Empty = (): ReactElement => {
   return (
     <S.EmptyMessage>
