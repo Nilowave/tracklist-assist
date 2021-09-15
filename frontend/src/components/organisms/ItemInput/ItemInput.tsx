@@ -21,6 +21,7 @@ export const ItemInput = ({ onClose, submit }: ItemInputProps): ReactElement => 
   const onSubmit = (data: FieldValues) => {
     const item: ItemData = {
       name: data.name,
+      tracks: [new Date().toString()],
     };
 
     submit(item);
@@ -35,7 +36,7 @@ export const ItemInput = ({ onClose, submit }: ItemInputProps): ReactElement => 
         <S.StyledForm onSubmit={handleSubmit(onSubmit)}>
           <S.Wrapper>
             <S.Title>Track what?</S.Title>
-            <S.Input autoFocus {...register('name', { required: true })} placeholder="Describe item here..." />
+            <S.Input autoComplete="off" autoFocus {...register('name', { required: true })} placeholder="Describe item here..." />
             {errors.name && <S.Error>This field is required</S.Error>}
           </S.Wrapper>
           <div>

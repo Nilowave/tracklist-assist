@@ -1,57 +1,50 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { respondTo } from '../../../../../styles/helpers/respondTo';
 import { MediaQuery } from '../../../../../styles/mediaQuery';
 import { typeStyles } from '../../../../../styles/typeStyles';
+import { SubTitle } from '../../ItemDetailsModal.styles';
 
-export const Dates = styled.div`
+export const Dates = styled(motion.div)`
   display: flex;
   grid-gap: 2rem;
   flex-direction: column;
+  width: 100%;
 `;
 
 export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   grid-gap: 4rem;
+  position: relative;
 `;
 
-export const InputWrapper = styled.div<{ index?: number }>`
-  text-align: right;
+export const InputWrapper = styled(motion.div)`
+  width: 100%;
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: space-between;
   align-items: center;
-  grid-gap: 2rem;
-  position: relative;
+  gap: 1rem;
+`;
 
-  &:before {
-    display: inline-block;
-    font-weight: 700;
-    content: '${({ index }) => index}';
-    font-size: 1.4rem;
-    background-color: ${({ theme }) => theme.colors.comment};
-    color: ${({ theme }) => theme.colors.black};
-    border-radius: 3rem;
-    height: 2.5rem;
-    width: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: -1rem;
-    transition: background-color 0.3s ease;
-  }
-
-  &:focus-within {
-    &:before {
-      background-color: ${({ theme }) => theme.colors.primary};
-    }
-  }
+export const StyledNumber = styled.p`
+  font-weight: 700;
+  font-size: 1.4rem;
+  background-color: ${({ theme }) => theme.colors.comment};
+  color: ${({ theme }) => theme.colors.black};
+  border-radius: 3rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color 0.3s ease;
 
   @media ${respondTo(MediaQuery.MAX_1023)} {
-    &:before {
-      height: 1.5rem;
-      width: 1.5rem;
-      font-size: 1rem;
-    }
+    height: 1.5rem;
+    width: 1.5rem;
+    font-size: 1rem;
   }
 `;
 
@@ -82,9 +75,28 @@ export const StyledDateInput = styled.input`
   border-radius: 0.8rem;
   background-color: ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.black};
+  min-width: 0;
 
   @media ${respondTo(MediaQuery.MAX_1023)} {
     padding: 1rem;
-    width: calc(100% - 15rem);
+  }
+`;
+
+export const HistoryTitle = styled(SubTitle)`
+  position: sticky;
+  align-self: flex-start;
+  top: 0;
+  z-index: 2;
+  background-color: ${({ theme }) => theme.colors.background};
+
+  &:before {
+    content: '';
+    background-color: ${({ theme }) => theme.colors.background};
+    width: calc(100% + 6rem);
+    left: -3rem;
+    height: calc(100% + 5rem);
+    top: -3rem;
+    position: absolute;
+    z-index: -1;
   }
 `;

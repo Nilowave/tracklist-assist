@@ -21,10 +21,13 @@ export const Title = styled.h3`
   text-align: center;
 `;
 
-export const SubTitle = styled.p`
+export const SubTitle = styled(motion.p)`
   ${typeStyles.h3};
   text-transform: capitalize;
   max-width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   @media ${respondTo(MediaQuery.MAX_1023)} {
     font-size: 2.4rem;
@@ -49,11 +52,12 @@ export const Card = styled(motion.div)`
   overflow-y: auto;
 `;
 
-export const Detail = styled.div<{ align?: string }>`
+export const Detail = styled(motion.div)<{ align?: string }>`
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: ${({ align }) => (align ? align : 'center')};
+  position: relative;
 
   @media ${respondTo(MediaQuery.MAX_1023)} {
     flex-wrap: wrap;

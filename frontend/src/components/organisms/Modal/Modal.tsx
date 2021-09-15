@@ -12,9 +12,7 @@ export const Modal = ({ children, onClose }: ModalProps): ReactElement => {
     <S.Wrapper>
       <S.Background {...fade()} />
       <S.CloseButton animate onClick={onClose} icon="Close" />
-      <S.Content layout {...scale()}>
-        {children}
-      </S.Content>
+      <S.Content {...scale(0.9)}>{children}</S.Content>
     </S.Wrapper>
   );
 };

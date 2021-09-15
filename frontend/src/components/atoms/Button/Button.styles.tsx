@@ -14,6 +14,7 @@ export const StyledButton = styled(motion.button)<ButtonProps>`
   --size: ${({ size }) => (size === 'small' ? '3rem' : '6rem')};
 
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   min-width: var(--size);
   height: var(--size);

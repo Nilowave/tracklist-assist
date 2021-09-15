@@ -1,38 +1,60 @@
-import { ReactElement } from 'react';
+import { ReactElement, useRef, useState } from 'react';
 import { ItemData } from '../../../Item/Item';
-import { FieldValues, UseFormRegister } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
 import { Detail, Menu, SubTitle } from '../../ItemDetailsModal.styles';
 import { formatISO9075 } from 'date-fns/esm';
 import * as S from './EditItem.styles';
 import { Button } from '../../../../atoms/Button/Button';
 import { useDeviceState } from '../../../../../hooks/useDeviceState';
+import { Error } from '../../../ItemInput/ItemInput.styles';
 
 interface EditItemProps {
   data: ItemData;
   onCancel: () => void;
-  register: UseFormRegister<FieldValues>;
+  formMethods: UseFormReturn;
 }
-export const EditItem = ({ data, register }: EditItemProps): ReactElement => {
+export const EditItem = ({ data, formMethods }: EditItemProps): ReactElement => {
   const { isMobile } = useDeviceState();
+
+  const tracksData = useRef<Array<string>>([...data.tracks]);
+  const [tracks, setTracks] = useState([...data.tracks]);
+  const watchFormName = formMethods.watch('name');
+
+  const handleDeleteItem = (index: number) => {
+    tracksData.current.splice(index, 1);
+    setTracks([...tracksData.current]);
+    formMethods.reset({ name: watchFormName });
+  };
+
+  const handleAddItem = () => {
+    tracksData.current.push(new Date().toISOString());
+
+    formMethods.reset({ name: watchFormName });
+    setTracks([...tracksData.current]);
+  };
 
   return (
     <>
       <S.StyledForm>
-        <Detail>
-          <SubTitle>Name:</SubTitle>
-          <S.StyledInput autoComplete="off" {...register(`name`, { required: true })} defaultValue={data.name} />
+        <Detail layout>
+          <SubTitle>Name: {formMethods.formState.errors.name && <Error>⬐ This is requiered</Error>}</SubTitle>
+          <S.StyledInput autoComplete="off" {...formMethods.register(`name`, { required: true })} defaultValue={data.name} />
         </Detail>
         <Detail align="flex-start">
-          <SubTitle>Track History:</SubTitle>
-          <S.Dates>
-            {data.tracks?.map((date, index) => {
+          <S.HistoryTitle layout>Track History:</S.HistoryTitle>
+          <S.Dates layout>
+            {tracks.map((date, index) => {
               const localDate = formatISO9075(new Date(date)).replace(' ', 'T');
-              console.log(localDate);
 
               return (
-                <S.InputWrapper index={index + 1} key={`date-input-${index}`}>
-                  <S.StyledDateInput {...register(`date-${index}`, { required: true })} type="datetime-local" defaultValue={localDate} />
-                  <Button size="small" icon="Delete" />
+                <S.InputWrapper layout key={`date-input-${index}`}>
+                  <Button type="button" onClick={() => handleDeleteItem(index)} size="small" icon="Delete" />
+                  <S.StyledDateInput
+                    {...formMethods.register(`tracks.date-${index}`, { required: true })}
+                    type="datetime-local"
+                    defaultValue={localDate}
+                  />
+                  <S.StyledNumber>{index + 1}</S.StyledNumber>
                 </S.InputWrapper>
               );
             })}
@@ -41,7 +63,7 @@ export const EditItem = ({ data, register }: EditItemProps): ReactElement => {
       </S.StyledForm>
       <Menu>
         <span />
-        <Button label={isMobile ? '' : 'Add'} icon="Plus" color="comment" />
+        <Button type="button" onClick={handleAddItem} label={isMobile ? '' : 'Add'} icon="Plus" color="comment" />
       </Menu>
     </>
   );

@@ -1,6 +1,11 @@
 import styled from 'styled-components';
+import { ColorKey } from '../../../styles/theme/default';
 
-export const Plus = styled.div`
+type IconProp = {
+  fill?: ColorKey;
+};
+
+export const Plus = styled.div<IconProp>`
   width: 100%;
   height: 100%;
   position: relative;
@@ -23,7 +28,7 @@ export const Plus = styled.div`
   }
 `;
 
-export const Delete = styled.div`
+export const Delete = styled.div<IconProp>`
   width: 6rem;
   height: 6rem;
   position: relative;
@@ -40,7 +45,63 @@ export const Delete = styled.div`
   }
 `;
 
-export const Close = styled.div`
+export const Back = styled.div<IconProp>`
+  width: 6rem;
+  height: 6rem;
+  position: relative;
+
+  &:before {
+    content: '';
+    width: 50%;
+    height: 0.2rem;
+    background-color: currentColor;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &:after {
+    content: '';
+    width: 1.3rem;
+    height: 1.3rem;
+    border-left: solid 2px currentColor;
+    border-bottom: solid 2px currentColor;
+    position: absolute;
+    top: calc(50% + 0.3rem);
+    left: calc(50% - 1.3rem);
+    transform: rotate(45deg) translate(-50%, -50%);
+  }
+`;
+
+export const Save = styled.div<IconProp>`
+  width: 6rem;
+  height: 6rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:before {
+    content: '';
+    width: 50%;
+    height: 0.2rem;
+    background-color: currentColor;
+  }
+
+  &:after {
+    content: '';
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    background-color: ${({ fill, theme }) => (fill ? theme.colors[fill] : 'currentColor')};
+    transform: rotate(45deg);
+    border-bottom: solid 2px currentColor;
+    border-right: solid 2px currentColor;
+  }
+`;
+
+export const Close = styled.div<IconProp>`
   width: 6rem;
   height: 6rem;
   position: relative;
@@ -64,8 +125,8 @@ export const Close = styled.div`
   }
 `;
 
-export const Edit = styled.div`
-  --size: 0.4rem;
+export const Edit = styled.div<IconProp>`
+  --size: 0.2rem;
 
   display: flex;
   flex-direction: column;

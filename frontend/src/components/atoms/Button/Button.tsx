@@ -8,10 +8,22 @@ interface StyledButtonProps extends S.ButtonProps {
   onClick?: () => void;
   label?: string;
   icon?: keyof typeof icons;
+  type?: 'button' | 'submit';
   animate?: boolean;
 }
 
-export const Button = ({ className, onClick, label, icon, color, textColor, animate, disable, size }: StyledButtonProps): ReactElement => {
+export const Button = ({
+  className,
+  onClick,
+  label,
+  icon,
+  color,
+  textColor,
+  animate,
+  disable,
+  size,
+  type,
+}: StyledButtonProps): ReactElement => {
   const Icon = icon && icons[icon];
 
   return (
@@ -23,11 +35,12 @@ export const Button = ({ className, onClick, label, icon, color, textColor, anim
       disable={disable}
       textColor={textColor}
       onClick={onClick}
+      type={type}
     >
       {label && <S.Label>{label}</S.Label>}
       {Icon && (
         <S.Icon>
-          <Icon />
+          <Icon fill={color} />
         </S.Icon>
       )}
     </S.StyledButton>

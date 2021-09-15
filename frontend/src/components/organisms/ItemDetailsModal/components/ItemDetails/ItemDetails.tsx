@@ -8,14 +8,13 @@ import { limitDuration } from '../../../../../utils/limitDuration';
 interface ItemDetailsProps {
   data: ItemData;
   averageDuration: string | null;
-  distance: string;
 }
-export const ItemDetails = ({ data, averageDuration, distance }: ItemDetailsProps): ReactElement => {
+export const ItemDetails = ({ data, averageDuration }: ItemDetailsProps): ReactElement => {
   return (
     <>
       <Detail>
         <SubTitle>Last tracked:</SubTitle>
-        <StyledDate>{distance}</StyledDate>
+        <StyledDate>{data.lastTrack}</StyledDate>
       </Detail>
       {averageDuration && (
         <Detail>

@@ -1,5 +1,7 @@
 const Item = require('../models/item-model');
 
+const parseItemDates = require('../utils/parseItemDates');
+
 upsert = (req, res, io) => {
   const body = req.body;
 
@@ -15,7 +17,6 @@ upsert = (req, res, io) => {
 
   Item.updateOne({ name }, { $push: { tracks: date } }, { upsert: true })
     .then((item) => {
-      console.log('success');
       io.sockets.emit('message', { id: 'update', data: item });
 
       return res.status(200).json({
@@ -25,7 +26,6 @@ upsert = (req, res, io) => {
       });
     })
     .catch((error) => {
-      console.log(error);
       return res.status(404).json({
         error,
         message: 'Item not updated!',
@@ -33,40 +33,7 @@ upsert = (req, res, io) => {
     });
 };
 
-createItem = (req, res) => {
-  const body = req.body;
-
-  if (!body) {
-    return res.status(400).json({
-      success: false,
-      error: 'You must provide an item',
-    });
-  }
-
-  const item = new Item(body);
-
-  if (!item) {
-    return res.status(400).json({ success: false, error: err });
-  }
-
-  item
-    .save()
-    .then(() => {
-      return res.status(201).json({
-        success: true,
-        id: item._id,
-        message: 'Item created!',
-      });
-    })
-    .catch((error) => {
-      return res.status(400).json({
-        error,
-        message: 'Item not created!',
-      });
-    });
-};
-
-updateItem = async (req, res) => {
+updateItem = async (req, res, io) => {
   const body = req.body;
 
   if (!body) {
@@ -76,52 +43,53 @@ updateItem = async (req, res) => {
     });
   }
 
-  Item.findOne({ _id: req.params.id }, (err, item) => {
-    if (err) {
-      return res.status(404).json({
-        err,
+  Item.findOne({ _id: req.params.id })
+    .exec()
+    .then((item) => {
+      item.name = body.name;
+      item.tracks = body.tracks;
+
+      item
+        .save()
+        .then(() => {
+          io.sockets.emit('message', { id: 'update', data: item });
+          return res.status(200).json({
+            success: true,
+            id: item._id,
+            message: 'Item updated!',
+          });
+        })
+        .catch((error) => {
+          return res.status(404).json({
+            error,
+            message: 'Item not updated!',
+          });
+        });
+    })
+    .catch((err) =>
+      res.status(404).json({
         message: 'Item not found!',
-      });
-    }
-    item.name = body.name;
-    item.time = body.time;
-    item.rating = body.rating;
-    item
-      .save()
-      .then(() => {
-        return res.status(200).json({
-          success: true,
-          id: item._id,
-          message: 'Item updated!',
-        });
-      })
-      .catch((error) => {
-        return res.status(404).json({
-          error,
-          message: 'Item not updated!',
-        });
-      });
-  });
+      }),
+    );
 };
 
 deleteItem = async (req, res, io) => {
-  await Item.findOneAndDelete({ _id: req.params.id }, (err, item) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err });
-    }
+  await Item.findOneAndDelete({ _id: req.params.id })
+    .exec()
+    .then((item) => {
+      if (!item) {
+        return res.status(404).json({ success: false, error: `Item not found` });
+      }
 
-    if (!item) {
-      return res.status(404).json({ success: false, error: `Item not found` });
-    }
+      io.sockets.emit('message', { id: 'update', data: item });
 
-    io.sockets.emit('message', { id: 'update', data: item });
-
-    return res.status(200).json({ success: true, data: item });
-  }).catch((err) => console.log(err));
+      return res.status(200).json({ success: true, data: item });
+    })
+    .catch((err) => res.status(400).json({ success: false, error: err }));
 };
 
-getItemById = async (req, res) => {
-  await Item.findOne({ _id: req.params.id }, (err, item) => {
+getItemByName = async (req, res) => {
+  await Item.findOne({ name: req.params.name }, (err, item) => {
     if (err) {
       return res.status(400).json({ success: false, error: err });
     }
@@ -134,22 +102,20 @@ getItemById = async (req, res) => {
 };
 
 getItems = async (req, res) => {
-  await Item.find({}, (err, items) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err });
-    }
-    if (!items.length) {
-      return res.status(404).json({ success: false, error: `Item not found` });
-    }
-    return res.status(200).json({ success: true, data: items });
-  }).catch((err) => console.log(err));
+  await Item.find({})
+    .exec()
+    .then((items) => {
+      const allItems = parseItemDates(items);
+
+      return res.status(200).json({ success: true, data: allItems });
+    })
+    .catch((err) => res.status(400).json({ success: false, error: err }));
 };
 
 module.exports = {
-  createItem,
   updateItem,
   deleteItem,
   getItems,
-  getItemById,
+  getItemByName,
   upsert,
 };

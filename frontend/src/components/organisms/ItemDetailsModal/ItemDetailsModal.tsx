@@ -8,6 +8,7 @@ import { Modal } from '../Modal/Modal';
 import { ItemDetails } from './components/ItemDetails/ItemDetails';
 import { EditItem } from './components/EditItem/EditItem';
 import { FieldValues, useForm } from 'react-hook-form';
+import axios from 'axios';
 
 interface ItemDetailsModalProps {
   onClose: () => void;
@@ -19,16 +20,27 @@ export const ItemDetailsModal = ({ onClose, data, onDelete }: ItemDetailsModalPr
   const [averageDuration, setAverageDuration] = useState<string | null>(null);
   const [editItem, setEditItem] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  console.log(errors);
+  const formMethods = useForm();
 
-  const handleEditSubmit = (data: FieldValues) => {
-    console.log('edits', data);
-    // onClose();
+  const handleEditSubmit = (formData: FieldValues) => {
+    const submitData: ItemData = {
+      name: formData.name,
+      tracks: Object.values(formData.tracks),
+      _id: data._id,
+    };
+
+    if (data._id) {
+      axios
+        .put(`/api/item/${data._id}`, submitData)
+        .then(() => {
+          console.log('update success yayyyyy');
+        })
+        .catch((error) => {
+          console.log('oops', error);
+        });
+    }
+
+    onClose();
     setEditItem(false);
   };
 
@@ -38,9 +50,6 @@ export const ItemDetailsModal = ({ onClose, data, onDelete }: ItemDetailsModalPr
       onClose();
     }
   };
-
-  const date = new Date(data.tracks?.slice(-1)[0] || '');
-  const distance = formatDistance(date || new Date(), new Date(), { addSuffix: true });
 
   useEffect(() => {
     if (data.tracks && data.tracks.length > 1) {
@@ -74,16 +83,16 @@ export const ItemDetailsModal = ({ onClose, data, onDelete }: ItemDetailsModalPr
         {!editItem && <S.Title>{data.name}</S.Title>}
         <S.Card layout>
           {editItem ? (
-            <EditItem register={register} onCancel={() => setEditItem(false)} data={data} />
+            <EditItem formMethods={formMethods} onCancel={() => setEditItem(false)} data={data} />
           ) : (
-            <ItemDetails data={data} averageDuration={averageDuration} distance={distance} />
+            <ItemDetails data={data} averageDuration={averageDuration} />
           )}
         </S.Card>
         <S.Menu>
           {editItem ? (
             <>
-              <Button textColor="cream" color="selection" icon="Close" onClick={() => setEditItem(false)} label="Cancel" />
-              <Button color="primary" icon="Delete" onClick={handleSubmit(handleEditSubmit)} label="Save" />
+              <Button textColor="cream" color="selection" icon="Back" onClick={() => setEditItem(false)} label="Cancel" />
+              <Button color="primary" icon="Save" onClick={formMethods.handleSubmit(handleEditSubmit)} label="Save" />
             </>
           ) : (
             <>

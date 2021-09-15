@@ -83,12 +83,12 @@ export const fade = (duration = 0.5, isChild = false): MotionProps => ({
   },
 });
 
-export const scale = (duration = 0.5, isChild = false): MotionProps => ({
+export const scale = (scale = 0.8, duration = 0.5, isChild = false): MotionProps => ({
   ...(isChild ? {} : variantProps),
   variants: {
     initial: {
       opacity: 0,
-      scale: 0.8,
+      scale,
     },
     animate: {
       opacity: 1,
@@ -100,7 +100,7 @@ export const scale = (duration = 0.5, isChild = false): MotionProps => ({
     },
     exit: {
       opacity: 0,
-      scale: 0.8,
+      scale,
       transition: {
         ease: eases.outExpo,
       },
