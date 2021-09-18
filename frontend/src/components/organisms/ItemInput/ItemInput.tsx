@@ -36,7 +36,13 @@ export const ItemInput = ({ onClose, submit }: ItemInputProps): ReactElement => 
         <S.StyledForm onSubmit={handleSubmit(onSubmit)}>
           <S.Wrapper>
             <S.Title>Track what?</S.Title>
-            <S.Input autoComplete="off" autoFocus {...register('name', { required: true })} placeholder="Describe item here..." />
+            <S.Input
+              maxLength={20}
+              autoComplete="off"
+              autoFocus
+              {...register('name', { required: true })}
+              placeholder="Describe item here..."
+            />
             {errors.name && <S.Error>This field is required</S.Error>}
           </S.Wrapper>
           <div>

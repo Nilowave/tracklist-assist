@@ -91,9 +91,10 @@ export const Save = styled.div<IconProp>`
 
   &:after {
     content: '';
-    width: 1rem;
-    height: 1rem;
+    width: 1.2rem;
+    height: 1.2rem;
     position: absolute;
+    top: 35%;
     background-color: ${({ fill, theme }) => (fill ? theme.colors[fill] : 'currentColor')};
     transform: rotate(45deg);
     border-bottom: solid 2px currentColor;

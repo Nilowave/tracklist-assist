@@ -1,15 +1,20 @@
 import { ReactElement } from 'react';
 import { ItemData } from '../../../Item/Item';
 import { Detail, HistoryDate, StyledDate, StyledHistory, SubTitle } from '../../ItemDetailsModal.styles';
-import { formatRelative, intervalToDuration, formatDuration } from 'date-fns';
+import { formatRelative, formatDuration } from 'date-fns';
 import * as S from './ItemDetails.styles';
 import { limitDuration } from '../../../../../utils/limitDuration';
 
 interface ItemDetailsProps {
   data: ItemData;
-  averageDuration: string | null;
 }
-export const ItemDetails = ({ data, averageDuration }: ItemDetailsProps): ReactElement => {
+export const ItemDetails = ({ data }: ItemDetailsProps): ReactElement => {
+  let averageDuration;
+
+  if (data.average) {
+    averageDuration = formatDuration(limitDuration(data.average));
+  }
+
   return (
     <>
       <Detail>
@@ -29,13 +34,9 @@ export const ItemDetails = ({ data, averageDuration }: ItemDetailsProps): ReactE
             data.tracks.map((d, index) => {
               const date = formatRelative(new Date(d), new Date());
               let diff;
-              if (data.tracks && data.tracks[index + 1]) {
-                const next = data.tracks[index + 1];
-                const interval = intervalToDuration({
-                  start: new Date(d),
-                  end: new Date(next),
-                });
-                diff = formatDuration(limitDuration(interval));
+
+              if (data.intervals && index < data.tracks.length - 1) {
+                diff = formatDuration(limitDuration(data.intervals[index]));
               }
               return (
                 <div key={`history-date-${index}`}>

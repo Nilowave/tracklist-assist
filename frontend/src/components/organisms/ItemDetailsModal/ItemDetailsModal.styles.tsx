@@ -12,6 +12,11 @@ export const Content = styled.div`
   max-height: 100%;
   height: 100%;
   grid-gap: 3rem;
+  pointer-events: none;
+
+  & > * {
+    pointer-events: all;
+  }
 `;
 
 export const Title = styled.h3`

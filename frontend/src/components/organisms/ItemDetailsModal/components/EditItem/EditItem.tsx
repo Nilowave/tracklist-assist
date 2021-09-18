@@ -45,6 +45,10 @@ export const EditItem = ({ data, formMethods }: EditItemProps): ReactElement => 
           <S.Dates layout>
             {tracks.map((date, index) => {
               const localDate = formatISO9075(new Date(date)).replace(' ', 'T');
+              let prevDate;
+              if (index > 0) {
+                prevDate = formatISO9075(new Date(tracks[index - 1])).replace(' ', 'T');
+              }
 
               return (
                 <S.InputWrapper layout key={`date-input-${index}`}>
@@ -53,6 +57,7 @@ export const EditItem = ({ data, formMethods }: EditItemProps): ReactElement => 
                     {...formMethods.register(`tracks.date-${index}`, { required: true })}
                     type="datetime-local"
                     defaultValue={localDate}
+                    {...(prevDate && { min: prevDate })}
                   />
                   <S.StyledNumber>{index + 1}</S.StyledNumber>
                 </S.InputWrapper>

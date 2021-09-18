@@ -3,6 +3,13 @@ const Item = require('../models/item-model');
 const parseItemDates = require('../utils/parseItemDates');
 
 upsert = (req, res, io) => {
+  if (!req.user) {
+    return res.status(400).json({
+      success: false,
+      error: 'User not authenticated',
+    });
+  }
+
   const body = req.body;
 
   if (!body) {
@@ -15,9 +22,40 @@ upsert = (req, res, io) => {
   const { name } = req.body;
   const date = new Date().toString();
 
-  Item.updateOne({ name }, { $push: { tracks: date } }, { upsert: true })
+  Item.updateOne({ name }, { $push: { tracks: date }, user: req.user.id }, { upsert: true })
     .then((item) => {
-      io.sockets.emit('message', { id: 'update', data: item });
+      io.to(req.user.id).emit('message', { id: 'update', data: item });
+
+      return res.status(200).json({
+        success: true,
+        id: item._id,
+        message: 'Item updated!',
+      });
+    })
+    .catch((error) => {
+      return res.status(404).json({
+        error,
+        message: 'Item not updated!',
+      });
+    });
+};
+
+assistant = (req, res, io) => {
+  const body = req.body;
+
+  if (!body || !body.id) {
+    return res.status(400).json({
+      success: false,
+      error: 'You must provide a body to update',
+    });
+  }
+
+  const { name, id } = req.body;
+  const date = new Date().toString();
+
+  Item.updateOne({ name, user: req.user.id }, { $push: { tracks: date } }, { upsert: true })
+    .then((item) => {
+      io.to(req.user.id).emit('message', { id: 'update', data: item });
 
       return res.status(200).json({
         success: true,
@@ -34,6 +72,10 @@ upsert = (req, res, io) => {
 };
 
 updateItem = async (req, res, io) => {
+  if (!req.user) {
+    res.redirect('/');
+  }
+
   const body = req.body;
 
   if (!body) {
@@ -52,7 +94,7 @@ updateItem = async (req, res, io) => {
       item
         .save()
         .then(() => {
-          io.sockets.emit('message', { id: 'update', data: item });
+          io.to(req.user.id).emit('message', { id: 'update', data: item });
           return res.status(200).json({
             success: true,
             id: item._id,
@@ -74,6 +116,10 @@ updateItem = async (req, res, io) => {
 };
 
 deleteItem = async (req, res, io) => {
+  if (!req.user) {
+    res.redirect('/');
+  }
+
   await Item.findOneAndDelete({ _id: req.params.id })
     .exec()
     .then((item) => {
@@ -81,7 +127,7 @@ deleteItem = async (req, res, io) => {
         return res.status(404).json({ success: false, error: `Item not found` });
       }
 
-      io.sockets.emit('message', { id: 'update', data: item });
+      io.to(req.user.id).emit('message', { id: 'update', data: item });
 
       return res.status(200).json({ success: true, data: item });
     })
@@ -89,6 +135,10 @@ deleteItem = async (req, res, io) => {
 };
 
 getItemByName = async (req, res) => {
+  if (!req.user) {
+    res.redirect('/');
+  }
+
   await Item.findOne({ name: req.params.name }, (err, item) => {
     if (err) {
       return res.status(400).json({ success: false, error: err });
@@ -102,7 +152,11 @@ getItemByName = async (req, res) => {
 };
 
 getItems = async (req, res) => {
-  await Item.find({})
+  if (!req.user) {
+    res.redirect('/');
+  }
+
+  await Item.find({ user: req.user.id })
     .exec()
     .then((items) => {
       const allItems = parseItemDates(items);

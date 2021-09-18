@@ -1,6 +1,7 @@
 const express = require('express');
 
 const ItemCtrl = require('../controllers/item-ctrl');
+const UserCtrl = require('../controllers/user-ctrl');
 
 module.exports = (io) => {
   const router = express.Router();
@@ -10,6 +11,10 @@ module.exports = (io) => {
   router.delete('/item/:id', (req, res) => ItemCtrl.deleteItem(req, res, io));
   router.get('/item/:name', ItemCtrl.getItemByName);
   router.get('/items', (req, res) => ItemCtrl.getItems(req, res, io));
+
+  // User
+  router.get('/logout', (req, res) => UserCtrl.logout(req, res));
+  router.get('/user', (req, res) => UserCtrl.getUser(req, res));
 
   return router;
 };

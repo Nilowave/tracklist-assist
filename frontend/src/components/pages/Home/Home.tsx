@@ -1,19 +1,24 @@
 import axios, { AxiosResponse } from 'axios';
 import io from 'socket.io-client';
 import { AnimatePresence } from 'framer-motion';
-import { ReactElement, useEffect, useMemo, useState } from 'react';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Empty } from '../../organisms/Empty/Empty';
 import { Item, ItemData } from '../../organisms/Item/Item';
 import { ItemInput } from '../../organisms/ItemInput/ItemInput';
 import * as S from './Home.styles';
 import { ItemDetailsModal } from '../../organisms/ItemDetailsModal/ItemDetailsModal';
 import { staggerChildren } from '../../../utils/motionTransitions';
+import { LogoutButton, UserData } from '../../atoms/LogoutButton/LogoutButton';
 
 // const endpoint = 'http://localhost:1337/api/';
 const basepath = '/';
 const endpoint = '/api/';
 
-export const Home = (): ReactElement => {
+interface HomeProps {
+  user?: UserData;
+}
+
+export const Home = ({ user }: HomeProps): ReactElement => {
   const [items, setItems] = useState<Array<ItemData> | null>(null);
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
   const [detailsModal, setDetailsModal] = useState<ItemData | null>(null);
@@ -32,21 +37,18 @@ export const Home = (): ReactElement => {
     }
   };
 
-  const onApiResponse = useMemo(
-    () => (response: AxiosResponse) => {
+  const onApiResponse = useCallback(
+    (response: AxiosResponse) => {
       if (!response.data) {
         setIsEmpty(true);
         return;
       }
 
-      if (response.data.length === 0) {
-        setIsEmpty(true);
-      }
+      setIsEmpty(!response.data.length);
 
-      // console.log(response.data);
       setItems(response.data);
     },
-    []
+    [refresh]
   );
 
   const submitNewItem = (item: ItemData) => {
@@ -82,6 +84,7 @@ export const Home = (): ReactElement => {
 
   return (
     <S.Home>
+      {user && <LogoutButton user={user} />}
       <S.Content $blur={!!detailsModal || !!addModal}>
         <S.Heading>TrackList</S.Heading>
         {items && !isEmpty && (

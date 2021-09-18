@@ -9,6 +9,8 @@ export type ItemData = {
   createdAt?: string;
   updatedAt?: string;
   lastTrack?: string;
+  average?: Duration;
+  intervals?: Array<Duration>;
 };
 
 interface ItemProps {
@@ -18,7 +20,6 @@ interface ItemProps {
 
 export const Item = ({ data, onClick }: ItemProps): ReactElement => {
   const count = data.tracks?.length || 0;
-  console.log(data);
 
   const handleClick = () => {
     data._id && onClick(data._id);

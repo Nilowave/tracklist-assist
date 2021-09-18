@@ -1,8 +1,6 @@
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import * as S from './ItemDetailsModal.styles';
 import { ItemData } from '../Item/Item';
-import { formatDistance, intervalToDuration, formatDuration, add } from 'date-fns';
-import { limitDuration } from '../../../utils/limitDuration';
 import { Button } from '../../atoms/Button/Button';
 import { Modal } from '../Modal/Modal';
 import { ItemDetails } from './components/ItemDetails/ItemDetails';
@@ -17,7 +15,6 @@ interface ItemDetailsModalProps {
 }
 
 export const ItemDetailsModal = ({ onClose, data, onDelete }: ItemDetailsModalProps): ReactElement => {
-  const [averageDuration, setAverageDuration] = useState<string | null>(null);
   const [editItem, setEditItem] = useState(false);
 
   const formMethods = useForm();
@@ -45,48 +42,18 @@ export const ItemDetailsModal = ({ onClose, data, onDelete }: ItemDetailsModalPr
   };
 
   const handleDelete = () => {
-    if (confirm(`Are you sure you want to delete "${data.name}"`)) {
+    if (confirm(`Sure you want to delete "${data.name}"?`)) {
       data._id && onDelete(data._id);
       onClose();
     }
   };
-
-  useEffect(() => {
-    if (data.tracks && data.tracks.length > 1) {
-      let average = 0;
-      data.tracks.forEach((d, index) => {
-        if (data.tracks && data.tracks[index + 1]) {
-          const next = data.tracks[index + 1];
-          const interval = intervalToDuration({
-            start: new Date(d),
-            end: new Date(next),
-          });
-          const diff = +add(0, interval);
-
-          average += diff;
-        }
-      });
-
-      average = average / (data.tracks.length - 1);
-      const durationAverage = intervalToDuration({
-        start: 0,
-        end: average,
-      });
-
-      setAverageDuration(formatDuration(limitDuration(durationAverage)));
-    }
-  }, []);
 
   return (
     <Modal onClose={onClose}>
       <S.Content>
         {!editItem && <S.Title>{data.name}</S.Title>}
         <S.Card layout>
-          {editItem ? (
-            <EditItem formMethods={formMethods} onCancel={() => setEditItem(false)} data={data} />
-          ) : (
-            <ItemDetails data={data} averageDuration={averageDuration} />
-          )}
+          {editItem ? <EditItem formMethods={formMethods} onCancel={() => setEditItem(false)} data={data} /> : <ItemDetails data={data} />}
         </S.Card>
         <S.Menu>
           {editItem ? (
