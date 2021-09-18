@@ -15,6 +15,13 @@ export const Item = styled(motion.button)`
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.white};
   position: relative;
+  transition: border-color 0.3s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      border: solid 1px ${({ theme }) => theme.hexToRgba(theme.colors.white, 0.5)};
+    }
+  }
 `;
 
 export const Title = styled.h3`

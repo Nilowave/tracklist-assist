@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import * as S from './Login.styles';
-import { GoogleButton, IAuthorizationOptions, isLoggedIn } from 'react-google-oauth2';
+import { IAuthorizationOptions } from 'react-google-oauth2';
+import { ReactComponent as GoogleIcon } from '../../../assets/svg/google-button.svg';
 
 export const Login = (): ReactElement => {
   const options: IAuthorizationOptions = {
@@ -10,18 +11,13 @@ export const Login = (): ReactElement => {
     includeGrantedScopes: true,
     accessType: 'offline',
   };
-  console.log('hello', isLoggedIn());
 
   return (
     <S.Login>
-      <GoogleButton
-        options={options}
-        placeholder="https://developers.google.com/identity/images/g-logo.png"
-        apiUrl="http://localhost:1337/auth/google"
-        defaultStyle={true} // Optional
-      >
+      <S.StyledGoogleButton options={options} apiUrl="http://localhost:1337/auth/google" defaultStyle={false}>
+        <GoogleIcon />
         Sign in with google
-      </GoogleButton>
+      </S.StyledGoogleButton>
     </S.Login>
   );
 };
