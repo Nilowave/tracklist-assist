@@ -5,12 +5,6 @@ const app = express();
 module.exports = () => {
   const router = express.Router();
 
-  router.get('/test', (req, res) => {
-    console.log('auth');
-
-    res.send('Auth Working properly');
-  });
-
   router.get(
     '/google',
     passport.authenticate('google', {
