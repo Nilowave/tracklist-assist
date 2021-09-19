@@ -2,12 +2,12 @@ import { ReactElement } from 'react';
 import * as S from './Login.styles';
 import { IAuthorizationOptions } from 'react-google-oauth2';
 import { GoogleIcon, Logo } from '../../atoms/Icon/Icon';
+import { Link } from 'react-router-dom';
 
 export const Login = (): ReactElement => {
-  const basePath = process.env.NODE_ENV === 'development' ? 'http://localhost:1337' : 'http://www.tracklistassist.com';
   const options: IAuthorizationOptions = {
     clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID as string,
-    redirectUri: `${basePath}/auth/google/callback`,
+    redirectUri: `${process.env.REACT_APP_BASE_PATH}/auth/google/callback`,
     scopes: ['profile', 'email'],
     includeGrantedScopes: true,
     accessType: 'offline',
@@ -16,10 +16,12 @@ export const Login = (): ReactElement => {
   return (
     <S.Login>
       <S.LogoWrapper>
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
         <p>Your tracking assistant</p>
       </S.LogoWrapper>
-      <S.StyledGoogleButton options={options} apiUrl={`${basePath}/auth/google`} defaultStyle={false}>
+      <S.StyledGoogleButton options={options} apiUrl={`${process.env.REACT_APP_BASE_PATH}/auth/google`} defaultStyle={false}>
         <GoogleIcon />
         Sign in with Google
       </S.StyledGoogleButton>

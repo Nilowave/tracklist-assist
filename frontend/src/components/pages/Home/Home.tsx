@@ -124,6 +124,16 @@ export const Home = ({ user }: HomeProps): ReactElement => {
         {isEmpty && <Empty />}
         <S.AddButton icon="Plus" color="primary" onClick={() => setAddModal(true)} />
       </S.Content>
+      <S.Footer>
+        <p>© {new Date().getFullYear()} Tracklist - All rights reserved</p>
+        <p>Privacy</p>
+        <p>Terms</p>
+        <p>
+          <a href="mailto:support@tracklistassist.com" target="_blank" rel="noreferrer">
+            support@tracklistassist.com
+          </a>
+        </p>
+      </S.Footer>
       <AnimatePresence exitBeforeEnter>
         {addModal && <ItemInput submit={submitNewItem} onClose={() => setAddModal(false)} />}
         {detailsModal && <ItemDetailsModal data={detailsModal} onDelete={deleteItem} onClose={() => setDetailsModal(null)} />}

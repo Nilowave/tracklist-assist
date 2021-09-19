@@ -9,8 +9,9 @@ export const Home = styled.section`
   padding: ${({ theme }) => theme.sitePaddings.desktop};
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  min-height: 100vh;
 
   @media ${respondTo(MediaQuery.MAX_1023)} {
     padding: ${({ theme }) => theme.sitePaddings.mobile};
@@ -76,4 +77,23 @@ export const Header = styled.div<{ isHidden?: boolean }>`
   transition: opacity 0.3s ease;
 
   ${({ isHidden }) => isHidden && 'opacity: 0; pointer-events: none'};
+`;
+
+export const Footer = styled.footer`
+  text-align: center;
+  color: ${({ theme }) => theme.colors.blueGray};
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: ${({ theme }) => theme.sitePaddings.mobile};
+  padding-left: 0;
+  gap: 2rem;
+  max-width: 80%;
+
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    justify-content: space-evenly;
+    padding: ${({ theme }) => theme.sitePaddings.desktop};
+    gap: 4rem;
+  }
 `;

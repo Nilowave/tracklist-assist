@@ -19,7 +19,7 @@ export const Item = styled(motion.button)`
 
   @media (hover: hover) {
     &:hover {
-      border: solid 1px ${({ theme }) => theme.hexToRgba(theme.colors.white, 0.5)};
+      border: solid 1px ${({ theme }) => theme.hexToRgba(theme.colors.primary, 0.5)};
     }
   }
 `;
