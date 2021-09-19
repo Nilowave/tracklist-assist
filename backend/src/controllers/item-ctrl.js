@@ -53,7 +53,7 @@ assistant = (req, res, io) => {
   const { name, id } = req.body;
   const date = new Date().toString();
 
-  Item.updateOne({ name, user: req.user.id }, { $push: { tracks: date } }, { upsert: true })
+  Item.updateOne({ name, user: id }, { $push: { tracks: date } }, { upsert: true })
     .then((item) => {
       io.to(req.user.id).emit('message', { id: 'update', data: item });
 

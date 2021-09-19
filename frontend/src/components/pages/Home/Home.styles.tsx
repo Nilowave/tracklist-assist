@@ -18,8 +18,10 @@ export const Home = styled.section`
   }
 `;
 
-export const Content = styled(motion.div)<{ $blur?: boolean }>`
-  ${({ $blur }) => $blur && `filter: blur(1rem)`};
+export const Content = styled(motion.div)`
+  /* position: relative; */
+  width: 100%;
+  height: auto;
 `;
 
 export const Heading = styled.h1`
@@ -30,7 +32,8 @@ export const Heading = styled.h1`
   position: relative;
 
   svg {
-    max-width: 70%;
+    max-width: 30rem;
+    width: 70%;
 
     @media ${respondTo(MediaQuery.MIN_1024)} {
       max-width: 30rem;
@@ -67,10 +70,11 @@ export const AddButton = styled(Button)`
 `;
 
 export const Header = styled.div<{ isHidden?: boolean }>`
-  position: fixed;
+  position: absolute;
   top: 0;
+  left: 0;
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.background};
+  /* background-color: ${({ theme }) => theme.colors.background}; */
   padding: 3rem 3rem 0;
   display: flex;
   justify-content: flex-end;
@@ -90,10 +94,24 @@ export const Footer = styled.footer`
   padding-left: 0;
   gap: 2rem;
   max-width: 80%;
+  text-align: left;
 
   @media ${respondTo(MediaQuery.MIN_1024)} {
     justify-content: space-evenly;
     padding: ${({ theme }) => theme.sitePaddings.desktop};
+    padding-bottom: 0;
     gap: 4rem;
+    position: absolute;
+    bottom: 4rem;
+  }
+
+  a {
+    transition: color 0.3s ease;
+
+    @media (hover: hover) {
+      &:hover {
+        color: ${({ theme }) => theme.colors.primary};
+      }
+    }
   }
 `;

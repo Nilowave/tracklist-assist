@@ -11,6 +11,7 @@ import { ItemDetailsModal } from '../../organisms/ItemDetailsModal/ItemDetailsMo
 import { staggerChildren } from '../../../utils/motionTransitions';
 import { LogoutButton, UserData } from '../../atoms/LogoutButton/LogoutButton';
 import { Logo } from '../../atoms/Icon/Icon';
+import { useDeviceState } from '../../../hooks/useDeviceState';
 
 // const endpoint = 'http://localhost:1337/api/';
 const basepath = '/';
@@ -27,6 +28,7 @@ export const Home = ({ user }: HomeProps): ReactElement => {
   const [addModal, setAddModal] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [hideHeader, setHideHeader] = useState(false);
+  const { isMobile } = useDeviceState();
 
   const itemsEndpoint = `${endpoint}items`;
   const itemEndpoint = `${endpoint}item`;
@@ -105,12 +107,12 @@ export const Home = ({ user }: HomeProps): ReactElement => {
 
   return (
     <S.Home>
-      {user && (
-        <S.Header isHidden={hideHeader}>
-          <LogoutButton user={user} />
-        </S.Header>
-      )}
-      <S.Content $blur={!!detailsModal || !!addModal}>
+      <S.Content>
+        {user && (
+          <S.Header isHidden={hideHeader}>
+            <LogoutButton user={user} />
+          </S.Header>
+        )}
         <S.Heading>
           <Logo />
         </S.Heading>
@@ -122,10 +124,10 @@ export const Home = ({ user }: HomeProps): ReactElement => {
           </S.ItemList>
         )}
         {isEmpty && <Empty />}
-        <S.AddButton icon="Plus" color="primary" onClick={() => setAddModal(true)} />
+        <S.AddButton label={isMobile ? '' : 'Track Item'} icon="Plus" color="primary" onClick={() => setAddModal(true)} />
       </S.Content>
       <S.Footer>
-        <p>© {new Date().getFullYear()} Tracklist - All rights reserved</p>
+        <p>© {new Date().getFullYear()} Tracklist Assist</p>
         <p>Privacy</p>
         <p>Terms</p>
         <p>

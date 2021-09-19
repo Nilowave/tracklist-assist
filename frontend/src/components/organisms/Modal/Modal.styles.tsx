@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { respondTo } from '../../../styles/helpers/respondTo';
 import { MediaQuery } from '../../../styles/mediaQuery';
 import { Button } from '../../atoms/Button/Button';
@@ -30,7 +30,23 @@ export const Background = styled(motion.div)`
   height: 100vh;
   top: 0;
   left: 0;
-  background-color: ${({ theme }) => theme.hexToRgba(theme.colors.secondary, 0.7)};
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    /* opacity: 0.7; */
+
+    ${({ theme }) =>
+      css`
+        background: transparent
+          linear-gradient(117deg, ${theme.colors.cerulean} 0%, ${theme.colors.secondary} 51%, ${theme.colors.primary} 100%) 0% 0% no-repeat
+          padding-box;
+      `}
+  }
 `;
 
 export const CloseButton = styled(Button)`

@@ -22,7 +22,7 @@ export const StyledForm = styled.form`
 export const InputWrapper = styled(motion.div)`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   gap: 1rem;
 `;
@@ -76,6 +76,7 @@ export const StyledDateInput = styled.input`
   background-color: ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.black};
   min-width: 0;
+  text-align: center;
 
   @media ${respondTo(MediaQuery.MAX_1023)} {
     padding: 1rem;
@@ -98,5 +99,11 @@ export const HistoryTitle = styled(SubTitle)`
     top: -3rem;
     position: absolute;
     z-index: -1;
+  }
+
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    &:before {
+      background-color: transparent;
+    }
   }
 `;
