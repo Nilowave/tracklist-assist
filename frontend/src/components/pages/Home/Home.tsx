@@ -106,40 +106,42 @@ export const Home = ({ user }: HomeProps): ReactElement => {
   }, [refresh]);
 
   return (
-    <S.Home>
-      <S.Content>
-        {user && (
-          <S.Header isHidden={hideHeader}>
-            <LogoutButton user={user} />
-          </S.Header>
-        )}
-        <S.Heading>
-          <Logo />
-        </S.Heading>
-        {items && !isEmpty && (
-          <S.ItemList layout {...staggerChildren()}>
-            {items.map((item) => (
-              <Item onClick={() => setDetailsModal(item)} key={item._id} data={item} />
-            ))}
-          </S.ItemList>
-        )}
-        {isEmpty && <Empty />}
-        <S.AddButton label={isMobile ? '' : 'Track Item'} icon="Plus" color="primary" onClick={() => setAddModal(true)} />
-      </S.Content>
-      <S.Footer>
-        <p>© {new Date().getFullYear()} Tracklist Assist</p>
-        <p>Privacy</p>
-        <p>Terms</p>
-        <p>
-          <a href="mailto:support@tracklistassist.com" target="_blank" rel="noreferrer">
-            support@tracklistassist.com
-          </a>
-        </p>
-      </S.Footer>
+    <>
+      <S.Home blur={!!addModal || !!detailsModal}>
+        <S.Content>
+          {user && (
+            <S.Header isHidden={hideHeader}>
+              <LogoutButton user={user} />
+            </S.Header>
+          )}
+          <S.Heading>
+            <Logo />
+          </S.Heading>
+          {items && !isEmpty && (
+            <S.ItemList layout {...staggerChildren()}>
+              {items.map((item) => (
+                <Item onClick={() => setDetailsModal(item)} key={item._id} data={item} />
+              ))}
+            </S.ItemList>
+          )}
+          {isEmpty && <Empty />}
+          <S.AddButton label={isMobile ? '' : 'Track Item'} icon="Plus" color="primary" onClick={() => setAddModal(true)} />
+        </S.Content>
+        <S.Footer>
+          <p>© {new Date().getFullYear()} Tracklist Assist</p>
+          <p>Privacy</p>
+          <p>Terms</p>
+          <p>
+            <a href="mailto:support@tracklistassist.com" target="_blank" rel="noreferrer">
+              support@tracklistassist.com
+            </a>
+          </p>
+        </S.Footer>
+      </S.Home>
       <AnimatePresence exitBeforeEnter>
         {addModal && <ItemInput submit={submitNewItem} onClose={() => setAddModal(false)} />}
         {detailsModal && <ItemDetailsModal data={detailsModal} onDelete={deleteItem} onClose={() => setDetailsModal(null)} />}
       </AnimatePresence>
-    </S.Home>
+    </>
   );
 };

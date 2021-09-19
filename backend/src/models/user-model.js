@@ -19,6 +19,10 @@ const User = new Schema({
     required: true,
     default: 'http://www.gravatar.com/avatar/?d=mp',
   },
+  apiKey: {
+    type: String,
+    required: false,
+  },
 });
 
 module.exports = mongoose.model('users', User);

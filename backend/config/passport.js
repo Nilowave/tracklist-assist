@@ -1,8 +1,15 @@
-const mongoose = require('mongoose');
 const User = require('../src/models/user-model');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const keys = require('../config/keys.js');
+const sha256 = require('crypto-js/sha256');
+
+const createApiKey = (data) => {
+  const copy = { ...data };
+  copy.today = new Date().toString();
+  const key = sha256(JSON.stringify(copy));
+  return key;
+};
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -27,14 +34,14 @@ passport.use(
         if (existingUser) {
           done(null, existingUser);
         } else {
-          new User({
+          const data = {
             googleId: profile.id,
             name: profile.displayName,
             email: profile.emails[0].value,
             photo: profile.photos[0].value.split('?')[0],
-          })
-            .save()
-            .then((user) => done(null, user));
+          };
+          // data.apiKey = createApiKey(data);
+          new User(data).save().then((user) => done(null, user));
         }
       });
     },
