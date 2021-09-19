@@ -24,6 +24,10 @@ export const Content = styled(motion.div)<{ $blur?: boolean }>`
 export const Heading = styled.h1`
   ${typeStyles.h1};
   text-align: center;
+
+  svg {
+    max-width: 30rem;
+  }
 `;
 
 export const ItemList = styled(motion.div)`

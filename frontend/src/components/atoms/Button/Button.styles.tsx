@@ -21,7 +21,7 @@ export const StyledButton = styled(motion.button)<ButtonProps>`
   border-radius: var(--size);
   background-color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.white)};
   color: ${({ theme, textColor }) => (textColor ? theme.colors[textColor] : theme.colors.black)};
-  border: solid 1px ${({ theme }) => theme.colors.selection};
+  border: solid 1px ${({ theme }) => theme.colors.outerSpace};
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
   z-index: 1;
   transition: filter 0.3s ease;
@@ -48,7 +48,7 @@ export const StyledButton = styled(motion.button)<ButtonProps>`
     css`
       && {
         color: ${theme.hexToRgba(theme.colors.white, 0.5)};
-        background-color: ${theme.colors.selection};
+        background-color: ${theme.colors.outerSpace};
         opacity: 0.8;
         pointer-events: none;
       }

@@ -9,7 +9,7 @@ export const Item = styled(motion.button)`
   align-items: center;
   min-width: 20rem;
   height: 15rem;
-  border: solid 1px ${({ theme }) => theme.colors.selection};
+  border: solid 1px ${({ theme }) => theme.colors.outerSpace};
   border-radius: 0.8rem;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
   background-color: ${({ theme }) => theme.colors.background};
@@ -39,7 +39,7 @@ export const Date = styled.p`
 export const Count = styled.div`
   ${typeStyles.button};
   font-size: 2.5rem;
-  border: solid 1px ${({ theme }) => theme.colors.selection};
+  border: solid 1px ${({ theme }) => theme.colors.outerSpace};
   width: 5rem;
   height: 5rem;
   border-radius: 3rem;

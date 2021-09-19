@@ -1,18 +1,19 @@
 import hexToRgba from 'hex-to-rgba';
 
 export const colors = {
-  cream: '#FFFDF9',
   white: '#fff',
   black: '#000',
   background: '#282a36',
   foreground: '#f8f8f2',
-  selection: '#44475a',
+  outerSpace: '#44475a',
   primary: '#ff79c6',
   secondary: '#bd93f9',
   red: '#ff5555',
   green: '#50fa7b',
-  yellow: '#f1fa8c',
-  comment: '#6272a4',
+  keyLime: '#f1fa8c',
+  blueGray: '#6272a4',
+  vistaBlue: '#828DD1',
+  cerulean: '#00aeef',
 };
 
 export const fonts = {

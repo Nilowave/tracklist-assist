@@ -30,7 +30,7 @@ export const InputWrapper = styled(motion.div)`
 export const StyledNumber = styled.p`
   font-weight: 700;
   font-size: 1.4rem;
-  background-color: ${({ theme }) => theme.colors.comment};
+  background-color: ${({ theme }) => theme.colors.blueGray};
   color: ${({ theme }) => theme.colors.black};
   border-radius: 3rem;
   height: 2.5rem;
@@ -54,8 +54,8 @@ export const StyledInput = styled.input`
   padding: 2rem;
   border-radius: 0.8rem;
   background-color: transparent;
-  border: solid 1px ${({ theme }) => theme.colors.comment};
-  color: ${({ theme }) => theme.colors.comment};
+  border: solid 1px ${({ theme }) => theme.colors.blueGray};
+  color: ${({ theme }) => theme.colors.blueGray};
   max-width: 100%;
   flex: 1;
   margin-left: 5rem;

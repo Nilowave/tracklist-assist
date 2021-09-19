@@ -8,7 +8,7 @@ export const StyledLogoutButton = styled.button`
   position: fixed;
   top: 0;
   right: 0;
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
 
   @media (hover: hover) {
     &:hover {

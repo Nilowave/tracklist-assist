@@ -14,7 +14,7 @@ export const Diff = styled.p`
   &:after,
   &:before {
     content: '';
-    background-color: ${({ theme }) => theme.colors.comment};
+    background-color: ${({ theme }) => theme.colors.blueGray};
     width: 1px;
     height: 1rem;
     margin-right: 2rem;

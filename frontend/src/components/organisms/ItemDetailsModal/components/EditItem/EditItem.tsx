@@ -68,7 +68,7 @@ export const EditItem = ({ data, formMethods }: EditItemProps): ReactElement => 
       </S.StyledForm>
       <Menu>
         <span />
-        <Button type="button" onClick={handleAddItem} label={isMobile ? '' : 'Add'} icon="Plus" color="comment" />
+        <Button type="button" onClick={handleAddItem} label={isMobile ? '' : 'Add'} icon="Plus" color="blueGray" />
       </Menu>
     </>
   );

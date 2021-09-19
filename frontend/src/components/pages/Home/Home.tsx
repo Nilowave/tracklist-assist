@@ -9,6 +9,7 @@ import * as S from './Home.styles';
 import { ItemDetailsModal } from '../../organisms/ItemDetailsModal/ItemDetailsModal';
 import { staggerChildren } from '../../../utils/motionTransitions';
 import { LogoutButton, UserData } from '../../atoms/LogoutButton/LogoutButton';
+import { Logo } from '../../atoms/Icon/Icon';
 
 // const endpoint = 'http://localhost:1337/api/';
 const basepath = '/';
@@ -86,7 +87,9 @@ export const Home = ({ user }: HomeProps): ReactElement => {
     <S.Home>
       {user && <LogoutButton user={user} />}
       <S.Content $blur={!!detailsModal || !!addModal}>
-        <S.Heading>TrackList</S.Heading>
+        <S.Heading>
+          <Logo />
+        </S.Heading>
         {items && !isEmpty && (
           <S.ItemList layout {...staggerChildren()}>
             {items.map((item) => (

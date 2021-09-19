@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import * as S from './Login.styles';
 import { IAuthorizationOptions } from 'react-google-oauth2';
-import { ReactComponent as GoogleIcon } from '../../../assets/svg/google-button.svg';
+import { GoogleIcon, Logo } from '../../atoms/Icon/Icon';
 
 export const Login = (): ReactElement => {
   const basePath = process.env.NODE_ENV === 'test' ? 'http://localhost:1337' : 'https://tracklist-assist.herokuapp.com';
@@ -15,6 +15,10 @@ export const Login = (): ReactElement => {
 
   return (
     <S.Login>
+      <S.LogoWrapper>
+        <Logo />
+        <p>Your tracking assistant</p>
+      </S.LogoWrapper>
       <S.StyledGoogleButton options={options} apiUrl={`${basePath}/auth/google`} defaultStyle={false}>
         <GoogleIcon />
         Sign in with google

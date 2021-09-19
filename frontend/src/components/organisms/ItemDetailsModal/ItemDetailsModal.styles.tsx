@@ -93,7 +93,7 @@ export const HistoryDate = styled(Date)<{ index: number }>`
     font-weight: 700;
     content: '${({ index }) => index}';
     font-size: 1rem;
-    background-color: ${({ theme }) => theme.colors.comment};
+    background-color: ${({ theme }) => theme.colors.blueGray};
     color: ${({ theme }) => theme.colors.black};
     border-radius: 3rem;
     height: 1.5rem;

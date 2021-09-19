@@ -58,13 +58,13 @@ export const ItemDetailsModal = ({ onClose, data, onDelete }: ItemDetailsModalPr
         <S.Menu>
           {editItem ? (
             <>
-              <Button textColor="cream" color="selection" icon="Back" onClick={() => setEditItem(false)} label="Cancel" />
+              <Button textColor="foreground" color="outerSpace" icon="Back" onClick={() => setEditItem(false)} label="Cancel" />
               <Button color="primary" icon="Save" onClick={formMethods.handleSubmit(handleEditSubmit)} label="Save" />
             </>
           ) : (
             <>
               <Button color="red" icon="Delete" onClick={handleDelete} label="Delete" />
-              <Button color="yellow" icon="Edit" onClick={() => setEditItem(true)} label="Edit" />
+              <Button color="keyLime" icon="Edit" onClick={() => setEditItem(true)} label="Edit" />
             </>
           )}
         </S.Menu>

@@ -5,6 +5,9 @@ type IconProp = {
   fill?: ColorKey;
 };
 
+export { ReactComponent as Logo } from '../../../assets/svg/logo.svg';
+export { ReactComponent as GoogleIcon } from '../../../assets/svg/google-button.svg';
+
 export const Plus = styled.div<IconProp>`
   width: 100%;
   height: 100%;
