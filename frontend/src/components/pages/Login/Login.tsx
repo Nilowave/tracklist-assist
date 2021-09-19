@@ -4,7 +4,7 @@ import { IAuthorizationOptions } from 'react-google-oauth2';
 import { GoogleIcon, Logo } from '../../atoms/Icon/Icon';
 
 export const Login = (): ReactElement => {
-  const basePath = process.env.NODE_ENV === 'test' ? 'http://localhost:1337' : 'https://tracklist-assist.herokuapp.com';
+  const basePath = process.env.NODE_ENV === 'development' ? 'http://localhost:1337' : 'https://tracklist-assist.herokuapp.com';
   const options: IAuthorizationOptions = {
     clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID as string,
     redirectUri: `${basePath}/auth/google/callback`,
@@ -21,7 +21,7 @@ export const Login = (): ReactElement => {
       </S.LogoWrapper>
       <S.StyledGoogleButton options={options} apiUrl={`${basePath}/auth/google`} defaultStyle={false}>
         <GoogleIcon />
-        Sign in with google
+        Sign in with Google
       </S.StyledGoogleButton>
     </S.Login>
   );

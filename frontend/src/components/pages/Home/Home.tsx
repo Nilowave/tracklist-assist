@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import io from 'socket.io-client';
+import { debounce } from 'lodash';
 import { AnimatePresence } from 'framer-motion';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Empty } from '../../organisms/Empty/Empty';
@@ -25,6 +26,7 @@ export const Home = ({ user }: HomeProps): ReactElement => {
   const [detailsModal, setDetailsModal] = useState<ItemData | null>(null);
   const [addModal, setAddModal] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [hideHeader, setHideHeader] = useState(false);
 
   const itemsEndpoint = `${endpoint}items`;
   const itemEndpoint = `${endpoint}item`;
@@ -73,10 +75,28 @@ export const Home = ({ user }: HomeProps): ReactElement => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   useEffect((): any => {
     const socket = io(basepath);
-
     socket.on('message', socketListener);
 
-    return () => socket.close();
+    // handle logout hide
+    // let previousScrollPosition = window.pageYOffset;
+
+    const handleScroll = debounce(() => {
+      const currentScrollPosition = window.pageYOffset;
+
+      // const variant = previousScrollPosition < currentScrollPosition && currentScrollPosition > 50;
+      const variant = currentScrollPosition > 50;
+
+      setHideHeader(variant);
+
+      // previousScrollPosition = currentScrollPosition;
+    }, 66);
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      socket.close();
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -85,7 +105,11 @@ export const Home = ({ user }: HomeProps): ReactElement => {
 
   return (
     <S.Home>
-      {user && <LogoutButton user={user} />}
+      {user && (
+        <S.Header isHidden={hideHeader}>
+          <LogoutButton user={user} />
+        </S.Header>
+      )}
       <S.Content $blur={!!detailsModal || !!addModal}>
         <S.Heading>
           <Logo />

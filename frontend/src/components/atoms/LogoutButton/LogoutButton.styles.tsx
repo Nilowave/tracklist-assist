@@ -4,8 +4,6 @@ export const StyledLogoutButton = styled.button`
   display: flex;
   gap: 1rem;
   align-items: center;
-  margin: 3rem;
-  position: fixed;
   top: 0;
   right: 0;
   color: ${({ theme }) => theme.colors.white};

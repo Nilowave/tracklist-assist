@@ -24,22 +24,32 @@ export const Content = styled(motion.div)<{ $blur?: boolean }>`
 export const Heading = styled.h1`
   ${typeStyles.h1};
   text-align: center;
+  pointer-events: none;
+  z-index: 2;
+  position: relative;
 
   svg {
-    max-width: 30rem;
+    max-width: 70%;
+
+    @media ${respondTo(MediaQuery.MIN_1024)} {
+      max-width: 30rem;
+    }
   }
 `;
 
 export const ItemList = styled(motion.div)`
-  margin-top: 8rem;
+  margin-top: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
   grid-gap: 3rem;
   flex-wrap: wrap;
+  flex-direction: column;
+  padding-bottom: 4rem;
 
-  @media ${respondTo(MediaQuery.MAX_1023)} {
-    flex-direction: column;
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    margin-top: 8rem;
+    flex-direction: row;
   }
 `;
 
@@ -53,4 +63,17 @@ export const AddButton = styled(Button)`
     bottom: ${({ theme }) => theme.sitePaddings.mobile};
     right: ${({ theme }) => theme.sitePaddings.mobile};
   }
+`;
+
+export const Header = styled.div<{ isHidden?: boolean }>`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: ${({ theme }) => theme.colors.background};
+  padding: 3rem 3rem 0;
+  display: flex;
+  justify-content: flex-end;
+  transition: opacity 0.3s ease;
+
+  ${({ isHidden }) => isHidden && 'opacity: 0; pointer-events: none'};
 `;
