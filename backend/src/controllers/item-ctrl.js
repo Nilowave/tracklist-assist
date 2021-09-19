@@ -41,22 +41,25 @@ upsert = (req, res, io) => {
 };
 
 assistant = (req, res, io) => {
+  console.log('tracking from assistant');
   const body = req.body;
 
   if (!body || !body.id) {
     return res.status(400).json({
       success: false,
-      error: 'You must provide a body to update',
+      error: 'You must provide a body with id to update',
     });
   }
 
   const { name, id } = req.body;
   const date = new Date().toString();
 
+  console.log('track', req.body);
+
   Item.updateOne({ name, user: id }, { $push: { tracks: date } }, { upsert: true })
     .then((item) => {
-      io.to(req.user.id).emit('message', { id: 'update', data: item });
-
+      io.to(id).emit('message', { id: 'update', data: item });
+      console.log('track success');
       return res.status(200).json({
         success: true,
         id: item._id,
@@ -64,6 +67,7 @@ assistant = (req, res, io) => {
       });
     })
     .catch((error) => {
+      console.log('track error', error);
       return res.status(404).json({
         error,
         message: 'Item not updated!',
@@ -172,4 +176,5 @@ module.exports = {
   getItems,
   getItemByName,
   upsert,
+  assistant,
 };

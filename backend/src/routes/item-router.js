@@ -6,7 +6,7 @@ const UserCtrl = require('../controllers/user-ctrl');
 module.exports = (io) => {
   const router = express.Router();
 
-  router.post('/assistant', (req, res) => ItemCtrl.upsert(req, res, io));
+  router.post('/assistant', (req, res) => ItemCtrl.assistant(req, res, io));
   router.post('/item', (req, res) => ItemCtrl.upsert(req, res, io));
   router.put('/item/:id', (req, res) => ItemCtrl.updateItem(req, res, io));
   router.delete('/item/:id', (req, res) => ItemCtrl.deleteItem(req, res, io));
