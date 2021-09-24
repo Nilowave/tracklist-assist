@@ -12,6 +12,9 @@ import { staggerChildren } from '../../../utils/motionTransitions';
 import { LogoutButton, UserData } from '../../atoms/LogoutButton/LogoutButton';
 import { Logo } from '../../atoms/Icon/Icon';
 import { useDeviceState } from '../../../hooks/useDeviceState';
+import { Link } from 'react-router-dom';
+import { Text } from '../../atoms/Text/Text.styles';
+import { Path } from '../../../routes/Paths';
 
 // const endpoint = 'http://localhost:1337/api/';
 const basepath = '/';
@@ -129,13 +132,11 @@ export const Home = ({ user }: HomeProps): ReactElement => {
         </S.Content>
         <S.Footer>
           <p>© {new Date().getFullYear()} Tracklist Assist</p>
-          <p>Privacy</p>
-          <p>Terms</p>
-          <p>
-            <a href="mailto:support@tracklistassist.com" target="_blank" rel="noreferrer">
-              support@tracklistassist.com
-            </a>
-          </p>
+          <Link to={Path.PrivacyPolicy}>Privacy Policy</Link>
+          <Link to={Path.Terms}>Terms of Service</Link>
+          <a href="mailto:support@tracklistassist.com" target="_blank" rel="noreferrer">
+            Contact: support@tracklistassist.com
+          </a>
         </S.Footer>
       </S.Home>
       <AnimatePresence exitBeforeEnter>

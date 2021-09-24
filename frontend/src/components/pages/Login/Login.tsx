@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import * as S from './Login.styles';
 import { IAuthorizationOptions } from 'react-google-oauth2';
 import { GoogleIcon, Logo } from '../../atoms/Icon/Icon';
-import { Link } from 'react-router-dom';
+import { Text } from '../../atoms/Text/Text.styles';
 
 export const Login = (): ReactElement => {
   const options: IAuthorizationOptions = {
@@ -16,15 +16,19 @@ export const Login = (): ReactElement => {
   return (
     <S.Login>
       <S.LogoWrapper>
-        <Link to="/">
-          <Logo />
-        </Link>
+        <Logo />
         <p>Your tracking assistant</p>
       </S.LogoWrapper>
-      <S.StyledGoogleButton options={options} apiUrl={`${process.env.REACT_APP_BASE_PATH}/auth/google`} defaultStyle={false}>
-        <GoogleIcon />
-        Sign in with Google
-      </S.StyledGoogleButton>
+      <S.StyledButtonWrapper>
+        <S.StyledGoogleButton options={options} apiUrl={`${process.env.REACT_APP_BASE_PATH}/auth/google`} defaultStyle={false}>
+          <GoogleIcon />
+          Sign in with Google
+        </S.StyledGoogleButton>
+        <Text type="disclaimer">
+          Click “Sign In” to agree to Tracklist Assist’s <S.StyledLink to="terms">Terms of Service</S.StyledLink> and acknowledge that
+          Tracklist Assist’s <S.StyledLink to="privacy-policy">Privacy Policy</S.StyledLink> applies to you.
+        </Text>
+      </S.StyledButtonWrapper>
     </S.Login>
   );
 };

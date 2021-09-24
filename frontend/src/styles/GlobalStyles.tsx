@@ -5,7 +5,7 @@ export const GlobalStyles = createGlobalStyle`
   ${normalize()}
 
   html {
-    font-family: ${({ theme }) => theme.fonts.primary};
+    font-family: ${({ theme }) => theme.fonts.arial};
     -webkit-text-size-adjust: 100%;
     box-sizing: border-box;
     font-size: 62.5%;
@@ -36,6 +36,7 @@ export const GlobalStyles = createGlobalStyle`
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
   }
 
   a {

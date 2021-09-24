@@ -2,4 +2,7 @@
 export enum Path {
   Home = '/',
   Login = '/login',
+  PrivacyPolicy = '/privacy-policy',
+  Terms = '/terms',
+  CookiePolicy = '/cookie-policy',
 }

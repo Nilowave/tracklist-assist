@@ -1,4 +1,5 @@
 import { GoogleButton } from 'react-google-oauth2';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 export const Login = styled.section`
@@ -31,6 +32,16 @@ export const LogoWrapper = styled.div`
   }
 `;
 
+export const StyledButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  flex-direction: column;
+  text-align: center;
+  max-width: 40rem;
+`;
+
 export const StyledGoogleButton = styled(GoogleButton)`
   display: flex;
   gap: 2rem;
@@ -51,6 +62,16 @@ export const StyledGoogleButton = styled(GoogleButton)`
   @media (hover: hover) {
     &:hover {
       filter: brightness(1.1);
+    }
+  }
+`;
+
+export const StyledLink = styled(Link)`
+  display: inline-block;
+  text-decoration: underline;
+  @media (hover: hover) {
+    &:hover {
+      color: ${({ theme }) => theme.colors.keyLime};
     }
   }
 `;

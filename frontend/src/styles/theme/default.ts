@@ -14,10 +14,13 @@ export const colors = {
   blueGray: '#6272a4',
   vistaBlue: '#828DD1',
   cerulean: '#00aeef',
+  platinum: '#E2E2E2',
 };
 
 export const fonts = {
-  primary: 'Arial',
+  arial: 'Arial',
+  arialRounded: 'Arial Rounded MT Bold',
+  logo: 'HLT Sneaker Script',
 };
 
 export const theme = {
