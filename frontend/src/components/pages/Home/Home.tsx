@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import io from 'socket.io-client';
-import { debounce } from 'lodash';
 import { AnimatePresence } from 'framer-motion';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Empty } from '../../organisms/Empty/Empty';
@@ -9,28 +8,21 @@ import { ItemInput } from '../../organisms/ItemInput/ItemInput';
 import * as S from './Home.styles';
 import { ItemDetailsModal } from '../../organisms/ItemDetailsModal/ItemDetailsModal';
 import { staggerChildren } from '../../../utils/motionTransitions';
-import { LogoutButton, UserData } from '../../atoms/LogoutButton/LogoutButton';
 import { Logo } from '../../atoms/Icon/Icon';
 import { useDeviceState } from '../../../hooks/useDeviceState';
 import { Link } from 'react-router-dom';
-import { Text } from '../../atoms/Text/Text.styles';
 import { Path } from '../../../routes/Paths';
 
 // const endpoint = 'http://localhost:1337/api/';
 const basepath = '/';
 const endpoint = '/api/';
 
-interface HomeProps {
-  user?: UserData;
-}
-
-export const Home = ({ user }: HomeProps): ReactElement => {
+export const Home = (): ReactElement => {
   const [items, setItems] = useState<Array<ItemData> | null>(null);
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
   const [detailsModal, setDetailsModal] = useState<ItemData | null>(null);
   const [addModal, setAddModal] = useState(false);
   const [refresh, setRefresh] = useState(false);
-  const [hideHeader, setHideHeader] = useState(false);
   const { isMobile } = useDeviceState();
 
   const itemsEndpoint = `${endpoint}items`;
@@ -82,25 +74,25 @@ export const Home = ({ user }: HomeProps): ReactElement => {
     const socket = io(basepath);
     socket.on('message', socketListener);
 
-    // handle logout hide
-    // let previousScrollPosition = window.pageYOffset;
+    // // handle logout hide
+    // // let previousScrollPosition = window.pageYOffset;
 
-    const handleScroll = debounce(() => {
-      const currentScrollPosition = window.pageYOffset;
+    // const handleScroll = debounce(() => {
+    //   const currentScrollPosition = window.pageYOffset;
 
-      // const variant = previousScrollPosition < currentScrollPosition && currentScrollPosition > 50;
-      const variant = currentScrollPosition > 50;
+    //   // const variant = previousScrollPosition < currentScrollPosition && currentScrollPosition > 50;
+    //   // const variant = currentScrollPosition > 50;
 
-      setHideHeader(variant);
+    //   // setHideHeader(variant);
 
-      // previousScrollPosition = currentScrollPosition;
-    }, 66);
+    //   // previousScrollPosition = currentScrollPosition;
+    // }, 66);
 
-    window.addEventListener('scroll', handleScroll);
+    // window.addEventListener('scroll', handleScroll);
 
     return () => {
       socket.close();
-      window.removeEventListener('scroll', handleScroll);
+      // window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -112,11 +104,6 @@ export const Home = ({ user }: HomeProps): ReactElement => {
     <>
       <S.Home blur={!!addModal || !!detailsModal}>
         <S.Content>
-          {user && (
-            <S.Header isHidden={hideHeader}>
-              <LogoutButton user={user} />
-            </S.Header>
-          )}
           <S.Heading>
             <Logo />
           </S.Heading>

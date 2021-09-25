@@ -17,6 +17,11 @@ export const typeStyles = {
     color: ${({ theme }) => theme.colors.outerSpace};
     text-shadow: 0.3rem 0.3rem 0 ${({ theme }) => theme.hexToRgba(theme.colors.secondary, 0.3)};
   `,
+  menu: css`
+    font-size: 1.6rem;
+    font-family: ${({ theme }) => theme.fonts.arialRounded};
+    color: ${({ theme }) => theme.colors.outerSpace};
+  `,
   body: css`
     font-size: 1.6rem;
     line-height: 1.375;

@@ -1,33 +1,13 @@
-import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
+import React, { useContext, ReactElement, ReactNode } from 'react';
 import { Redirect, Route } from 'react-router';
-import axios from 'axios';
-import { UserData } from '../components/atoms/LogoutButton/LogoutButton';
+import { UserContext } from '../context/UserContext/UserContext';
 
 interface PrivateRoutesProps {
   children: ReactNode;
 }
 
 export const PrivateRoutes = ({ children, ...props }: PrivateRoutesProps): ReactElement => {
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<UserData>();
-
-  useEffect(() => {
-    axios
-      .get('/api/user')
-      .then((response) => {
-        console.log(response.data);
-        setUser(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
-    return <></>;
-  }
+  const { user } = useContext(UserContext);
 
   return (
     <Route

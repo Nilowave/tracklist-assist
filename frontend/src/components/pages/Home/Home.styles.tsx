@@ -71,15 +71,16 @@ export const AddButton = styled(Button)`
 `;
 
 export const Header = styled.div<{ isHidden?: boolean }>`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   /* background-color: ${({ theme }) => theme.colors.background}; */
   padding: 3rem 3rem 0;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   transition: opacity 0.3s ease;
+  z-index: 2;
 
   ${({ isHidden }) => isHidden && 'opacity: 0; pointer-events: none'};
 `;
