@@ -8,4 +8,6 @@ mongoose.connect(uri, { useNewUrlParser: true }).catch((e) => {
 
 const db = mongoose.connection;
 
+// db.dropDatabase();
+
 module.exports = db;

@@ -4,7 +4,7 @@ import * as S from './Item.styles';
 
 export type ItemData = {
   name: string;
-  tracks: Array<string>;
+  tracks: Array<number>;
   _id?: string;
   createdAt?: string;
   updatedAt?: string;
