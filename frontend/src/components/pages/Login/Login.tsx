@@ -7,8 +7,8 @@ import { AdUnit } from '../../atoms/AdUnit/AdUnit';
 
 export const Login = (): ReactElement => {
   const options: IAuthorizationOptions = {
-    clientId: (process || {}).env.REACT_APP_GOOGLE_CLIENT_ID as string,
-    redirectUri: `${(process || {}).env.REACT_APP_BASE_PATH}/auth/google/callback`,
+    clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID as string,
+    redirectUri: `${process.env.REACT_APP_BASE_PATH}/auth/google/callback`,
     scopes: ['profile', 'email'],
     includeGrantedScopes: true,
     accessType: 'offline',
@@ -21,7 +21,7 @@ export const Login = (): ReactElement => {
         <p>Your tracking assistant</p>
       </S.LogoWrapper>
       <S.StyledButtonWrapper>
-        <S.StyledGoogleButton options={options} apiUrl={`${(process || {}).env.REACT_APP_BASE_PATH}/auth/google`} defaultStyle={false}>
+        <S.StyledGoogleButton options={options} apiUrl={`${process.env.REACT_APP_BASE_PATH}/auth/google`} defaultStyle={false}>
           <GoogleIcon />
           Sign in with Google
         </S.StyledGoogleButton>
