@@ -64,7 +64,7 @@ export const NavItem = styled.li<{ isActive?: boolean; isRainbow?: boolean }>`
 
   ${({ isActive, theme }) => isActive && `color: ${theme.colors.primary}`};
 
-  ${({ isRainbow, theme }) =>
+  ${({ isRainbow }) =>
     isRainbow &&
     css`
       font-style: italic;
