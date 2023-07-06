@@ -24,7 +24,12 @@ export const ItemDetailsModal = ({ onClose, data, onDelete }: ItemDetailsModalPr
 
     console.log(formData.tracks);
 
-    const dates = (Object.values(formData.tracks) as Array<string>).map((date: string) => new Date(date).getTime());
+    const dates = (Object.values(formData.tracks) as Array<string>).map((date: string) => {
+      const dd = new Date(date);
+      console.log(dd);
+
+      return dd.getTime();
+    });
     console.log({ dates });
 
     const submitData: ItemData = {
