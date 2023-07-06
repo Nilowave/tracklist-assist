@@ -7,6 +7,8 @@ export const toDatetimeLocal = (date: Date): string => {
     DD = ten(date.getDate()),
     HH = ten(date.getHours()),
     II = ten(date.getMinutes()),
-    SS = ten(date.getSeconds());
-  return YYYY + '-' + MM + '-' + DD + 'T' + HH + ':' + II + ':' + SS;
+    SS = ten(date.getSeconds()),
+    MS = ten(date.getMilliseconds());
+
+  return YYYY + '-' + MM + '-' + DD + 'T' + HH + ':' + II + ':' + SS + '.' + MS;
 };

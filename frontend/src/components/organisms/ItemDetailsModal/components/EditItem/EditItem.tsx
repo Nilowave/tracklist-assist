@@ -62,6 +62,7 @@ export const EditItem = ({ data, formMethods }: EditItemProps): ReactElement => 
                   <S.StyledDateInput
                     {...formMethods.register(`tracks.date-${index}`, { required: true })}
                     type="datetime-local"
+                    step="0.1"
                     defaultValue={localDate}
                     {...(prevDate && { min: prevDate })}
                   />
