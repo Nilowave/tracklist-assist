@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const Item = new Schema(
   {
     name: { type: String, required: true },
-    tracks: { type: [Date], required: true },
+    tracks: { type: [Number], required: true },
     user: {
       type: Schema.Types.ObjectId,
       ref: 'users',
