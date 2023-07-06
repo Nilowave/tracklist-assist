@@ -94,15 +94,14 @@ updateItem = async (req, res, io) => {
     });
   }
 
-  console.log('update', body);
-
   Item.findOne({ _id: req.params.id })
     .exec()
     .then((item) => {
       item.name = body.name;
 
       const { tracks } = body;
-      item.tracks = tracks.map((date) => new Date(date).getTime());
+      const updateTracks = tracks.map((date) => new Date(date).getTime());
+      item.tracks = updateTracks;
 
       item
         .save()
