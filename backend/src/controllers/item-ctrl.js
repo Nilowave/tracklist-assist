@@ -23,6 +23,7 @@ upsert = (req, res, io) => {
   // const date = new Date().toString();
   const date = Date.now();
 
+  console.log('upsert');
   console.log({ date });
 
   Item.updateOne({ name }, { $push: { tracks: date }, user: req.user.id }, { upsert: true })
@@ -102,6 +103,9 @@ updateItem = async (req, res, io) => {
       const { tracks } = body;
       const updateTracks = tracks.map((date) => new Date(date).getTime());
       item.tracks = updateTracks;
+
+      console.log('updateItem');
+      console.log(item.tracks);
 
       item
         .save()
