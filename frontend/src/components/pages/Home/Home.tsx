@@ -17,6 +17,12 @@ import { Path } from '../../../routes/Paths';
 const basepath = '/';
 const endpoint = '/api/';
 
+type Func = () => void;
+
+type SocketMessage = {
+  id: string;
+};
+
 export const Home = (): ReactElement => {
   const [items, setItems] = useState<Array<ItemData> | null>(null);
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
@@ -28,10 +34,7 @@ export const Home = (): ReactElement => {
   const itemsEndpoint = `${endpoint}items`;
   const itemEndpoint = `${endpoint}item`;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const socketListener = (message: any) => {
-    console.log(message);
-
+  const socketListener = (message: SocketMessage) => {
     if (message.id === 'update') {
       getItems();
     }
@@ -69,8 +72,7 @@ export const Home = (): ReactElement => {
       });
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  useEffect((): any => {
+  useEffect((): Func => {
     const socket = io(basepath);
     socket.on('message', socketListener);
 
@@ -121,9 +123,9 @@ export const Home = (): ReactElement => {
           <p>© {new Date().getFullYear()} Tracklist Assist</p>
           <Link to={Path.PrivacyPolicy}>Privacy Policy</Link>
           <Link to={Path.Terms}>Terms of Service</Link>
-          <a href="mailto:support@tracklistassist.com" target="_blank" rel="noreferrer">
+          {/* <a href="mailto:support@tracklistassist.com" target="_blank" rel="noreferrer">
             Contact: support@tracklistassist.com
-          </a>
+          </a> */}
         </S.Footer>
       </S.Home>
       <AnimatePresence exitBeforeEnter>
