@@ -8,9 +8,6 @@
     "start": "node backend/index.js",
     "build": "cd frontend && npm install && npm run build"
   },
-  "engines": {
-    "node": "14.15.2"
-  },
   "dependencies": {
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
