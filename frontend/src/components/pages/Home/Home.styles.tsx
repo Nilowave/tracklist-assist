@@ -13,6 +13,10 @@ export const Home = styled.section<{ blur?: boolean }>`
   align-items: center;
   min-height: 100vh;
 
+  background-image: radial-gradient(${({ theme }) => theme.hexToRgba(theme.colors.primary, 0.2)} 1px, transparent 0);
+  background-size: 40px 40px;
+  background-position: -19px -19px;
+
   @media ${respondTo(MediaQuery.MAX_1023)} {
     padding: ${({ theme }) => theme.sitePaddings.mobile};
   }

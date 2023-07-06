@@ -6,11 +6,7 @@ import { menuData } from './SideMenu.data';
 import { UserContext } from '../../../context/UserContext/UserContext';
 import { Path } from '../../../routes/Paths';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface SideMenuProps {}
-
-// eslint-disable-next-line no-empty-pattern
-export const SideMenu = ({}: SideMenuProps): ReactElement => {
+export const SideMenu = (): ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { user } = useContext(UserContext);
@@ -21,11 +17,14 @@ export const SideMenu = ({}: SideMenuProps): ReactElement => {
 
   const handleLogout = () => {
     axios.get('/api/logout').then(() => {
-      console.log('logout');
-
       history.push('/login');
     });
   };
+
+  const splitUsername = (email: string) => {
+    return email.split(' ')[0];
+  };
+
   return (
     <>
       <S.StyledSideMenu $isOpen={isOpen}>
@@ -50,7 +49,7 @@ export const SideMenu = ({}: SideMenuProps): ReactElement => {
           type="button"
         >
           <S.Photo src={user.photo} alt={`Profile ${user.name}`} />
-          <span>{'username'}</span>
+          <span>{splitUsername(user.name)}</span>
         </S.StyledUserButton>
       )}
     </>
