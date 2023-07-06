@@ -11,7 +11,7 @@ export const SideMenu = (): ReactElement => {
 
   const elementRef = useRef<HTMLElement>(null);
 
-  const { user } = useContext(UserContext);
+  const { user, logout } = useContext(UserContext);
 
   const location = useLocation();
 
@@ -19,6 +19,8 @@ export const SideMenu = (): ReactElement => {
 
   const handleLogout = () => {
     axios.get('/api/logout').then(() => {
+      setIsOpen(false);
+      logout();
       history.push('/login');
     });
   };
@@ -31,7 +33,7 @@ export const SideMenu = (): ReactElement => {
     const { target } = event;
     if (!elementRef.current || !target) return;
 
-    if (target !== elementRef.current && !elementRef.current.contains(target as Node)) {
+    if (target !== elementRef.current) {
       setIsOpen(false);
     }
   };
@@ -60,6 +62,9 @@ export const SideMenu = (): ReactElement => {
               </S.NavItem>
             );
           })}
+          {/* <S.NavItem isRainbow>
+            <Link to="#">Remove Ads</Link>
+          </S.NavItem> */}
         </S.NavList>
         <S.LogoutButton type="button" onClick={handleLogout}>
           Logout

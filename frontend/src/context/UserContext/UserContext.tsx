@@ -5,9 +5,11 @@ import { UserData } from '../../components/atoms/LogoutButton/LogoutButton';
 type UserState = {
   user?: UserData;
   isLoading: boolean;
+  logout: () => void;
 };
 
-export const UserContext = createContext<UserState>({ isLoading: true });
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+export const UserContext = createContext<UserState>({ isLoading: true, logout: () => {} });
 
 interface UserContextProps {
   children: ReactNode;
@@ -23,8 +25,18 @@ const UserContextProvider = ({ children }: UserContextProps) => {
     });
   };
 
+  const logout = () => {
+    const user = undefined;
+    setState({
+      ...state,
+      user,
+      isLoading: false,
+    });
+  };
+
   const [state, setState] = useState<UserState>({
     isLoading: true,
+    logout,
   });
 
   useEffect(() => {
