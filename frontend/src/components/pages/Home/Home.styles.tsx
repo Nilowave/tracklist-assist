@@ -16,6 +16,7 @@ export const Home = styled.section<{ blur?: boolean }>`
   background-image: radial-gradient(${({ theme }) => theme.hexToRgba(theme.colors.primary, 0.2)} 1px, transparent 0);
   background-size: 40px 40px;
   background-position: -19px -19px;
+  background-attachment: fixed;
 
   @media ${respondTo(MediaQuery.MAX_1023)} {
     padding: ${({ theme }) => theme.sitePaddings.mobile};
@@ -89,17 +90,21 @@ export const Header = styled.div<{ isHidden?: boolean }>`
   ${({ isHidden }) => isHidden && 'opacity: 0; pointer-events: none'};
 `;
 
-export const Footer = styled.footer`
+export const Footer = styled.div`
+  padding: ${({ theme }) => theme.sitePaddings.mobile};
+  padding-left: 0;
+  max-width: 80%;
+`;
+
+export const FooterWrapper = styled.footer`
   text-align: center;
   color: ${({ theme }) => theme.colors.blueGray};
   font-size: 1.2rem;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
-  padding: ${({ theme }) => theme.sitePaddings.mobile};
-  padding-left: 0;
+  /* padding-right: ${({ theme }) => theme.sitePaddings.mobile}; */
   gap: 2rem;
-  max-width: 80%;
   text-align: left;
 
   @media ${respondTo(MediaQuery.MIN_1024)} {
@@ -107,8 +112,8 @@ export const Footer = styled.footer`
     padding: ${({ theme }) => theme.sitePaddings.desktop};
     padding-bottom: 0;
     gap: 4rem;
-    position: absolute;
-    bottom: 4rem;
+    /* position: absolute; */
+    /* bottom: 4rem; */
   }
 
   a {

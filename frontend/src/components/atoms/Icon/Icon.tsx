@@ -7,6 +7,7 @@ type IconProp = {
 
 export { ReactComponent as Logo } from '../../../assets/svg/logo.svg';
 export { ReactComponent as LogoColor } from '../../../assets/svg/logo-color.svg';
+export { ReactComponent as Spinner } from '../../../assets/svg/spinner.svg';
 export { ReactComponent as GoogleIcon } from '../../../assets/svg/google-button.svg';
 
 export const Plus = styled.div<IconProp>`
