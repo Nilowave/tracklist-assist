@@ -43,7 +43,7 @@ io.use((socket, next) => {
   sessionMiddleware(socket.request, {}, next);
 }).on('connection', (socket) => {
   const userId = socket.request.session.passport.user;
-  console.log('a user connected', userId);
+  console.log('a user connected, hello #', userId);
   if (userId) {
     socket.join(userId);
     io.to(userId).emit('message', { id: 'connected' });

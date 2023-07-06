@@ -21,13 +21,11 @@ export const ItemInput = ({ onClose, submit }: ItemInputProps): ReactElement => 
   const onSubmit = (data: FieldValues) => {
     const item: ItemData = {
       name: data.name,
-      tracks: [new Date().toString()],
+      tracks: [Date.now()],
     };
 
     submit(item);
     onClose();
-
-    console.log(item);
   };
 
   return (

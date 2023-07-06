@@ -31,6 +31,7 @@
     "web-vitals": "^1.0.1",
     "webpack-bundle-analyzer": "^4.4.2"
   },
+  "type": "commonjs",
   "scripts": {
     "dev": "react-app-rewired start",
     "build": "react-app-rewired build",
@@ -56,7 +57,9 @@
     ]
   },
   "devDependencies": {
-    "react-app-rewired": "^2.1.8",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^26.0.15",
     "@types/lodash": "^4.14.173",
     "@types/node": "^12.0.0",
@@ -68,8 +71,7 @@
     "@types/styled-system": "^5.1.13",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10"
+    "react-app-rewired": "^2.1.8",
+    "uglifyjs-webpack-plugin": "^2.2.0"
   }
 }

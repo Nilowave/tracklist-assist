@@ -22,6 +22,8 @@ upsert = (req, res, io) => {
   const { name } = req.body;
   const date = new Date().toString();
 
+  console.log({ date });
+
   Item.updateOne({ name }, { $push: { tracks: date }, user: req.user.id }, { upsert: true })
     .then((item) => {
       io.to(req.user.id).emit('message', { id: 'update', data: item });
@@ -55,6 +57,7 @@ assistant = (req, res, io) => {
   const date = new Date().toString();
 
   console.log('track', req.body);
+  console.log({ date });
 
   Item.updateOne({ name, user: id }, { $push: { tracks: date } }, { upsert: true })
     .then((item) => {
@@ -88,6 +91,8 @@ updateItem = async (req, res, io) => {
       error: 'You must provide a body to update',
     });
   }
+
+  console.log('update', body);
 
   Item.findOne({ _id: req.params.id })
     .exec()

@@ -2,7 +2,7 @@ import { ReactElement, useRef, useState } from 'react';
 import { ItemData } from '../../../Item/Item';
 import { UseFormReturn } from 'react-hook-form';
 import { Detail, Menu, SubTitle } from '../../ItemDetailsModal.styles';
-import { formatISO9075 } from 'date-fns/esm';
+// import { formatISO9075 } from 'date-fns/esm';
 import * as S from './EditItem.styles';
 import { Button } from '../../../../atoms/Button/Button';
 import { useDeviceState } from '../../../../../hooks/useDeviceState';
@@ -16,7 +16,7 @@ interface EditItemProps {
 export const EditItem = ({ data, formMethods }: EditItemProps): ReactElement => {
   const { isMobile } = useDeviceState();
 
-  const tracksData = useRef<Array<string>>([...data.tracks]);
+  const tracksData = useRef<Array<number>>([...data.tracks]);
   const [tracks, setTracks] = useState([...data.tracks]);
   const watchFormName = formMethods.watch('name');
 
@@ -27,7 +27,7 @@ export const EditItem = ({ data, formMethods }: EditItemProps): ReactElement => 
   };
 
   const handleAddItem = () => {
-    tracksData.current.push(new Date().toISOString());
+    tracksData.current.push(Date.now());
 
     formMethods.reset({ name: watchFormName });
     setTracks([...tracksData.current]);
@@ -44,10 +44,12 @@ export const EditItem = ({ data, formMethods }: EditItemProps): ReactElement => 
           <S.HistoryTitle layout>Track History:</S.HistoryTitle>
           <S.Dates layout>
             {tracks.map((date, index) => {
-              const localDate = formatISO9075(new Date(date)).replace(' ', 'T');
+              // const localDate = formatISO9075(new Date(date)).replace(' ', 'T');
+              const localDate = new Date(date).toString();
               let prevDate;
               if (index > 0) {
-                prevDate = formatISO9075(new Date(tracks[index - 1])).replace(' ', 'T');
+                // prevDate = formatISO9075(new Date(tracks[index - 1])).replace(' ', 'T');
+                prevDate = new Date(tracks[index - 1]).toString();
               }
 
               return (
