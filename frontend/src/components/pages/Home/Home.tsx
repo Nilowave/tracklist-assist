@@ -32,8 +32,6 @@ export const Home = (): ReactElement => {
   const [refresh, setRefresh] = useState(false);
   const { isMobile } = useDeviceState();
 
-  console.log(items);
-
   const itemsEndpoint = `${endpoint}items`;
   const itemEndpoint = `${endpoint}item`;
 

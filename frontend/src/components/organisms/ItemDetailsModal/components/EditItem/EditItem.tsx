@@ -28,6 +28,9 @@ export const EditItem = ({ data, formMethods }: EditItemProps): ReactElement => 
   };
 
   const handleAddItem = () => {
+    const date = Date.now();
+    console.log('handleAddItem', date);
+
     tracksData.current.push(Date.now());
 
     formMethods.reset({ name: watchFormName });

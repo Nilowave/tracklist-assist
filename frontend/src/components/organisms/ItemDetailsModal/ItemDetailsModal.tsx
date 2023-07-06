@@ -20,8 +20,12 @@ export const ItemDetailsModal = ({ onClose, data, onDelete }: ItemDetailsModalPr
   const formMethods = useForm();
 
   const handleEditSubmit = (formData: FieldValues) => {
+    console.log('handleEditSubmit');
+
+    console.log(formData.tracks);
+
     const dates = (Object.values(formData.tracks) as Array<string>).map((date: string) => new Date(date).getTime());
-    console.log(dates);
+    console.log({ dates });
 
     const submitData: ItemData = {
       name: formData.name,
