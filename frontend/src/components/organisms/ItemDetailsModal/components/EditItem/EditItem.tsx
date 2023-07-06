@@ -7,6 +7,7 @@ import * as S from './EditItem.styles';
 import { Button } from '../../../../atoms/Button/Button';
 import { useDeviceState } from '../../../../../hooks/useDeviceState';
 import { Error } from '../../../ItemInput/ItemInput.styles';
+import { toDatetimeLocal } from '../../../../../utils/toDatetimeLocal';
 
 interface EditItemProps {
   data: ItemData;
@@ -45,11 +46,11 @@ export const EditItem = ({ data, formMethods }: EditItemProps): ReactElement => 
           <S.Dates layout>
             {tracks.map((date, index) => {
               // const localDate = formatISO9075(new Date(date)).replace(' ', 'T');
-              const localDate = new Date(date).toString();
+              const localDate = toDatetimeLocal(new Date(date));
               let prevDate;
               if (index > 0) {
                 // prevDate = formatISO9075(new Date(tracks[index - 1])).replace(' ', 'T');
-                prevDate = new Date(tracks[index - 1]).toString();
+                prevDate = toDatetimeLocal(new Date(tracks[index - 1]));
               }
 
               return (
