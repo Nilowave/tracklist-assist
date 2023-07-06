@@ -41,7 +41,7 @@ export const menuData: Array<NavItem> = [
     path: Path.CookiePolicy,
   },
   {
-    title: 'Terms & Conditions',
+    title: 'Terms of Service',
     path: Path.Terms,
   },
   // {
