@@ -20,7 +20,8 @@ upsert = (req, res, io) => {
   }
 
   const { name } = req.body;
-  const date = new Date().toString();
+  // const date = new Date().toString();
+  const date = Date.now();
 
   console.log({ date });
 
@@ -54,7 +55,8 @@ assistant = (req, res, io) => {
   }
 
   const { name, id } = req.body;
-  const date = new Date().toString();
+  // const date = new Date().toString();
+  const date = Date.now();
 
   console.log('track', req.body);
   console.log({ date });
@@ -98,7 +100,9 @@ updateItem = async (req, res, io) => {
     .exec()
     .then((item) => {
       item.name = body.name;
-      item.tracks = body.tracks;
+
+      const { tracks } = body;
+      item.tracks = tracks.map((date) => new Date(date).getTime());
 
       item
         .save()
