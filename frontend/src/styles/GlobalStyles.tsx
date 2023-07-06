@@ -33,7 +33,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   #root {
-    height: 100%;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     overflow-y: auto;

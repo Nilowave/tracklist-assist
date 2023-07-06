@@ -9,7 +9,7 @@
     "build": "cd frontend && npm install && npm run build"
   },
   "engines": {
-    "node": "14.15.2"
+    "node": "^14"
   },
   "dependencies": {
     "cookie-session": "^1.4.0",

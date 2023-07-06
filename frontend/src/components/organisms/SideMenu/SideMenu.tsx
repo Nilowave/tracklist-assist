@@ -1,4 +1,4 @@
-import { ReactElement, useContext, useState } from 'react';
+import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import * as S from './SideMenu.styles';
 import { Link, useHistory, useLocation } from 'react-router-dom';
@@ -8,6 +8,8 @@ import { Path } from '../../../routes/Paths';
 
 export const SideMenu = (): ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const elementRef = useRef<HTMLElement>(null);
 
   const { user } = useContext(UserContext);
 
@@ -25,9 +27,30 @@ export const SideMenu = (): ReactElement => {
     return email.split(' ')[0];
   };
 
+  const onClickOutside = (event: MouseEvent) => {
+    const { target } = event;
+    if (!elementRef.current || !target) return;
+
+    if (target !== elementRef.current && !elementRef.current.contains(target as Node)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', onClickOutside);
+
+    if (isOpen === false) {
+      document.removeEventListener('click', onClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('click', onClickOutside);
+    };
+  }, [isOpen]);
+
   return (
     <>
-      <S.StyledSideMenu $isOpen={isOpen}>
+      <S.StyledSideMenu $isOpen={isOpen} ref={elementRef}>
         <S.NavList>
           {menuData.map((item) => {
             if (item.protected && !user?.email) return;

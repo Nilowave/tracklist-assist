@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { typeStyles } from '../../../styles/typeStyles';
 
 export const StyledSideMenu = styled.nav<{ $isOpen: boolean }>`
-  position: absolute;
+  position: fixed;
   background-color: ${({ theme }) => theme.colors.white};
   padding: 3rem;
   top: 0;
@@ -13,6 +13,7 @@ export const StyledSideMenu = styled.nav<{ $isOpen: boolean }>`
   flex-direction: column;
   justify-content: space-between;
   transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
 
   ${({ $isOpen }) => !$isOpen && `transform: translateX(-100%)`};
 `;
@@ -30,8 +31,8 @@ export const StyledUserButton = styled.button<ButtonProps>`
   color: ${({ theme, $variant }) => ($variant === 'dark' ? theme.colors.outerSpace : theme.colors.white)};
   font-style: italic;
   font-weight: 600;
-  position: absolute;
-  z-index: 1;
+  position: fixed;
+  z-index: 2;
   transition: color 0.5s ease;
 
   @media (hover: hover) {

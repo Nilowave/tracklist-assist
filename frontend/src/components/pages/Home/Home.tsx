@@ -12,6 +12,7 @@ import { Logo } from '../../atoms/Icon/Icon';
 import { useDeviceState } from '../../../hooks/useDeviceState';
 import { Link } from 'react-router-dom';
 import { Path } from '../../../routes/Paths';
+import { AdUnit } from '../../atoms/AdUnit/AdUnit';
 
 // const endpoint = 'http://localhost:1337/api/';
 const basepath = '/';
@@ -111,8 +112,11 @@ export const Home = (): ReactElement => {
           </S.Heading>
           {items && !isEmpty && (
             <S.ItemList layout {...staggerChildren()}>
-              {items.map((item) => (
-                <Item onClick={() => setDetailsModal(item)} key={item._id} data={item} />
+              {items.map((item, index) => (
+                <div style={{ display: 'contents' }} key={item._id}>
+                  <Item onClick={() => setDetailsModal(item)} key={item._id} data={item} />
+                  {index % 3 === 2 && index < items.length - 1 && <AdUnit slot={3271702308} format="square" />}
+                </div>
               ))}
             </S.ItemList>
           )}
@@ -120,9 +124,12 @@ export const Home = (): ReactElement => {
           <S.AddButton label={isMobile ? '' : 'Track Item'} icon="Plus" color="primary" onClick={() => setAddModal(true)} />
         </S.Content>
         <S.Footer>
-          <p>© {new Date().getFullYear()} Tracklist Assist</p>
-          <Link to={Path.PrivacyPolicy}>Privacy Policy</Link>
-          <Link to={Path.Terms}>Terms of Service</Link>
+          <AdUnit slot={6156885942} />
+          <S.FooterWrapper>
+            <p>© {new Date().getFullYear()} Tracklist Assist</p>
+            <Link to={Path.PrivacyPolicy}>Privacy Policy</Link>
+            <Link to={Path.Terms}>Terms of Service</Link>
+          </S.FooterWrapper>
           {/* <a href="mailto:support@tracklistassist.com" target="_blank" rel="noreferrer">
             Contact: support@tracklistassist.com
           </a> */}
