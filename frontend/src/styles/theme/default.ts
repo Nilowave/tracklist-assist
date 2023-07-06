@@ -27,7 +27,7 @@ export const theme = {
   colors,
   fonts,
   sitePaddings: {
-    mobile: '3rem',
+    mobile: '1.5rem',
     desktop: '10.2rem',
   },
   hexToRgba,

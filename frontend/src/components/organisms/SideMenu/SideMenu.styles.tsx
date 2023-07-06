@@ -1,10 +1,12 @@
 import styled, { css } from 'styled-components';
 import { typeStyles } from '../../../styles/typeStyles';
+import { respondTo } from '../../../styles/helpers/respondTo';
+import { MediaQuery } from '../../../styles/mediaQuery';
 
 export const StyledSideMenu = styled.nav<{ $isOpen: boolean }>`
   position: fixed;
   background-color: ${({ theme }) => theme.colors.white};
-  padding: 3rem;
+  padding: ${({ theme }) => theme.sitePaddings.mobile};
   top: 0;
   left: 0;
   width: 30rem;
@@ -16,6 +18,10 @@ export const StyledSideMenu = styled.nav<{ $isOpen: boolean }>`
   z-index: 2;
 
   ${({ $isOpen }) => !$isOpen && `transform: translateX(-100%)`};
+
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    padding: 3rem;
+  }
 `;
 
 export type ButtonProps = {
@@ -26,8 +32,8 @@ export const StyledUserButton = styled.button<ButtonProps>`
   display: flex;
   gap: 1rem;
   align-items: center;
-  top: 3rem;
-  left: 3rem;
+  top: ${({ theme }) => theme.sitePaddings.mobile};
+  left: ${({ theme }) => theme.sitePaddings.mobile};
   color: ${({ theme, $variant }) => ($variant === 'dark' ? theme.colors.outerSpace : theme.colors.white)};
   font-style: italic;
   font-weight: 600;
@@ -40,6 +46,11 @@ export const StyledUserButton = styled.button<ButtonProps>`
       text-decoration: underline;
     }
   }
+
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    top: 3rem;
+    left: 3rem;
+  }
 `;
 
 export const Photo = styled.img`
@@ -49,13 +60,18 @@ export const Photo = styled.img`
 `;
 
 export const NavList = styled.ul`
-  margin-top: 6rem;
+  margin-top: 4.5rem;
   border-top: solid 1px ${({ theme }) => theme.colors.primary};
-  padding-top: 5rem;
+  padding-top: 3rem;
   display: flex;
   gap: 2rem;
   flex-direction: column;
   list-style: none;
+
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    margin-top: 6rem;
+    padding-top: 5rem;
+  }
 `;
 
 export const NavItem = styled.li<{ isActive?: boolean; isRainbow?: boolean }>`

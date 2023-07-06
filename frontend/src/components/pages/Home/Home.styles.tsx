@@ -91,8 +91,7 @@ export const Header = styled.div<{ isHidden?: boolean }>`
 `;
 
 export const Footer = styled.div`
-  padding: ${({ theme }) => theme.sitePaddings.mobile};
-  padding-left: 0;
+  padding: ${({ theme }) => theme.sitePaddings.mobile} 0;
   max-width: 80%;
 `;
 

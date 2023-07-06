@@ -126,9 +126,9 @@ export const Home = (): ReactElement => {
         <S.Footer>
           <AdUnit slot={6156885942} />
           <S.FooterWrapper>
-            <p>© {new Date().getFullYear()} Tracklist Assist</p>
             <Link to={Path.PrivacyPolicy}>Privacy Policy</Link>
             <Link to={Path.Terms}>Terms of Service</Link>
+            <p>© {new Date().getFullYear()} Tracklist Assist</p>
           </S.FooterWrapper>
           {/* <a href="mailto:support@tracklistassist.com" target="_blank" rel="noreferrer">
             Contact: support@tracklistassist.com
