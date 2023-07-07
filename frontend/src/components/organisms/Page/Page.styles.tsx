@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 import { typeStyles } from '../../../styles/typeStyles';
 import { respondTo } from '../../../styles/helpers/respondTo';
 import { MediaQuery } from '../../../styles/mediaQuery';
-import { Text } from '../../atoms/Text/Text.styles';
 
 export const Fade = styled.div`
   position: fixed;

@@ -1,0 +1,14 @@
+<svg viewBox="0 0 120 100">
+  <path
+    d="
+       M 20,50
+       l 100,0
+       M 20,50
+       l 30,28
+       M 20,50
+       l 30,-28"
+    stroke="currentColor"
+    stroke-linecap="round"
+    stroke-width="6"
+  />
+</svg>
