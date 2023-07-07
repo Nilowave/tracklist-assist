@@ -12,6 +12,7 @@ module.exports = (io) => {
   router.delete('/item/:id', (req, res) => ItemCtrl.deleteItem(req, res, io));
   // router.get('/item/:name', ItemCtrl.getItemByName);
   router.get('/items', (req, res) => ItemCtrl.getItems(req, res, io));
+  router.get('/item/:id', (req, res) => ItemCtrl.getItemById(req, res, io));
 
   // User
   router.get('/logout', (req, res) => UserCtrl.logout(req, res));

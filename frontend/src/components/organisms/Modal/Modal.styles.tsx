@@ -19,7 +19,7 @@ export const Wrapper = styled.div`
   color: ${({ theme }) => theme.colors.black};
 
   @media ${respondTo(MediaQuery.MAX_1023)} {
-    padding: ${({ theme }) => `${theme.sitePaddings.desktop} ${theme.sitePaddings.mobile} ${theme.sitePaddings.mobile}`};
+    padding: ${({ theme }) => `8rem ${theme.sitePaddings.mobile} ${theme.sitePaddings.mobile}`};
   }
 `;
 

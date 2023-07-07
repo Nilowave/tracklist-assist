@@ -45,9 +45,9 @@ export const Card = styled(motion.div)`
   flex-direction: column;
   width: 100%;
   max-width: 70rem;
-  border: solid 1px ${({ theme }) => theme.colors.primary};
+  border: solid 4px ${({ theme }) => theme.colors.secondary};
   border-radius: 0.8rem;
-  box-shadow: 0 3px 6px ${({ theme }) => theme.colors.primary};
+  box-shadow: 0 3px 3px ${({ theme }) => theme.hexToRgba(theme.colors.black, 0.2)};
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.white};
   position: relative;
@@ -55,6 +55,10 @@ export const Card = styled(motion.div)`
   padding: ${({ theme }) => theme.sitePaddings.mobile};
   overflow: hidden;
   overflow-y: auto;
+
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    padding: 5rem;
+  }
 `;
 
 export const Detail = styled(motion.div)<{ align?: string }>`

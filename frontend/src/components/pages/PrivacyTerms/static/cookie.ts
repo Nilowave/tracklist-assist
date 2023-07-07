@@ -33,6 +33,7 @@ font-family: Arial !important;
 font-size: 14px !important;
 font-family: Arial !important;
 word-break: break-word !important;
+display: inline-block;
       }
 </style>
 
@@ -52,4 +53,4 @@ word-break: break-word !important;
     }
   </style>
     </div>
-    <div style="color: #595959;font-size: 14px;font-family: Arial;padding-top:16px;">This cookie policy was created using Termly's <a style="color: rgb(48, 48, 241) !important;" href="https://termly.io/en/products/cookie-consent-manager/?ftseo">Cookie Consent Manager</a>.</div>`;
+    <div style="color: #595959;font-size: 14px;font-family: Arial;padding-top:16px;">This cookie policy was created using Termly's <a data-custom-class="link" style="color: rgb(48, 48, 241) !important;" href="https://termly.io/en/products/cookie-consent-manager/?ftseo">Cookie Consent Manager</a>.</div>`;

@@ -7,10 +7,13 @@ import { ItemDetails } from './components/ItemDetails/ItemDetails';
 import { EditItem } from './components/EditItem/EditItem';
 import { FieldValues, useForm } from 'react-hook-form';
 import axios from 'axios';
+import { Flex } from '../../../styles/ui';
+import { useDeviceState } from '../../../hooks/useDeviceState';
 
 interface ItemDetailsModalProps {
   onClose: () => void;
   onDelete: (id: string) => void;
+  onUpdate?: (data: ItemData) => void;
   data: ItemData;
 }
 
@@ -19,24 +22,17 @@ type FormData = {
   name: string;
 };
 
-export const ItemDetailsModal = ({ onClose, data, onDelete }: ItemDetailsModalProps): ReactElement => {
+export const ItemDetailsModal = ({ onClose, data, onDelete, onUpdate }: ItemDetailsModalProps): ReactElement => {
   const [editItem, setEditItem] = useState(false);
 
   const formMethods = useForm();
 
-  const handleEditSubmit = (formData: FieldValues) => {
-    console.log('handleEditSubmit');
+  const { isMobile } = useDeviceState();
 
-    console.log(formData.tracks);
+  const handleEditSubmit = (formData: FieldValues) => {
     const fields = formData as FormData;
 
-    const tracks: Array<number> = Object.values(fields.tracks).map((date: string) => {
-      const dd = new Date(date);
-      console.log(dd);
-
-      return dd.getTime();
-    });
-    console.log({ tracks });
+    const tracks: Array<number> = Object.values(fields.tracks).map((date: string) => new Date(date).getTime());
 
     const submitData: ItemData = {
       name: fields.name,
@@ -48,10 +44,10 @@ export const ItemDetailsModal = ({ onClose, data, onDelete }: ItemDetailsModalPr
       axios
         .put(`/api/item/${data._id}`, submitData)
         .then(() => {
-          console.log('update success yayyyyy');
+          console.log(':)');
         })
         .catch((error) => {
-          console.log('oops', error);
+          console.log(':(', error);
         });
     }
 
@@ -63,6 +59,36 @@ export const ItemDetailsModal = ({ onClose, data, onDelete }: ItemDetailsModalPr
     if (confirm(`Sure you want to delete "${data.name}"?`)) {
       data._id && onDelete(data._id);
       onClose();
+    }
+  };
+
+  const handleTrackNew = () => {
+    const newDate = Date.now();
+    const { tracks } = data;
+
+    const update = [...tracks, newDate];
+    const submitData: ItemData = {
+      name: data.name,
+      tracks: update,
+      _id: data._id,
+    };
+
+    if (data._id) {
+      axios.put(`/api/item/${data._id}`, submitData).then(() => {
+        if (onUpdate) {
+          const updatedData: ItemData = {
+            ...data,
+            ...submitData,
+          };
+          onUpdate(updatedData);
+        }
+
+        axios.get(`/api/item/${data._id}`).then((_data) => {
+          if (onUpdate) {
+            onUpdate(_data.data.data as ItemData);
+          }
+        });
+      });
     }
   };
 
@@ -82,7 +108,10 @@ export const ItemDetailsModal = ({ onClose, data, onDelete }: ItemDetailsModalPr
           ) : (
             <>
               <Button color="red" icon="Delete" onClick={handleDelete} label="Delete" />
-              <Button color="keyLime" icon="Edit" onClick={() => setEditItem(true)} label="Edit" />
+              <Flex row gap="3rem">
+                <Button color="keyLime" icon="Edit" onClick={() => setEditItem(true)} label="Edit" />
+                {!isMobile && <Button color="primary" icon="Plus" onClick={handleTrackNew} label="Track" />}
+              </Flex>
             </>
           )}
         </S.Menu>

@@ -1,7 +1,7 @@
 import type { ReactElement, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Path } from '../../../routes/Paths';
-import { LogoColor } from '../../atoms/Icon/Icon';
+import { BackArrow, LogoColor } from '../../atoms/Icon/Icon';
 import { Text } from '../../atoms/Text/Text.styles';
 import * as S from './Page.styles';
 
@@ -19,13 +19,19 @@ export const Page = ({ children, title }: PageProps): ReactElement => {
             <LogoColor />
           </Link>
         </S.LogoWrapper>
-        <S.Title>{title}</S.Title>
+        <S.TitleWrapper>
+          <S.Title>{title}</S.Title>
+          <S.BackLink to="/">
+            <BackArrow width={24} />
+            <span>Go back</span>
+          </S.BackLink>
+        </S.TitleWrapper>
       </S.PageContent>
       <S.PageContent>{children}</S.PageContent>
       <S.PageFooter>
         <S.FooterContent>
           <Text type="disclaimer">
-            © 2021{' '}
+            © {new Date().getFullYear()}{' '}
             <Text as="span" type="tinyLogo">
               Tracklist Assist
             </Text>
@@ -34,15 +40,16 @@ export const Page = ({ children, title }: PageProps): ReactElement => {
             <Link to={Path.PrivacyPolicy}>
               <Text type="disclaimer">Privacy Policy</Text>
             </Link>
-            <Link to={Path.Terms}>
-              <Text type="disclaimer">Terms of Service</Text>
+            <Link to={Path.CookiePolicy}>
+              <Text type="disclaimer">Cookie Policy</Text>
             </Link>
             <Link to={Path.Terms}>
-              <Text type="disclaimer">Contact</Text>
+              <Text type="disclaimer">Terms of Service</Text>
             </Link>
           </S.FooterMenu>
         </S.FooterContent>
       </S.PageFooter>
+      <S.Fade />
     </S.PageWrapper>
   );
 };
