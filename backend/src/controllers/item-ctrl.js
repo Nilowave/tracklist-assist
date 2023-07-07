@@ -102,11 +102,11 @@ updateItem = async (req, res, io) => {
 
       const { tracks } = body;
       console.log({ tracks });
-      console.log({ updateTracks });
       const updateTracks = tracks.map((date) => {
         console.log(new Date(date));
         return new Date(date).getTime();
       });
+      console.log({ updateTracks });
       item.tracks = updateTracks;
 
       console.log('updateItem');

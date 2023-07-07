@@ -14,27 +14,32 @@ interface ItemDetailsModalProps {
   data: ItemData;
 }
 
+type FormData = {
+  tracks: Array<string>;
+  name: string;
+};
+
 export const ItemDetailsModal = ({ onClose, data, onDelete }: ItemDetailsModalProps): ReactElement => {
   const [editItem, setEditItem] = useState(false);
 
   const formMethods = useForm();
 
-  const handleEditSubmit = (formData: FieldValues) => {
+  const handleEditSubmit = (formData: FormData) => {
     console.log('handleEditSubmit');
 
     console.log(formData.tracks);
 
-    const dates = (Object.values(formData.tracks) as Array<string>).map((date: string) => {
+    const tracks: Array<number> = Object.values(formData.tracks).map((date: string) => {
       const dd = new Date(date);
       console.log(dd);
 
       return dd.getTime();
     });
-    console.log({ dates });
+    console.log({ tracks });
 
     const submitData: ItemData = {
       name: formData.name,
-      tracks: Object.values(formData.tracks),
+      tracks,
       _id: data._id,
     };
 
