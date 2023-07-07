@@ -23,9 +23,6 @@ upsert = (req, res, io) => {
   // const date = new Date().toString();
   const date = Date.now();
 
-  console.log('upsert');
-  console.log({ date });
-
   Item.updateOne({ name }, { $push: { tracks: date }, user: req.user.id }, { upsert: true })
     .then((item) => {
       io.to(req.user.id).emit('message', { id: 'update', data: item });
@@ -45,7 +42,6 @@ upsert = (req, res, io) => {
 };
 
 assistant = (req, res, io) => {
-  console.log('tracking from assistant');
   const body = req.body;
 
   if (!body || !body.id) {
@@ -59,13 +55,9 @@ assistant = (req, res, io) => {
   // const date = new Date().toString();
   const date = Date.now();
 
-  console.log('track', req.body);
-  console.log({ date });
-
   Item.updateOne({ name, user: id }, { $push: { tracks: date } }, { upsert: true })
     .then((item) => {
       io.to(id).emit('message', { id: 'update', data: item });
-      console.log('track success');
       return res.status(200).json({
         success: true,
         id: item._id,
@@ -101,16 +93,10 @@ updateItem = async (req, res, io) => {
       item.name = body.name;
 
       const { tracks } = body;
-      console.log({ tracks });
       const updateTracks = tracks.map((date) => {
-        console.log(new Date(date));
         return new Date(date).getTime();
       });
-      console.log({ updateTracks });
       item.tracks = updateTracks;
-
-      console.log('updateItem');
-      console.log(item.tracks);
 
       item
         .save()
@@ -172,6 +158,26 @@ getItemByName = async (req, res) => {
   }).catch((err) => console.log(err));
 };
 
+getItemById = async (req, res) => {
+  if (!req.user) {
+    res.redirect('/');
+  }
+
+  await Item.findOne({ _id: req.params.id }, (err, item) => {
+    if (err) {
+      return res.status(400).json({ success: false, error: err });
+    }
+
+    if (!item) {
+      return res.status(404).json({ success: false, error: `Item not found` });
+    }
+
+    const parsedItem = parseItemDates([item]);
+
+    return res.status(200).json({ success: true, data: parsedItem[0] });
+  }).catch((err) => console.log(err));
+};
+
 getItems = async (req, res) => {
   if (!req.user) {
     res.redirect('/');
@@ -192,6 +198,7 @@ module.exports = {
   deleteItem,
   getItems,
   getItemByName,
+  getItemById,
   upsert,
   assistant,
 };

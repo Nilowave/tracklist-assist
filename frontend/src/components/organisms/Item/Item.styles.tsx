@@ -29,7 +29,6 @@ export const Title = styled.h3`
   padding: ${({ theme }) => theme.sitePaddings.mobile};
   text-transform: capitalize;
   text-align: center;
-  /* color: ${({ theme }) => theme.colors.white}; */
 `;
 
 export const Date = styled.p`
@@ -38,17 +37,17 @@ export const Date = styled.p`
 
 export const Count = styled.div`
   ${typeStyles.button};
-  font-size: 2.5rem;
-  border: solid 1px ${({ theme }) => theme.colors.outerSpace};
-  width: 5rem;
-  height: 5rem;
-  border-radius: 3rem;
-  background-color: ${({ theme }) => theme.colors.secondary};
-  color: ${({ theme }) => theme.colors.black};
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
   top: -1rem;
   right: -1rem;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  border: solid 3px ${({ theme }) => theme.colors.outerSpace};
+  border-radius: 1rem;
+  background-color: ${({ theme }) => theme.colors.keyLime};
+  color: ${({ theme }) => theme.colors.background};
 `;

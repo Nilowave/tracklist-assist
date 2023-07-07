@@ -41,6 +41,7 @@ export const privacyHTML = `<html lang="en">
   font-size: 14px !important;
   font-family: Arial !important;
   word-break: break-word !important;
+  display: inline-block;
           }
   </style>
 

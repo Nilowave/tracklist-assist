@@ -137,7 +137,9 @@ export const Home = (): ReactElement => {
       </S.Home>
       <AnimatePresence exitBeforeEnter>
         {addModal && <ItemInput submit={submitNewItem} onClose={() => setAddModal(false)} />}
-        {detailsModal && <ItemDetailsModal data={detailsModal} onDelete={deleteItem} onClose={() => setDetailsModal(null)} />}
+        {detailsModal && (
+          <ItemDetailsModal data={detailsModal} onDelete={deleteItem} onClose={() => setDetailsModal(null)} onUpdate={setDetailsModal} />
+        )}
       </AnimatePresence>
     </>
   );
