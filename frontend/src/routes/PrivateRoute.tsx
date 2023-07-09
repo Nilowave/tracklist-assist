@@ -1,12 +1,14 @@
 import React, { useContext, ReactElement, ReactNode } from 'react';
 import { Redirect, Route } from 'react-router';
 import { UserContext } from '../context/UserContext/UserContext';
+import { Path } from '../data/enum/Path';
 
 interface PrivateRoutesProps {
   children: ReactNode;
+  redirect: Path;
 }
 
-export const PrivateRoutes = ({ children, ...props }: PrivateRoutesProps): ReactElement => {
+export const PrivateRoutes = ({ redirect, children, ...props }: PrivateRoutesProps): ReactElement => {
   const { user } = useContext(UserContext);
 
   return (
@@ -28,7 +30,7 @@ export const PrivateRoutes = ({ children, ...props }: PrivateRoutesProps): React
         ) : (
           <Redirect
             to={{
-              pathname: '/login',
+              pathname: redirect,
               state: { from: location },
             }}
           />

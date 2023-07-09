@@ -1,4 +1,4 @@
-import { Path } from '../../../routes/Paths';
+import { Path } from '../../../data/enum/Path';
 
 export type NavItem = {
   title: string;

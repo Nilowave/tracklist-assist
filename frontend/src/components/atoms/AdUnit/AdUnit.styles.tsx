@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { AdFormat } from './AdUnit.types';
+import { Text } from '../Text/Text.styles';
 
 type AdUnitProps = {
   format: AdFormat;
@@ -11,6 +12,14 @@ export const Wrapper = styled.div`
   justify-content: center;
   width: 100%;
   margin: 2rem 0;
+`;
+
+export const Caption = styled(Text)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: ${({ theme }) => theme.hexToRgba(theme.colors.white, 0.5)};
 `;
 
 export const AdUnit = styled.div<AdUnitProps>`

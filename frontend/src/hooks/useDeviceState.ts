@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 import debounce from 'lodash/debounce';
-
 import { DeviceState } from '../data/enum/deviceState';
 
 export const useDeviceState = (): Record<'deviceState' | 'isPortrait' | 'isMobile', boolean | number> => {

@@ -11,7 +11,7 @@ import { staggerChildren } from '../../../utils/motionTransitions';
 import { Logo } from '../../atoms/Icon/Icon';
 import { useDeviceState } from '../../../hooks/useDeviceState';
 import { Link } from 'react-router-dom';
-import { Path } from '../../../routes/Paths';
+import { Path } from '../../../data/enum/Path';
 import { AdUnit } from '../../atoms/AdUnit/AdUnit';
 
 // const endpoint = 'http://localhost:1337/api/';

@@ -36,7 +36,7 @@ export const StyledButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
+  /* gap: 3rem; */
   flex-direction: column;
   text-align: center;
   max-width: 40rem;
@@ -53,6 +53,8 @@ export const StyledGoogleButton = styled(GoogleButton)`
   padding-right: 2rem;
   border-radius: 0.3rem;
   transition: filter 0.3s ease;
+
+  margin-bottom: 3rem;
 
   svg {
     width: 5rem;
