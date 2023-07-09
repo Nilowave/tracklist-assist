@@ -1,16 +1,22 @@
-import type { ReactElement, ReactNode } from 'react';
+import { useEffect, ReactElement, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { Path } from '../../../routes/Paths';
+import { Path } from '../../../data/enum/Path';
 import { BackArrow, LogoColor } from '../../atoms/Icon/Icon';
 import { Text } from '../../atoms/Text/Text.styles';
 import * as S from './Page.styles';
+import { PageTitle } from '../../../data/enum/PageTitle';
 
 interface PageProps {
   children: ReactNode;
   title?: string;
+  pageTitle?: string;
 }
 
-export const Page = ({ children, title }: PageProps): ReactElement => {
+export const Page = ({ children, title, pageTitle }: PageProps): ReactElement => {
+  useEffect(() => {
+    document.title = PageTitle.BASE + pageTitle;
+  }, []);
+
   return (
     <S.PageWrapper>
       <S.PageContent>

@@ -1,11 +1,17 @@
-import { ReactElement } from 'react';
+import { ReactElement, useContext, useEffect } from 'react';
 import * as S from './Login.styles';
 import { IAuthorizationOptions } from 'react-google-oauth2';
 import { GoogleIcon, Logo } from '../../atoms/Icon/Icon';
 import { Text } from '../../atoms/Text/Text.styles';
 import { AdUnit } from '../../atoms/AdUnit/AdUnit';
+import { UserContext } from '../../../context/UserContext/UserContext';
+import { Redirect } from 'react-router-dom';
+import { Path } from '../../../data/enum/Path';
+import { PageTitle } from '../../../data/enum/PageTitle';
 
 export const Login = (): ReactElement => {
+  const { user } = useContext(UserContext);
+
   const options: IAuthorizationOptions = {
     clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID as string,
     redirectUri: `${process.env.REACT_APP_BASE_PATH}/auth/google/callback`,
@@ -14,7 +20,17 @@ export const Login = (): ReactElement => {
     accessType: 'offline',
   };
 
-  return (
+  useEffect(() => {
+    document.title = PageTitle.BASE + PageTitle.LOGIN;
+  }, []);
+
+  return user ? (
+    <Redirect
+      to={{
+        pathname: Path.Home,
+      }}
+    />
+  ) : (
     <S.Login>
       <S.LogoWrapper>
         <Logo />
@@ -29,10 +45,10 @@ export const Login = (): ReactElement => {
           Click “Sign In” to agree to Tracklist Assist’s <S.StyledLink to="terms">Terms of Service</S.StyledLink> and acknowledge that
           Tracklist Assist’s <S.StyledLink to="privacy-policy">Privacy Policy</S.StyledLink> applies to you.
         </Text>
+        <div style={{}}>
+          <AdUnit slot={6156885942} />
+        </div>
       </S.StyledButtonWrapper>
-      <div style={{ position: 'absolute', bottom: 20 }}>
-        <AdUnit slot={6156885942} />
-      </div>
     </S.Login>
   );
 };

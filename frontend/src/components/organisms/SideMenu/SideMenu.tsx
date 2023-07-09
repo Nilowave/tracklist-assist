@@ -4,7 +4,7 @@ import * as S from './SideMenu.styles';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { menuData } from './SideMenu.data';
 import { UserContext } from '../../../context/UserContext/UserContext';
-import { Path } from '../../../routes/Paths';
+import { Path } from '../../../data/enum/Path';
 
 export const SideMenu = (): ReactElement => {
   const [isOpen, setIsOpen] = useState(false);

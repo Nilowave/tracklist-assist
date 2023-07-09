@@ -1,7 +1,6 @@
 import { ReactElement } from 'react';
 import * as S from './AdUnit.styles';
 import { AdFormat } from './AdUnit.types';
-import { Spinner } from '../Icon/Icon';
 
 interface AdUnitProps {
   slot: number;
@@ -11,7 +10,7 @@ interface AdUnitProps {
 export const AdUnit = ({ slot, format = 'leaderboard' }: AdUnitProps): ReactElement => {
   return (
     <S.Wrapper>
-      <Spinner style={{ width: '5rem', height: '5rem', position: 'absolute', top: '50%', transform: 'translateY(-50%)' }} />
+      <S.Caption type="label">Advertisement</S.Caption>
       <S.AdUnit format={format}>
         <script
           async
