@@ -1,5 +1,5 @@
 {
-  "name": "tracklist",
+  "name": "trackwave",
   "version": "1.0.0",
   "main": "backend/index.js",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "build": "cd frontend && npm install && npm run build"
   },
   "engines": {
-    "node": "^14"
+    "node": "^16"
   },
   "dependencies": {
     "cookie-session": "^1.4.0",

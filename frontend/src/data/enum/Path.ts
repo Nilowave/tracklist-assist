@@ -11,4 +11,5 @@ export enum Path {
   Pricing = '/pricing',
   FAQ = '/faq',
   Contact = '/contact',
+  Tracker = '/tracker/:id',
 }

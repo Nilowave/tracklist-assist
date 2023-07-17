@@ -1,6 +1,6 @@
 import { ReactElement, useState } from 'react';
 import * as S from './ItemDetailsModal.styles';
-import { ItemData } from '../Item/Item';
+import { CardData } from '../O01DashboardCard/O01DashboardCard';
 import { Button } from '../../atoms/Button/Button';
 import { Modal } from '../Modal/Modal';
 import { ItemDetails } from './components/ItemDetails/ItemDetails';
@@ -13,8 +13,8 @@ import { useDeviceState } from '../../../hooks/useDeviceState';
 interface ItemDetailsModalProps {
   onClose: () => void;
   onDelete: (id: string) => void;
-  onUpdate?: (data: ItemData) => void;
-  data: ItemData;
+  onUpdate?: (data: CardData) => void;
+  data: CardData;
 }
 
 type FormData = {
@@ -34,7 +34,7 @@ export const ItemDetailsModal = ({ onClose, data, onDelete, onUpdate }: ItemDeta
 
     const tracks: Array<number> = Object.values(fields.tracks).map((date: string) => new Date(date).getTime());
 
-    const submitData: ItemData = {
+    const submitData: CardData = {
       name: fields.name,
       tracks,
       _id: data._id,
@@ -67,7 +67,7 @@ export const ItemDetailsModal = ({ onClose, data, onDelete, onUpdate }: ItemDeta
     const { tracks } = data;
 
     const update = [...tracks, newDate];
-    const submitData: ItemData = {
+    const submitData: CardData = {
       name: data.name,
       tracks: update,
       _id: data._id,
@@ -76,7 +76,7 @@ export const ItemDetailsModal = ({ onClose, data, onDelete, onUpdate }: ItemDeta
     if (data._id) {
       axios.put(`/api/item/${data._id}`, submitData).then(() => {
         if (onUpdate) {
-          const updatedData: ItemData = {
+          const updatedData: CardData = {
             ...data,
             ...submitData,
           };
@@ -85,7 +85,7 @@ export const ItemDetailsModal = ({ onClose, data, onDelete, onUpdate }: ItemDeta
 
         axios.get(`/api/item/${data._id}`).then((_data) => {
           if (onUpdate) {
-            onUpdate(_data.data.data as ItemData);
+            onUpdate(_data.data.data as CardData);
           }
         });
       });

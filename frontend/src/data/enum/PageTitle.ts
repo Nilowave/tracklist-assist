@@ -1,5 +1,5 @@
 export enum PageTitle {
-  BASE = 'Tracklist Assist',
+  BASE = 'Trackwave',
   LOGIN = ` - Login`,
   PRIVACY = ` - Privacy Policy`,
   COOKIE = ` - Cookie Policy`,

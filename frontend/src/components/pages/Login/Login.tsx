@@ -8,6 +8,7 @@ import { UserContext } from '../../../context/UserContext/UserContext';
 import { Redirect } from 'react-router-dom';
 import { Path } from '../../../data/enum/Path';
 import { PageTitle } from '../../../data/enum/PageTitle';
+import { Trackwave } from '../../../data/enum/Trackwave';
 
 export const Login = (): ReactElement => {
   const { user } = useContext(UserContext);
@@ -42,8 +43,8 @@ export const Login = (): ReactElement => {
           Sign in with Google
         </S.StyledGoogleButton>
         <Text type="disclaimer">
-          Click “Sign In” to agree to Tracklist Assist’s <S.StyledLink to="terms">Terms of Service</S.StyledLink> and acknowledge that
-          Tracklist Assist’s <S.StyledLink to="privacy-policy">Privacy Policy</S.StyledLink> applies to you.
+          Click “Sign In” to agree to {Trackwave.NAME}’s <S.StyledLink to="terms">Terms of Service</S.StyledLink> and acknowledge that
+          {Trackwave.NAME}’s <S.StyledLink to="privacy-policy">Privacy Policy</S.StyledLink> applies to you.
         </Text>
         <div style={{}}>
           <AdUnit slot={6156885942} />

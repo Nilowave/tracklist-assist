@@ -3,9 +3,9 @@ import io from 'socket.io-client';
 import { AnimatePresence } from 'framer-motion';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Empty } from '../../organisms/Empty/Empty';
-import { Item, ItemData } from '../../organisms/Item/Item';
+import { O01DashboardCard, CardData } from '../../organisms/O01DashboardCard/O01DashboardCard';
 import { ItemInput } from '../../organisms/ItemInput/ItemInput';
-import * as S from './Home.styles';
+import * as S from './Dashboard.styles';
 import { ItemDetailsModal } from '../../organisms/ItemDetailsModal/ItemDetailsModal';
 import { staggerChildren } from '../../../utils/motionTransitions';
 import { Logo } from '../../atoms/Icon/Icon';
@@ -13,6 +13,7 @@ import { useDeviceState } from '../../../hooks/useDeviceState';
 import { Link } from 'react-router-dom';
 import { Path } from '../../../data/enum/Path';
 import { AdUnit } from '../../atoms/AdUnit/AdUnit';
+import { Trackwave } from '../../../data/enum/Trackwave';
 
 // const endpoint = 'http://localhost:1337/api/';
 const basepath = '/';
@@ -24,10 +25,10 @@ type SocketMessage = {
   id: string;
 };
 
-export const Home = (): ReactElement => {
-  const [items, setItems] = useState<Array<ItemData> | null>(null);
+export const Dashboard = (): ReactElement => {
+  const [items, setItems] = useState<Array<CardData> | null>(null);
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
-  const [detailsModal, setDetailsModal] = useState<ItemData | null>(null);
+  const [detailsModal, setDetailsModal] = useState<CardData | null>(null);
   const [addModal, setAddModal] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const { isMobile } = useDeviceState();
@@ -55,7 +56,7 @@ export const Home = (): ReactElement => {
     [refresh]
   );
 
-  const submitNewItem = (item: ItemData) => {
+  const submitNewItem = (item: CardData) => {
     axios.post(itemEndpoint, item).then(() => setRefresh(!refresh));
   };
 
@@ -105,7 +106,7 @@ export const Home = (): ReactElement => {
 
   return (
     <>
-      <S.Home blur={!!addModal || !!detailsModal}>
+      <S.Dashboard blur={!!addModal || !!detailsModal}>
         <S.Content>
           <S.Heading>
             <Logo />
@@ -114,7 +115,7 @@ export const Home = (): ReactElement => {
             <S.ItemList layout {...staggerChildren()}>
               {items.map((item, index) => (
                 <div style={{ display: 'contents' }} key={item._id}>
-                  <Item onClick={() => setDetailsModal(item)} key={item._id} data={item} />
+                  <O01DashboardCard onClick={() => setDetailsModal(item)} key={item._id} data={item} />
                   {index % 3 === 2 && index < items.length - 1 && <AdUnit slot={3271702308} format="square" />}
                 </div>
               ))}
@@ -128,13 +129,16 @@ export const Home = (): ReactElement => {
           <S.FooterWrapper>
             <Link to={Path.PrivacyPolicy}>Privacy Policy</Link>
             <Link to={Path.Terms}>Terms of Service</Link>
-            <p>© {new Date().getFullYear()} Tracklist Assist</p>
+            <p>
+              © {new Date().getFullYear()} {Trackwave.NAME}
+            </p>
           </S.FooterWrapper>
-          {/* <a href="mailto:support@tracklistassist.com" target="_blank" rel="noreferrer">
-            Contact: support@tracklistassist.com
+          {/* <a href="mailto:support@trackwave.com" target="_blank" rel="noreferrer">
+            Contact: support@trackwave.com
           </a> */}
         </S.Footer>
-      </S.Home>
+      </S.Dashboard>
+
       <AnimatePresence exitBeforeEnter>
         {addModal && <ItemInput submit={submitNewItem} onClose={() => setAddModal(false)} />}
         {detailsModal && (

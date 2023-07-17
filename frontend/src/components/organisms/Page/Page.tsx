@@ -5,6 +5,7 @@ import { BackArrow, LogoColor } from '../../atoms/Icon/Icon';
 import { Text } from '../../atoms/Text/Text.styles';
 import * as S from './Page.styles';
 import { PageTitle } from '../../../data/enum/PageTitle';
+import { Trackwave } from '../../../data/enum/Trackwave';
 
 interface PageProps {
   children: ReactNode;
@@ -39,7 +40,7 @@ export const Page = ({ children, title, pageTitle }: PageProps): ReactElement =>
           <Text type="disclaimer">
             © {new Date().getFullYear()}{' '}
             <Text as="span" type="tinyLogo">
-              Tracklist Assist
+              {Trackwave.NAME}
             </Text>
           </Text>
           <S.FooterMenu>

@@ -1,12 +1,13 @@
 import { ReactElement } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { SideMenu } from '../components/organisms/SideMenu/SideMenu';
-import { Home } from '../components/pages/Home/Home';
+import { Dashboard } from '../components/pages/Dashboard/Dashboard';
 import { Login } from '../components/pages/Login/Login';
 import { PrivacyTerms } from '../components/pages/PrivacyTerms/PrivacyTerms';
 import { Path } from '../data/enum/Path';
 import { PrivateRoutes } from './PrivateRoute';
 import { PageTitle } from '../data/enum/PageTitle';
+import { TrackerDetails } from '../components/pages/TrackerDetails/TrackerDetails';
 
 export const Routes = (): ReactElement => {
   return (
@@ -25,7 +26,8 @@ export const Routes = (): ReactElement => {
           render={() => <PrivacyTerms title="Cookie Policy" type="cookie" pageTitle={PageTitle.COOKIE} />}
         />
         <PrivateRoutes redirect={Path.Login}>
-          <Home />
+          <Route path={Path.Home} exact component={Dashboard} />
+          <Route path={Path.Tracker} exact component={TrackerDetails} />
         </PrivateRoutes>
       </Switch>
       <SideMenu />

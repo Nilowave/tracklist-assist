@@ -5,7 +5,7 @@ import { MediaQuery } from '../../../styles/mediaQuery';
 import { typeStyles } from '../../../styles/typeStyles';
 import { Button } from '../../atoms/Button/Button';
 
-export const Home = styled.section<{ blur?: boolean }>`
+export const Dashboard = styled.section<{ blur?: boolean }>`
   padding: ${({ theme }) => theme.sitePaddings.desktop};
   display: flex;
   flex-direction: column;
