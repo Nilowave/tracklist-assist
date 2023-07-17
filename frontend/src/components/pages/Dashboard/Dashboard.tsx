@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { Path } from '../../../data/enum/Path';
 import { AdUnit } from '../../atoms/AdUnit/AdUnit';
 import { Trackwave } from '../../../data/enum/Trackwave';
+import { A01Icon } from '../../atoms/A01Icon/A01Icon';
 
 // const endpoint = 'http://localhost:1337/api/';
 const basepath = '/';
@@ -107,6 +108,7 @@ export const Dashboard = (): ReactElement => {
   return (
     <>
       <S.Dashboard blur={!!addModal || !!detailsModal}>
+        <A01Icon name="maximize" />
         <S.Content>
           <S.Heading>
             <Logo />
