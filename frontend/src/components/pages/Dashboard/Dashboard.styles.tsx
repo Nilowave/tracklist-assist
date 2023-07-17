@@ -4,11 +4,6 @@ import { respondTo } from '../../../styles/helpers/respondTo';
 import { MediaQuery } from '../../../styles/mediaQuery';
 import { typeStyles } from '../../../styles/typeStyles';
 import { Button } from '../../atoms/Button/Button';
-import { A01icon } from '../../atoms/A01Icon/A01Icon';
-
-export const Test = styled(A01icon)`
-  background-color: red;
-`;
 
 export const Dashboard = styled.section<{ blur?: boolean }>`
   padding: ${({ theme }) => theme.sitePaddings.desktop};
