@@ -41,24 +41,6 @@ export const Login = (): ReactElement => {
         <p>Your tracking assistant</p>
       </S.LogoWrapper>
       <S.StyledButtonWrapper>
-        {/* <GoogleLogin
-          auto_select
-          ux_mode="popup"
-          shape="pill"
-          size="medium"
-          onSuccess={(credentialResponse) => {
-            const { credential } = credentialResponse;
-            if (credential) {
-              const creds = jwt_decode(credential);
-              console.log(creds);
-            }
-            console.log(credentialResponse);
-          }}
-          onError={() => {
-            console.log('Login Failed');
-          }}
-        /> */}
-
         <S.StyledGoogleButton options={options} apiUrl={`${import.meta.env.VITE_REACT_APP_BASE_PATH}/auth/google`} defaultStyle={false}>
           <GoogleIcon />
           Sign in with Google
