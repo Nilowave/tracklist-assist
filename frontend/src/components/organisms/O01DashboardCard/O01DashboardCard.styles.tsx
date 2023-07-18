@@ -35,9 +35,9 @@ export const Border = styled.div`
     width: calc(100% + 2px);
     height: calc(100% + 2px);
     border-radius: 2.5rem 2.5rem 3rem 3rem;
-    --smooth-corners: 8;
+    /* --smooth-corners: 8;
     mask-image: paint(smooth-corners);
-    -webkit-mask-image: paint(smooth-corners);
+    -webkit-mask-image: paint(smooth-corners); */
     background-color: var(--border-color);
     transition: background-color 0.3s ease;
   }
@@ -48,9 +48,9 @@ export const Border = styled.div`
     height: 100%;
     border-radius: 2.5rem 2.5rem 3rem 3rem;
     overflow: hidden;
-    --smooth-corners: 8;
+    /* --smooth-corners: 8;
     mask-image: paint(smooth-corners);
-    -webkit-mask-image: paint(smooth-corners);
+    -webkit-mask-image: paint(smooth-corners); */
 
     &:before {
       content: '';
@@ -102,9 +102,11 @@ export const TitleWrapper = styled.div`
     left: -1px;
     width: calc(100% + 2px);
     height: calc(100% + 2px);
-    --smooth-corners: 9;
+    border-radius: 2.5rem 2.5rem 3rem 3rem;
+
+    /* --smooth-corners: 9;
     mask-image: paint(smooth-corners);
-    -webkit-mask-image: paint(smooth-corners);
+    -webkit-mask-image: paint(smooth-corners); */
     background: ${({ theme }) => `linear-gradient(110deg, #e8fced 0%, ${theme.colors.secondary} 35%)`};
     transition: background-color 0.3s ease;
     z-index: -1;
