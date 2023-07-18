@@ -1,7 +1,7 @@
 import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import * as S from './SideMenu.styles';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { menuData } from './SideMenu.data';
 import { UserContext } from '../../../context/UserContext/UserContext';
 import { Path } from '../../../data/enum/Path';
@@ -15,13 +15,13 @@ export const SideMenu = (): ReactElement => {
 
   const location = useLocation();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     axios.get('/api/logout').then(() => {
       setIsOpen(false);
       logout();
-      history.push('/login');
+      navigate('/login');
     });
   };
 

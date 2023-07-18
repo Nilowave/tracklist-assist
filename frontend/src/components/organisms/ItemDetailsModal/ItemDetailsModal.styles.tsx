@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { respondTo } from '../../../styles/helpers/respondTo';
 import { MediaQuery } from '../../../styles/mediaQuery';
 import { typeStyles } from '../../../styles/typeStyles';
-import { Date } from '../Item/Item.styles';
+import { Date } from '../O01DashboardCard/O01DashboardCard.styles';
 
 export const Content = styled.div`
   display: flex;

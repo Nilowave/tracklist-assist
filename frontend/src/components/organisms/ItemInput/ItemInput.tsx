@@ -1,14 +1,14 @@
 import type { ReactElement } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import * as S from './ItemInput.styles';
-import { ItemData } from '../Item/Item';
+import { CardData } from '../O01DashboardCard/O01DashboardCard';
 import { Modal } from '../Modal/Modal';
 import { Content } from '../ItemDetailsModal/ItemDetailsModal.styles';
 import { Button } from '../../atoms/Button/Button';
 
 interface ItemInputProps {
   onClose: () => void;
-  submit: (item: ItemData) => void;
+  submit: (item: CardData) => void;
 }
 
 export const ItemInput = ({ onClose, submit }: ItemInputProps): ReactElement => {
@@ -19,7 +19,7 @@ export const ItemInput = ({ onClose, submit }: ItemInputProps): ReactElement => 
   } = useForm();
 
   const onSubmit = (data: FieldValues) => {
-    const item: ItemData = {
+    const item: CardData = {
       name: data.name,
       tracks: [Date.now()],
     };

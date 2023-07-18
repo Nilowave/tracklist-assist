@@ -1,5 +1,5 @@
 import { ReactElement, useRef, useState } from 'react';
-import { ItemData } from '../../../Item/Item';
+import { CardData } from '../../../O01DashboardCard/O01DashboardCard';
 import { UseFormReturn } from 'react-hook-form';
 import { Detail, Menu, SubTitle } from '../../ItemDetailsModal.styles';
 // import { formatISO9075 } from 'date-fns/esm';
@@ -10,7 +10,7 @@ import { Error } from '../../../ItemInput/ItemInput.styles';
 import { toDatetimeLocal } from '../../../../../utils/toDatetimeLocal';
 
 interface EditItemProps {
-  data: ItemData;
+  data: CardData;
   onCancel: () => void;
   formMethods: UseFormReturn;
 }

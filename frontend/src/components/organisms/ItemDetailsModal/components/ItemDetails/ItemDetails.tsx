@@ -1,12 +1,12 @@
 import { ReactElement } from 'react';
-import { ItemData } from '../../../Item/Item';
+import { CardData } from '../../../O01DashboardCard/O01DashboardCard';
 import { Detail, HistoryDate, StyledDate, StyledHistory, SubTitle } from '../../ItemDetailsModal.styles';
 import { formatRelative, formatDuration } from 'date-fns';
 import * as S from './ItemDetails.styles';
 import { limitDuration } from '../../../../../utils/limitDuration';
 
 interface ItemDetailsProps {
-  data: ItemData;
+  data: CardData;
 }
 export const ItemDetails = ({ data }: ItemDetailsProps): ReactElement => {
   let averageDuration;

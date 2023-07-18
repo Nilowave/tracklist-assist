@@ -7,7 +7,12 @@ export const colors = {
   foreground: '#f8f8f2',
   outerSpace: '#44475a',
   primary: '#ff79c6',
-  secondary: '#bd93f9',
+  secondary: '#A7F3BD',
+  tertiary: '#6272A4',
+  accent1: '#FBBC05',
+  accent2: '#00AEEF',
+  alt1: '#828DD1',
+
   red: '#ff5555',
   green: '#50fa7b',
   keyLime: '#f1fa8c',
