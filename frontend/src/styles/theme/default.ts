@@ -20,6 +20,8 @@ export const colors = {
   vistaBlue: '#828DD1',
   cerulean: '#00aeef',
   platinum: '#E2E2E2',
+
+  gradientPink: ['#00aeef', '#bd93f9', '#ff79c6'],
 };
 
 export const fonts = {
