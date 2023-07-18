@@ -14,9 +14,7 @@ import { Link } from 'react-router-dom';
 import { Path } from '../../../data/enum/Path';
 import { AdUnit } from '../../atoms/AdUnit/AdUnit';
 import { Trackwave } from '../../../data/enum/Trackwave';
-import { A01Icon } from '../../atoms/A01Icon/A01Icon';
 
-// const endpoint = 'http://localhost:1337/api/';
 const basepath = '/';
 const endpoint = '/api/';
 
@@ -107,8 +105,7 @@ export const Dashboard = (): ReactElement => {
 
   return (
     <>
-      <S.Dashboard blur={!!addModal || !!detailsModal}>
-        <A01Icon name="maximize" />
+      <S.Dashboard $blur={!!addModal || !!detailsModal}>
         <S.Content>
           <S.Heading>
             <Logo />
@@ -135,13 +132,9 @@ export const Dashboard = (): ReactElement => {
               © {new Date().getFullYear()} {Trackwave.NAME}
             </p>
           </S.FooterWrapper>
-          {/* <a href="mailto:support@trackwave.com" target="_blank" rel="noreferrer">
-            Contact: support@trackwave.com
-          </a> */}
         </S.Footer>
       </S.Dashboard>
-
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode="wait">
         {addModal && <ItemInput submit={submitNewItem} onClose={() => setAddModal(false)} />}
         {detailsModal && (
           <ItemDetailsModal data={detailsModal} onDelete={deleteItem} onClose={() => setDetailsModal(null)} onUpdate={setDetailsModal} />

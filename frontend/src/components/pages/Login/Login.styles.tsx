@@ -1,4 +1,5 @@
 import { GoogleButton } from 'react-google-oauth2';
+
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
@@ -10,12 +11,11 @@ export const Login = styled.section`
   height: 100vh;
   gap: 25vh;
 
-  ${({ theme }) =>
-    css`
-      background: transparent
-        linear-gradient(117deg, ${theme.colors.cerulean} 0%, ${theme.colors.secondary} 51%, ${theme.colors.primary} 100%) 0% 0% no-repeat
-        padding-box;
-    `}
+  ${({ theme }) => css`
+    background: transparent
+      linear-gradient(117deg, ${theme.colors.cerulean} 0%, ${theme.colors.secondary} 51%, ${theme.colors.primary} 100%) 0% 0% no-repeat
+      padding-box;
+  `}
 `;
 
 export const LogoWrapper = styled.div`

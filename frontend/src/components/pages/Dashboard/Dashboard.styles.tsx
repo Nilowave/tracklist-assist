@@ -5,7 +5,7 @@ import { MediaQuery } from '../../../styles/mediaQuery';
 import { typeStyles } from '../../../styles/typeStyles';
 import { Button } from '../../atoms/Button/Button';
 
-export const Dashboard = styled.section<{ blur?: boolean }>`
+export const Dashboard = styled.section<{ $blur?: boolean }>`
   padding: ${({ theme }) => theme.sitePaddings.desktop};
   display: flex;
   flex-direction: column;
@@ -21,7 +21,7 @@ export const Dashboard = styled.section<{ blur?: boolean }>`
   @media ${respondTo(MediaQuery.MAX_1023)} {
     padding: ${({ theme }) => theme.sitePaddings.mobile};
   }
-  ${({ blur }) => blur && 'filter: blur(20px)'};
+  ${({ $blur }) => $blur && 'filter: blur(20px)'};
 `;
 
 export const Content = styled(motion.div)`

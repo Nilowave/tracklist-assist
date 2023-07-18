@@ -1,41 +1,19 @@
-import React, { useContext, ReactElement, ReactNode } from 'react';
-import { Redirect, Route } from 'react-router';
+import { useContext, ReactNode } from 'react';
+import { Navigate, Outlet } from 'react-router';
 import { UserContext } from '../context/UserContext/UserContext';
 import { Path } from '../data/enum/Path';
 
-interface PrivateRoutesProps {
-  children: ReactNode;
-  redirect: Path;
+interface PrivateRouteProps {
+  children?: ReactNode;
+  redirect?: Path;
 }
 
-export const PrivateRoutes = ({ redirect, children, ...props }: PrivateRoutesProps): ReactElement => {
+export const PrivateRoute = ({ children, redirect = Path.Login }: PrivateRouteProps) => {
   const { user } = useContext(UserContext);
 
-  return (
-    <Route
-      {...props}
-      render={({ location }) => {
-        return user?.email ? (
-          React.Children.map(children, (child) => {
-            if (React.isValidElement(child)) {
-              return React.cloneElement(child, {
-                ...{
-                  ...child.props,
-                  user,
-                },
-              });
-            }
-            return child;
-          })
-        ) : (
-          <Redirect
-            to={{
-              pathname: redirect,
-              state: { from: location },
-            }}
-          />
-        );
-      }}
-    />
-  );
+  if (!user?.email) {
+    return <Navigate to={redirect} replace />;
+  }
+
+  return children ? children : <Outlet />;
 };
