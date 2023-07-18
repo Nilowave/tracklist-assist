@@ -45,9 +45,7 @@ const UserContextProvider = ({ children }: UserContextProps) => {
       .then((response) => {
         setUser(response.data);
       })
-      .catch(() => {
-        // console.log(error);
-      });
+      .catch(() => {});
   }, []);
 
   return <UserContext.Provider value={state}>{state.isLoading ? <div /> : children}</UserContext.Provider>;
