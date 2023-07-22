@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { Path } from '../../../data/enum/Path';
 import { AdUnit } from '../../atoms/AdUnit/AdUnit';
 import { Trackwave } from '../../../data/enum/Trackwave';
+import { M02iconbutton } from '../../molecules/M02iconbutton/M02iconbutton';
 
 const basepath = '/';
 const endpoint = '/api/';
@@ -110,6 +111,7 @@ export const Dashboard = (): ReactElement => {
           <S.Heading>
             <Logo />
           </S.Heading>
+          <M02iconbutton icon="back" tooltip="Back" />
           {items && !isEmpty && (
             <S.ItemList layout {...staggerChildren()}>
               {items.map((item, index) => (
