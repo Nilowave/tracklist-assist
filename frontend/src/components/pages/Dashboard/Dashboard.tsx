@@ -111,7 +111,6 @@ export const Dashboard = (): ReactElement => {
           <S.Heading>
             <Logo />
           </S.Heading>
-          <M02iconbutton icon="back" tooltip="Back" />
           {items && !isEmpty && (
             <S.ItemList layout {...staggerChildren()}>
               {items.map((item, index) => (
