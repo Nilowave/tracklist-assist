@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-// eslint-disable-next-line no-shadow
 export enum MediaQuery {
   MAX_350 = '(max-width: 350px)',
   MAX_479 = '(max-width: 479px)',

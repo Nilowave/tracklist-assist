@@ -62,7 +62,9 @@ export const StyledInput = styled.input`
   text-transform: capitalize;
   text-align: center;
   outline: none;
-  transition: color 0.3s ease, border-color 0.3s ease;
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease;
 
   &:focus-visible {
     border: solid 1px ${({ theme }) => theme.colors.primary};

@@ -41,12 +41,11 @@ export const Background = styled(motion.div)`
     background-color: ${({ theme }) => theme.colors.secondary};
     opacity: 0.7;
 
-    /* ${({ theme }) =>
-      css`
-        background: transparent
-          linear-gradient(117deg, ${theme.colors.cerulean} 0%, ${theme.colors.secondary} 51%, ${theme.colors.primary} 100%) 0% 0% no-repeat
-          padding-box;
-      `} */
+    /* ${({ theme }) => css`
+      background: transparent
+        linear-gradient(117deg, ${theme.colors.cerulean} 0%, ${theme.colors.secondary} 51%, ${theme.colors.primary} 100%) 0% 0% no-repeat
+        padding-box;
+    `} */
   }
 `;
 
