@@ -42,7 +42,7 @@ export const IconWrapper = styled.div<{ $isText: boolean }>`
   transition: background-color 0.3s ease;
 `;
 
-export const StyledM02iconbutton = styled.button<{ $isText: boolean }>`
+export const StyledM02IconButton = styled.button<{ $isText: boolean }>`
   ${({ $isText }) =>
     $isText &&
     css`
