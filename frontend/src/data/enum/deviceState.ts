@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 export enum DeviceState {
   MAX_479 = 0,
   MIN_480 = 1,

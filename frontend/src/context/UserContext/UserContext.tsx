@@ -15,7 +15,6 @@ interface UserContextProps {
   children: ReactNode;
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const UserContextProvider = ({ children }: UserContextProps) => {
   const setUser = (user: UserData) => {
     setState({
@@ -40,12 +39,9 @@ const UserContextProvider = ({ children }: UserContextProps) => {
   });
 
   useEffect(() => {
-    axios
-      .get('/api/user')
-      .then((response) => {
-        setUser(response.data);
-      })
-      .catch(() => {});
+    axios.get('/api/user').then((response) => {
+      setUser(response.data);
+    });
   }, []);
 
   return <UserContext.Provider value={state}>{state.isLoading ? <div /> : children}</UserContext.Provider>;

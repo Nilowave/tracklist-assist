@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "npx nodemon backend/index.js",
     "start": "node backend/index.js",
-    "build": "cd frontend && npm i --force && npm run build"
+    "build": "cd frontend && npm i && npm run build",
+    "prepare": "husky install"
   },
   "engines": {
     "node": "^18"
@@ -24,5 +25,8 @@
     "passport-google-oauth20": "^2.0.0",
     "socket.io": "^4.7.1",
     "string-sanitizer": "^2.0.2"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3"
   }
 }
