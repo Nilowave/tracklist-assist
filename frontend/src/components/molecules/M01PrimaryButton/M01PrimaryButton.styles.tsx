@@ -5,7 +5,7 @@ export const StyledM01PrimaryButton = styled.button<{ hasIcon: boolean }>`
   align-items: center;
   gap: 1.5rem;
   padding: 2rem 4rem;
-  border-radius: 4rem
+  border-radius: 4rem;
   box-shadow: 0 4px 4px ${({ theme }) => theme.hexToRgba(theme.colors.black, 0.25)};
 
   ${({ hasIcon }) =>
