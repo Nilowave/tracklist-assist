@@ -24,7 +24,7 @@ export const ItemDetails = ({ data }: ItemDetailsProps): ReactElement => {
       {averageDuration && (
         <Detail>
           <SubTitle>Average Track:</SubTitle>
-          <StyledDate variant>{averageDuration}</StyledDate>
+          <StyledDate $variant>{averageDuration}</StyledDate>
         </Detail>
       )}
       <Detail align="flex-start">

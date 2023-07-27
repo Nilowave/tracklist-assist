@@ -1,8 +1,8 @@
 import hexToRgba from 'hex-to-rgba';
 
 export const colors = {
-  white: '#fff',
-  black: '#000',
+  white: '#ffffff',
+  black: '#000000',
   background: '#282a36',
   foreground: '#f8f8f2',
   outerSpace: '#44475a',
@@ -20,8 +20,10 @@ export const colors = {
   vistaBlue: '#828DD1',
   cerulean: '#00aeef',
   platinum: '#E2E2E2',
+};
 
-  gradientPink: ['#00aeef', '#bd93f9', '#ff79c6'],
+export const gradients = {
+  pink: ['#00aeef', '#bd93f9', '#ff79c6'],
 };
 
 export const fonts = {
@@ -32,6 +34,7 @@ export const fonts = {
 
 export const theme = {
   colors,
+  gradients,
   fonts,
   sitePaddings: {
     mobile: '1.5rem',
