@@ -1,7 +1,6 @@
 import { ReactElement, useState } from 'react';
 import * as S from './ItemDetailsModal.styles';
 import { CardData } from '../O01DashboardCard/O01DashboardCard';
-import { Button } from '../../atoms/Button/Button';
 import { Modal } from '../Modal/Modal';
 import { ItemDetails } from './components/ItemDetails/ItemDetails';
 import { EditItem } from './components/EditItem/EditItem';
@@ -9,6 +8,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import axios from 'axios';
 import { Flex } from '../../../styles/ui';
 import { useDeviceState } from '../../../hooks/useDeviceState';
+import { M01PrimaryButton } from '../../molecules/M01PrimaryButton/M01PrimaryButton';
 
 interface ItemDetailsModalProps {
   onClose: () => void;
@@ -102,15 +102,21 @@ export const ItemDetailsModal = ({ onClose, data, onDelete, onUpdate }: ItemDeta
         <S.Menu>
           {editItem ? (
             <>
-              <Button textColor="foreground" color="outerSpace" icon="Back" onClick={() => setEditItem(false)} label="Cancel" />
-              <Button color="primary" icon="Save" onClick={formMethods.handleSubmit(handleEditSubmit)} label="Save" />
+              <M01PrimaryButton
+                textColor="foreground"
+                color="outerSpace"
+                icon="backArrow"
+                onClick={() => setEditItem(false)}
+                text="Cancel"
+              />
+              <M01PrimaryButton color="primary" onClick={formMethods.handleSubmit(handleEditSubmit)} text="Save" />
             </>
           ) : (
             <>
-              <Button color="red" icon="Delete" onClick={handleDelete} label="Delete" />
-              <Flex row gap="3rem">
-                <Button color="keyLime" icon="Edit" onClick={() => setEditItem(true)} label="Edit" />
-                {!isMobile && <Button color="primary" icon="Plus" onClick={handleTrackNew} label="Track" />}
+              <M01PrimaryButton color="red" onClick={handleDelete} text="Delete" />
+              <Flex $row $gap="3rem">
+                <M01PrimaryButton color="keyLime" onClick={() => setEditItem(true)} text="Edit" />
+                {!isMobile && <M01PrimaryButton color="primary" icon="add" onClick={handleTrackNew} text="Track" />}
               </Flex>
             </>
           )}

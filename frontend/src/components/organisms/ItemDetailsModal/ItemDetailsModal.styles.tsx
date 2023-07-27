@@ -76,10 +76,10 @@ export const Detail = styled(motion.div)<{ align?: string }>`
   }
 `;
 
-export const StyledDate = styled(Date)<{ variant?: boolean }>`
+export const StyledDate = styled(Date)<{ $variant?: boolean }>`
   padding: 1rem 1.5rem;
   border-radius: 2rem;
-  background-color: ${({ theme, variant }) => (variant ? theme.colors.secondary : theme.colors.primary)};
+  background-color: ${({ theme, $variant }) => ($variant ? theme.colors.secondary : theme.colors.primary)};
   color: ${({ theme }) => theme.colors.black};
   white-space: nowrap;
 `;

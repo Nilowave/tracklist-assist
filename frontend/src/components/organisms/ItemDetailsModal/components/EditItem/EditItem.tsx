@@ -4,10 +4,10 @@ import { UseFormReturn } from 'react-hook-form';
 import { Detail, Menu, SubTitle } from '../../ItemDetailsModal.styles';
 // import { formatISO9075 } from 'date-fns/esm';
 import * as S from './EditItem.styles';
-import { Button } from '../../../../atoms/Button/Button';
 import { useDeviceState } from '../../../../../hooks/useDeviceState';
 import { Error } from '../../../ItemInput/ItemInput.styles';
 import { toDatetimeLocal } from '../../../../../utils/toDatetimeLocal';
+import { M01PrimaryButton } from '../../../../molecules/M01PrimaryButton/M01PrimaryButton';
 
 interface EditItemProps {
   data: CardData;
@@ -55,7 +55,7 @@ export const EditItem = ({ data, formMethods }: EditItemProps): ReactElement => 
 
               return (
                 <S.InputWrapper layout key={`date-input-${index}`}>
-                  <Button type="button" onClick={() => handleDeleteItem(index)} size="small" icon="Delete" />
+                  <M01PrimaryButton type="button" onClick={() => handleDeleteItem(index)} size="small" icon="close" />
                   <S.StyledDateInput
                     {...formMethods.register(`tracks.date-${index}`, { required: true })}
                     type="datetime-local"
@@ -72,7 +72,7 @@ export const EditItem = ({ data, formMethods }: EditItemProps): ReactElement => 
       </S.StyledForm>
       <Menu>
         <span />
-        <Button type="button" onClick={handleAddItem} label={isMobile ? '' : 'Add'} icon="Plus" color="blueGray" />
+        <M01PrimaryButton type="button" onClick={handleAddItem} text={isMobile ? '' : 'Add'} icon="add" color="blueGray" />
       </Menu>
     </>
   );

@@ -1,21 +1,27 @@
 import type { ReactElement } from 'react';
-import * as S from './Button.styles';
-import * as icons from '../Icon/Icon';
+import * as S from './M01PrimaryButton.styles';
+import { ColorKey } from '../../../styles/theme/default';
 import { scale } from '../../../utils/motionTransitions';
+import { A01Icon } from '../../atoms/A01Icon/A01Icon';
+import { Icon } from '../../atoms/A01Icon/icons';
 
-interface StyledButtonProps extends S.ButtonProps {
+export interface StyledButtonProps {
   className?: string;
   onClick?: () => void;
-  label?: string;
-  icon?: keyof typeof icons;
+  text?: string;
   type?: 'button' | 'submit';
   animate?: boolean;
+  color?: ColorKey;
+  textColor?: ColorKey;
+  disable?: boolean;
+  size?: 'small' | 'regular';
+  icon?: Icon;
 }
 
-export const Button = ({
+export const M01PrimaryButton = ({
   className,
   onClick,
-  label,
+  text,
   icon,
   color,
   textColor,
@@ -24,8 +30,6 @@ export const Button = ({
   size,
   type,
 }: StyledButtonProps): ReactElement => {
-  const Icon = icon && icons[icon];
-
   return (
     <S.StyledButton
       {...(animate && scale())}
@@ -36,13 +40,11 @@ export const Button = ({
       textColor={textColor}
       onClick={onClick}
       type={type}
+      icon={icon}
+      text={text}
     >
-      {label && <S.Label>{label}</S.Label>}
-      {Icon && (
-        <S.Icon>
-          <Icon fill={color} />
-        </S.Icon>
-      )}
+      {text && <S.Label>{text}</S.Label>}
+      {icon && <A01Icon name={icon} />}
     </S.StyledButton>
   );
 };

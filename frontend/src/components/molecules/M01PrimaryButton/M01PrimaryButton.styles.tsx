@@ -1,26 +1,28 @@
 import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
-import { ColorKey } from '../../../styles/theme/default';
-import { typeStyles } from '../../../styles/typeStyles';
 
-export type ButtonProps = {
-  color?: ColorKey;
-  textColor?: ColorKey;
-  disable?: boolean;
-  size?: 'small' | 'regular';
-};
+import { typeStyles } from '../../../styles/typeStyles';
+import { StyledButtonProps } from './M01PrimaryButton';
+import { getContrastingTextColor } from '../../../utils/getContrastingTextColor';
+
+type ButtonProps = Omit<StyledButtonProps, 'animate'>;
 
 export const StyledButton = styled(motion.button)<ButtonProps>`
   --size: ${({ size }) => (size === 'small' ? '3rem' : '6rem')};
 
   display: flex;
+  gap: 1rem;
   flex-shrink: 0;
   align-items: center;
+  justify-content: center;
   min-width: var(--size);
   height: var(--size);
+  padding-inline-start: ${({ text }) => (text ? 'calc(var(--size) / 2)' : 'calc(var(--size) / 4)')};
+  padding-inline-end: ${({ icon }) => (icon ? `calc(var(--size) / 4)` : `calc(var(--size) / 2)`)};
   border-radius: var(--size);
   background-color: ${({ theme, color }) => (color ? theme.colors[color] : theme.colors.white)};
-  color: ${({ theme, textColor }) => (textColor ? theme.colors[textColor] : theme.colors.black)};
+  color: ${({ theme, textColor, color }) =>
+    textColor ? theme.colors[textColor] : getContrastingTextColor(theme.colors[color || 'white'] as string)};
   border: solid 1px ${({ theme }) => theme.colors.outerSpace};
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
   z-index: 1;
@@ -56,8 +58,7 @@ export const StyledButton = styled(motion.button)<ButtonProps>`
 `;
 
 export const Label = styled.span`
-  ${typeStyles.button}
-  margin-left: calc(var(--size) / 2);
+  ${typeStyles.button};
 `;
 
 export const Icon = styled.div`

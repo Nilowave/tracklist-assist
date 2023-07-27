@@ -13,8 +13,8 @@ export const Login = styled.section`
 
   ${({ theme }) => css`
     background: transparent
-      linear-gradient(117deg, ${theme.colors.gradientPink[0]} 0%, ${theme.colors.gradientPink[0]} 51%, ${theme.colors.gradientPink[0]} 100%)
-      0% 0% no-repeat padding-box;
+      linear-gradient(117deg, ${theme.gradients.pink[0]} 0%, ${theme.gradients.pink[0]} 51%, ${theme.gradients.pink[0]} 100%) 0% 0%
+      no-repeat padding-box;
   `}
 `;
 

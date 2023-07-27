@@ -4,7 +4,7 @@ import * as S from './ItemInput.styles';
 import { CardData } from '../O01DashboardCard/O01DashboardCard';
 import { Modal } from '../Modal/Modal';
 import { Content } from '../ItemDetailsModal/ItemDetailsModal.styles';
-import { Button } from '../../atoms/Button/Button';
+import { M01PrimaryButton } from '../../molecules/M01PrimaryButton/M01PrimaryButton';
 
 interface ItemInputProps {
   onClose: () => void;
@@ -44,7 +44,7 @@ export const ItemInput = ({ onClose, submit }: ItemInputProps): ReactElement => 
             {errors.name && <S.Error>This field is required</S.Error>}
           </S.Wrapper>
           <div>
-            <Button label="Track" icon="Plus" color="primary" />
+            <M01PrimaryButton text="Track" icon="addLarge" color="primary" />
           </div>
         </S.StyledForm>
       </Content>

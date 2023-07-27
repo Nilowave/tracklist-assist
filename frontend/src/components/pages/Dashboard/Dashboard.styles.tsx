@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { respondTo } from '../../../styles/helpers/respondTo';
 import { MediaQuery } from '../../../styles/mediaQuery';
 import { typeStyles } from '../../../styles/typeStyles';
-import { Button } from '../../atoms/Button/Button';
+import { M01PrimaryButton } from '../../molecules/M01PrimaryButton/M01PrimaryButton';
 
 export const Dashboard = styled.section<{ $blur?: boolean }>`
   padding: ${({ theme }) => theme.sitePaddings.desktop};
@@ -12,11 +12,6 @@ export const Dashboard = styled.section<{ $blur?: boolean }>`
   justify-content: space-between;
   align-items: center;
   min-height: 100vh;
-
-  background-image: radial-gradient(${({ theme }) => theme.hexToRgba(theme.colors.primary, 0.2)} 1px, transparent 0);
-  background-size: 40px 40px;
-  background-position: -19px -19px;
-  background-attachment: fixed;
 
   @media ${respondTo(MediaQuery.MAX_1023)} {
     padding: ${({ theme }) => theme.sitePaddings.mobile};
@@ -63,7 +58,7 @@ export const ItemList = styled(motion.div)`
   }
 `;
 
-export const AddButton = styled(Button)`
+export const AddButton = styled(M01PrimaryButton)`
   position: fixed;
   bottom: ${({ theme }) => theme.sitePaddings.desktop};
   right: ${({ theme }) => theme.sitePaddings.desktop};

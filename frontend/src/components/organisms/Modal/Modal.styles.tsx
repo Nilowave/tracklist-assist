@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 import { respondTo } from '../../../styles/helpers/respondTo';
 import { MediaQuery } from '../../../styles/mediaQuery';
-import { Button } from '../../atoms/Button/Button';
+import { M01PrimaryButton } from '../../molecules/M01PrimaryButton/M01PrimaryButton';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -49,7 +49,7 @@ export const Background = styled(motion.div)`
   }
 `;
 
-export const CloseButton = styled(Button)`
+export const CloseButton = styled(M01PrimaryButton)`
   position: absolute;
   top: 4rem;
   right: ${({ theme }) => theme.sitePaddings.desktop};

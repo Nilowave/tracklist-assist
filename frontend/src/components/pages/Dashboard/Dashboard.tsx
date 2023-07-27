@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { Path } from '../../../data/enum/Path';
 import { AdUnit } from '../../atoms/AdUnit/AdUnit';
 import { Trackwave } from '../../../data/enum/Trackwave';
+import { DotGrid } from '../../../styles/ui';
 
 const basepath = '/';
 const endpoint = '/api/';
@@ -106,22 +107,23 @@ export const Dashboard = (): ReactElement => {
   return (
     <>
       <S.Dashboard $blur={!!addModal || !!detailsModal}>
+        <DotGrid />
         <S.Content>
           <S.Heading>
             <Logo />
           </S.Heading>
           {items && !isEmpty && (
             <S.ItemList layout {...staggerChildren()}>
-              {items.map((item, index) => (
+              {items.map((item) => (
                 <div style={{ display: 'contents' }} key={item._id}>
                   <O01DashboardCard onClick={() => setDetailsModal(item)} key={item._id} data={item} />
-                  {index % 3 === 2 && index < items.length - 1 && <AdUnit slot={3271702308} format="square" />}
+                  {/* {index % 3 === 2 && index < items.length - 1 && <AdUnit slot={3271702308} format="square" />} */}
                 </div>
               ))}
             </S.ItemList>
           )}
           {isEmpty && <Empty />}
-          <S.AddButton label={isMobile ? '' : 'Track Item'} icon="Plus" color="primary" onClick={() => setAddModal(true)} />
+          <S.AddButton text={isMobile ? '' : 'Track Item'} icon="addLarge" color="primary" onClick={() => setAddModal(true)} />
         </S.Content>
         <S.Footer>
           <AdUnit slot={6156885942} />
