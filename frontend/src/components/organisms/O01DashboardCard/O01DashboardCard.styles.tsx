@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { typeStyles } from '../../../styles/typeStyles';
+import { smoothCorners } from '../../../styles/ui';
 
 export const O01DashboardCard = styled(motion.button)`
   --border-color: ${({ theme }) => theme.hexToRgba(theme.colors.white, 0.2)};
@@ -35,22 +36,19 @@ export const Border = styled.div`
     width: calc(100% + 2px);
     height: calc(100% + 2px);
     border-radius: 2.5rem 2.5rem 3rem 3rem;
-    /* --smooth-corners: 8;
-    mask-image: paint(smooth-corners);
-    -webkit-mask-image: paint(smooth-corners); */
     background-color: var(--border-color);
     transition: background-color 0.3s ease;
+
+    ${smoothCorners(8)};
   }
 
-  div {
+  & > div {
     position: absolute;
     width: 100%;
     height: 100%;
     border-radius: 2.5rem 2.5rem 3rem 3rem;
     overflow: hidden;
-    /* --smooth-corners: 8;
-    mask-image: paint(smooth-corners);
-    -webkit-mask-image: paint(smooth-corners); */
+    ${smoothCorners(8)};
 
     &:before {
       content: '';
@@ -103,13 +101,10 @@ export const TitleWrapper = styled.div`
     width: calc(100% + 2px);
     height: calc(100% + 2px);
     border-radius: 2.5rem 2.5rem 3rem 3rem;
-
-    /* --smooth-corners: 9;
-    mask-image: paint(smooth-corners);
-    -webkit-mask-image: paint(smooth-corners); */
     background: ${({ theme }) => `linear-gradient(110deg, #e8fced 0%, ${theme.colors.secondary} 35%)`};
     transition: background-color 0.3s ease;
     z-index: -1;
+    ${smoothCorners(9)};
   }
 `;
 

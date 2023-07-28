@@ -7,6 +7,12 @@ type FlexProps = {
   $justify?: 'space-between' | 'start' | 'end';
 };
 
+export const smoothCorners = (radius: number) => css`
+  --smooth-corners: ${radius};
+  mask-image: paint(smooth-corners);
+  -webkit-mask-image: paint(smooth-corners);
+`;
+
 export const DotGrid = styled.div`
   top: 0;
   left: 0;
