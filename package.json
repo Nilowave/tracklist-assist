@@ -6,11 +6,10 @@
   "scripts": {
     "dev": "npx nodemon backend/index.js",
     "start": "node backend/index.js",
-    "build": "cd frontend && npm i && npm run build",
-    "prepare": "husky install"
+    "build": "cd frontend && npm i && npm run build"
   },
   "engines": {
-    "node": "^18"
+    "node": "^16"
   },
   "dependencies": {
     "cookie-session": "^2.0.0",
