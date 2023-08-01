@@ -1,5 +1,4 @@
 import { ReactElement, ReactNode, useEffect, useRef, useState } from 'react';
-import textFit, { TextFitOption } from 'textFit';
 import * as S from './A03Text.styles';
 import { TypeStyleKey } from '../../../styles/typeStyles';
 
@@ -16,7 +15,7 @@ export const A03Text = ({ type = 'body', fit, className, children }: A03TextProp
 
   useEffect(() => {
     if (textRef.current && fit && fontsLoaded) {
-      textFit(textRef.current, fit);
+      window.textFit(textRef.current, fit);
     }
   }, [fit, children, fontsLoaded, textRef]);
 

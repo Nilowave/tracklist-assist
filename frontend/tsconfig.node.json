@@ -4,10 +4,7 @@
     "skipLibCheck": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true,
-    "paths": {
-      "textFit": ["./node_modules/textfit"]
-    }
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["vite.config.ts", "svg.d.ts"]
+  "include": ["vite.config.ts", "custom.d.ts", "svg.d.ts"]
 }
