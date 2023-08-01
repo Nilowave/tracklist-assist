@@ -2,6 +2,13 @@ const Item = require('../models/item-model');
 
 const parseItemDates = require('../utils/parseItemDates');
 
+const itemEventEmitter = Item.watch();
+
+itemEventEmitter.on('change', (change) => {
+  console.log('update some items');
+  console.log(JSON.stringify(change));
+});
+
 upsert = (req, res, io) => {
   if (!req.user) {
     return res.status(400).json({
@@ -25,6 +32,7 @@ upsert = (req, res, io) => {
 
   Item.updateOne({ name }, { $push: { tracks: date }, user: req.user.id }, { upsert: true })
     .then((item) => {
+      console.log('socket update', req.user.id);
       io.to(req.user.id).emit('message', { id: 'update', data: item });
 
       return res.status(200).json({
@@ -101,6 +109,7 @@ updateItem = async (req, res, io) => {
       item
         .save()
         .then(() => {
+          console.log('socket update here', req.user.id);
           io.to(req.user.id).emit('message', { id: 'update', data: item });
           return res.status(200).json({
             success: true,
@@ -146,16 +155,20 @@ getItemByName = async (req, res) => {
     res.redirect('/');
   }
 
-  await Item.findOne({ name: req.params.name }, (err, item) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err });
-    }
+  await Item.findOne({ name: req.params.name })
+    .exec()
+    .then((item) => {
+      if (!item) {
+        return res.status(404).json({ success: false, error: `Item not found` });
+      }
 
-    if (!item) {
-      return res.status(404).json({ success: false, error: `Item not found` });
-    }
-    return res.status(200).json({ success: true, data: item });
-  }).catch((err) => console.log(err));
+      const parsedItem = parseItemDates([item]);
+
+      return res.status(200).json({ success: true, data: parsedItem[0] });
+    })
+    .catch((error) => {
+      return res.status(400).json({ success: false, error });
+    });
 };
 
 getItemById = async (req, res) => {
@@ -163,19 +176,20 @@ getItemById = async (req, res) => {
     res.redirect('/');
   }
 
-  await Item.findOne({ _id: req.params.id }, (err, item) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err });
-    }
+  Item.findOne({ _id: req.params.id })
+    .exec()
+    .then((item) => {
+      if (!item) {
+        return res.status(404).json({ success: false, error: `Item not found` });
+      }
 
-    if (!item) {
-      return res.status(404).json({ success: false, error: `Item not found` });
-    }
+      const parsedItem = parseItemDates([item]);
 
-    const parsedItem = parseItemDates([item]);
-
-    return res.status(200).json({ success: true, data: parsedItem[0] });
-  }).catch((err) => console.log(err));
+      return res.status(200).json({ success: true, data: parsedItem[0] });
+    })
+    .catch((error) => {
+      return res.status(400).json({ success: false, error });
+    });
 };
 
 getItems = async (req, res) => {

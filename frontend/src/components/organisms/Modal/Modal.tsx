@@ -1,6 +1,6 @@
 import type { ReactElement, ReactNode } from 'react';
-import { fade, scale } from '../../../utils/motionTransitions';
 import * as S from './Modal.styles';
+import { fade, scale } from '../../../utils/motionTransitions';
 
 interface ModalProps {
   onClose: () => void;

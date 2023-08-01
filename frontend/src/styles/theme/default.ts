@@ -1,3 +1,4 @@
+import { createTheme } from '@mui/material';
 import hexToRgba from 'hex-to-rgba';
 
 export const colors = {
@@ -30,6 +31,7 @@ export const fonts = {
   arial: 'Arial',
   arialRounded: 'Arial Rounded MT Bold',
   logo: 'HLT Sneaker Script',
+  robotoFlex: 'Roboto Flex',
 };
 
 export const theme = {
@@ -42,6 +44,34 @@ export const theme = {
   },
   hexToRgba,
 };
+
+export const muiTheme = createTheme({
+  typography: {
+    fontSize: 24,
+    fontFamily: 'Roboto Flex',
+    h1: {
+      fontFamily: 'Arial Rounded MT Bold',
+    },
+    h2: {
+      fontFamily: 'Arial Rounded MT Bold',
+    },
+    h3: {
+      fontFamily: 'Arial Rounded MT Bold',
+    },
+    h4: {
+      fontFamily: 'Arial Rounded MT Bold',
+    },
+    h5: {
+      fontFamily: 'Arial Rounded MT Bold',
+    },
+    h6: {
+      fontFamily: 'Arial Rounded MT Bold',
+    },
+    button: {
+      fontFamily: 'Arial Rounded MT Bold',
+    },
+  },
+});
 
 export type ThemeType = typeof theme;
 export type ColorType = ThemeType['colors'][keyof ThemeType['colors']];

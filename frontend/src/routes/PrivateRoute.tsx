@@ -1,4 +1,4 @@
-import { useContext, ReactNode } from 'react';
+import { ReactNode, useContext } from 'react';
 import { Navigate, Outlet } from 'react-router';
 import { UserContext } from '../context/UserContext/UserContext';
 import { Path } from '../data/enum/Path';

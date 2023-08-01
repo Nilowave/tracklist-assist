@@ -1,9 +1,9 @@
+import { formatDuration, formatRelative } from 'date-fns';
 import { ReactElement } from 'react';
-import { CardData } from '../../../O01DashboardCard/O01DashboardCard';
-import { Detail, HistoryDate, StyledDate, StyledHistory, SubTitle } from '../../ItemDetailsModal.styles';
-import { formatRelative, formatDuration } from 'date-fns';
 import * as S from './ItemDetails.styles';
 import { limitDuration } from '../../../../../utils/limitDuration';
+import { CardData } from '../../../O01DashboardCard/O01DashboardCard';
+import { Detail, HistoryDate, StyledDate, StyledHistory, SubTitle } from '../../ItemDetailsModal.styles';
 
 interface ItemDetailsProps {
   data: CardData;

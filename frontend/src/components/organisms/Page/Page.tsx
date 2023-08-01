@@ -1,11 +1,11 @@
-import { useEffect, ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Path } from '../../../data/enum/Path';
-import { BackArrow, LogoColor } from '../../atoms/Icon/Icon';
-import { Text } from '../../atoms/Text/Text.styles';
 import * as S from './Page.styles';
 import { PageTitle } from '../../../data/enum/PageTitle';
+import { Path } from '../../../data/enum/Path';
 import { Trackwave } from '../../../data/enum/Trackwave';
+import { Text } from '../../atoms/A03Text/A03Text.styles';
+import { BackArrow, LogoColor } from '../../atoms/Icon/Icon';
 
 interface PageProps {
   children: ReactNode;

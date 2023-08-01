@@ -5,7 +5,7 @@ export const GlobalStyles = createGlobalStyle`
   ${normalize()}
 
   html {
-    font-family: ${({ theme }) => theme.fonts.arial};
+    font-family: ${({ theme }) => theme.fonts.robotoFlex};
     -webkit-text-size-adjust: 100%;
     box-sizing: border-box;
     font-size: 62.5%;
@@ -29,7 +29,7 @@ export const GlobalStyles = createGlobalStyle`
   *:after {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    box-sizing: inherit;
+    box-sizing: border-box;
   }
 
   #root {

@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import * as S from './A01Icon.styles';
-import { icons, Icon } from './icons';
+import { Icon, icons } from './icons';
 
 interface A01IconProps {
   name: Icon;
