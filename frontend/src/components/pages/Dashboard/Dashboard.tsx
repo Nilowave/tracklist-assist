@@ -1,20 +1,21 @@
 import axios, { AxiosResponse } from 'axios';
-import io from 'socket.io-client';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, LayoutGroup } from 'framer-motion';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
-import { Empty } from '../../organisms/Empty/Empty';
-import { O01DashboardCard, CardData } from '../../organisms/O01DashboardCard/O01DashboardCard';
-import { ItemInput } from '../../organisms/ItemInput/ItemInput';
-import * as S from './Dashboard.styles';
-import { ItemDetailsModal } from '../../organisms/ItemDetailsModal/ItemDetailsModal';
-import { staggerChildren } from '../../../utils/motionTransitions';
-import { Logo } from '../../atoms/Icon/Icon';
-import { useDeviceState } from '../../../hooks/useDeviceState';
 import { Link } from 'react-router-dom';
+import io from 'socket.io-client';
+import * as S from './Dashboard.styles';
 import { Path } from '../../../data/enum/Path';
-import { AdUnit } from '../../atoms/AdUnit/AdUnit';
 import { Trackwave } from '../../../data/enum/Trackwave';
+import { useDeviceState } from '../../../hooks/useDeviceState';
 import { DotGrid } from '../../../styles/ui';
+import { staggerChildren } from '../../../utils/motionTransitions';
+import { AdUnit } from '../../atoms/AdUnit/AdUnit';
+import { Logo } from '../../atoms/Icon/Icon';
+import { M06Dialog } from '../../molecules/M06Dialog/M06Dialog';
+import { Empty } from '../../organisms/Empty/Empty';
+import { ItemDetailsModal } from '../../organisms/ItemDetailsModal/ItemDetailsModal';
+import { ItemInput } from '../../organisms/ItemInput/ItemInput';
+import { CardData, O01DashboardCard } from '../../organisms/O01DashboardCard/O01DashboardCard';
 
 const basepath = '/';
 const endpoint = '/api/';
@@ -37,6 +38,7 @@ export const Dashboard = (): ReactElement => {
   const itemEndpoint = `${endpoint}item`;
 
   const socketListener = (message: SocketMessage) => {
+    console.log('update', message);
     if (message.id === 'update') {
       getItems();
     }
@@ -112,16 +114,18 @@ export const Dashboard = (): ReactElement => {
           <S.Heading>
             <Logo />
           </S.Heading>
-          {items && !isEmpty && (
-            <S.ItemList layout {...staggerChildren()}>
-              {items.map((item) => (
-                <div style={{ display: 'contents' }} key={item._id}>
-                  <O01DashboardCard onClick={() => setDetailsModal(item)} key={item._id} data={item} />
-                  {/* {index % 3 === 2 && index < items.length - 1 && <AdUnit slot={3271702308} format="square" />} */}
-                </div>
-              ))}
-            </S.ItemList>
-          )}
+          <LayoutGroup>
+            {items && !isEmpty && (
+              <S.ItemList layout {...staggerChildren()}>
+                {items.map((item) => (
+                  <div style={{ display: 'contents' }} key={item._id}>
+                    <O01DashboardCard onClick={() => setDetailsModal(item)} key={item._id} data={item} />
+                    {/* {index % 3 === 2 && index < items.length - 1 && <AdUnit slot={3271702308} format="square" />} */}
+                  </div>
+                ))}
+              </S.ItemList>
+            )}
+          </LayoutGroup>
           {isEmpty && <Empty />}
           <S.AddButton text={isMobile ? '' : 'Track Item'} icon="addLarge" color="primary" onClick={() => setAddModal(true)} />
         </S.Content>
@@ -129,10 +133,14 @@ export const Dashboard = (): ReactElement => {
           <AdUnit slot={6156885942} />
           <S.FooterWrapper>
             <Link to={Path.PrivacyPolicy}>Privacy Policy</Link>
-            <Link to={Path.Terms}>Terms of Service</Link>
+            <Link to="#">Terms of Service</Link>
+            <Link to={Path.Terms}>Credits</Link>
             <p>
               © {new Date().getFullYear()} {Trackwave.NAME}
             </p>
+            <div>
+              Icons made from <a href="https://www.onlinewebfonts.com/icon">svg icons</a>is licensed by CC BY 4.0
+            </div>
           </S.FooterWrapper>
         </S.Footer>
       </S.Dashboard>
@@ -142,6 +150,7 @@ export const Dashboard = (): ReactElement => {
           <ItemDetailsModal data={detailsModal} onDelete={deleteItem} onClose={() => setDetailsModal(null)} onUpdate={setDetailsModal} />
         )}
       </AnimatePresence>
+      <M06Dialog />
     </>
   );
 };

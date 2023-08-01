@@ -1,14 +1,13 @@
 import { ReactElement, useState } from 'react';
-import * as S from './ItemDetailsModal.styles';
-import { CardData } from '../O01DashboardCard/O01DashboardCard';
-import { Modal } from '../Modal/Modal';
-import { ItemDetails } from './components/ItemDetails/ItemDetails';
-import { EditItem } from './components/EditItem/EditItem';
 import { FieldValues, useForm } from 'react-hook-form';
-import axios from 'axios';
+import { EditItem } from './components/EditItem/EditItem';
+import { ItemDetails } from './components/ItemDetails/ItemDetails';
+import * as S from './ItemDetailsModal.styles';
+import { trackNewItem, updateItem } from '../../../store/api';
 import { Flex } from '../../../styles/ui';
-import { useDeviceState } from '../../../hooks/useDeviceState';
 import { M01PrimaryButton } from '../../molecules/M01PrimaryButton/M01PrimaryButton';
+import { Modal } from '../Modal/Modal';
+import { CardData } from '../O01DashboardCard/O01DashboardCard';
 
 interface ItemDetailsModalProps {
   onClose: () => void;
@@ -27,8 +26,6 @@ export const ItemDetailsModal = ({ onClose, data, onDelete, onUpdate }: ItemDeta
 
   const formMethods = useForm();
 
-  const { isMobile } = useDeviceState();
-
   const handleEditSubmit = (formData: FieldValues) => {
     const fields = formData as FormData;
 
@@ -41,14 +38,7 @@ export const ItemDetailsModal = ({ onClose, data, onDelete, onUpdate }: ItemDeta
     };
 
     if (data._id) {
-      axios
-        .put(`/api/item/${data._id}`, submitData)
-        .then(() => {
-          console.log(':)');
-        })
-        .catch((error) => {
-          console.log(':(', error);
-        });
+      updateItem(submitData);
     }
 
     onClose();
@@ -63,31 +53,11 @@ export const ItemDetailsModal = ({ onClose, data, onDelete, onUpdate }: ItemDeta
   };
 
   const handleTrackNew = () => {
-    const newDate = Date.now();
-    const { tracks } = data;
-
-    const update = [...tracks, newDate];
-    const submitData: CardData = {
-      name: data.name,
-      tracks: update,
-      _id: data._id,
-    };
-
     if (data._id) {
-      axios.put(`/api/item/${data._id}`, submitData).then(() => {
+      trackNewItem(data).then((updateData) => {
         if (onUpdate) {
-          const updatedData: CardData = {
-            ...data,
-            ...submitData,
-          };
-          onUpdate(updatedData);
+          updateData && onUpdate(updateData);
         }
-
-        axios.get(`/api/item/${data._id}`).then((_data) => {
-          if (onUpdate) {
-            onUpdate(_data.data.data as CardData);
-          }
-        });
       });
     }
   };
@@ -114,9 +84,9 @@ export const ItemDetailsModal = ({ onClose, data, onDelete, onUpdate }: ItemDeta
           ) : (
             <>
               <M01PrimaryButton color="red" onClick={handleDelete} text="Delete" />
-              <Flex $row $gap="3rem">
+              <Flex $row $gap="1.5rem">
                 <M01PrimaryButton color="keyLime" onClick={() => setEditItem(true)} text="Edit" />
-                {!isMobile && <M01PrimaryButton color="primary" icon="add" onClick={handleTrackNew} text="Track" />}
+                <M01PrimaryButton color="primary" icon="add" onClick={handleTrackNew} text="Track" />
               </Flex>
             </>
           )}

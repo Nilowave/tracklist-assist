@@ -3,9 +3,15 @@ import styled, { css } from 'styled-components';
 type FlexProps = {
   $row?: boolean;
   $gap?: string;
-  $align?: 'center' | 'start' | 'end';
-  $justify?: 'space-between' | 'start' | 'end';
+  $align?: 'center' | 'flex-start' | 'flex-end';
+  $justify?: 'space-between' | 'flex-start' | 'flex-end' | 'center';
 };
+
+export const smoothCorners = (radius: number) => css`
+  --smooth-corners: ${radius};
+  mask-image: paint(smooth-corners);
+  -webkit-mask-image: paint(smooth-corners);
+`;
 
 export const DotGrid = styled.div`
   top: 0;

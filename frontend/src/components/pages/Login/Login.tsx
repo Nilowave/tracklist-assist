@@ -1,16 +1,16 @@
 import { ReactElement, useContext, useEffect } from 'react';
-import * as S from './Login.styles';
-import { GoogleIcon, Logo } from '../../atoms/Icon/Icon';
 
 import { IAuthorizationOptions } from 'react-google-oauth2';
 
-import { Text } from '../../atoms/Text/Text.styles';
-import { AdUnit } from '../../atoms/AdUnit/AdUnit';
-import { UserContext } from '../../../context/UserContext/UserContext';
 import { Navigate } from 'react-router-dom';
-import { Path } from '../../../data/enum/Path';
+import * as S from './Login.styles';
+import { UserContext } from '../../../context/UserContext/UserContext';
 import { PageTitle } from '../../../data/enum/PageTitle';
+import { Path } from '../../../data/enum/Path';
 import { Trackwave } from '../../../data/enum/Trackwave';
+import { Text } from '../../atoms/A03Text/A03Text.styles';
+import { AdUnit } from '../../atoms/AdUnit/AdUnit';
+import { GoogleIcon, Logo } from '../../atoms/Icon/Icon';
 
 export const Login = (): ReactElement => {
   const { user } = useContext(UserContext);

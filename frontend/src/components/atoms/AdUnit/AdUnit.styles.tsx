@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { AdFormat } from './AdUnit.types';
-import { Text } from '../Text/Text.styles';
+import { Text } from '../A03Text/A03Text.styles';
 
 type AdUnitProps = {
   format: AdFormat;

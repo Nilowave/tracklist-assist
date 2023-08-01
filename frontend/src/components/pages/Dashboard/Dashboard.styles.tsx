@@ -46,7 +46,7 @@ export const ItemList = styled(motion.div)`
   margin-top: 3rem;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   grid-gap: 3rem;
   flex-wrap: wrap;
   flex-direction: column;

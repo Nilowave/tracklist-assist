@@ -1,12 +1,12 @@
 import { ReactElement } from 'react';
 import { Route, Routes as Switch } from 'react-router-dom';
+import { PrivateRoute } from './PrivateRoute';
 import { Dashboard } from '../components/pages/Dashboard/Dashboard';
 import { Login } from '../components/pages/Login/Login';
 import { PrivacyTerms } from '../components/pages/PrivacyTerms/PrivacyTerms';
-import { Path } from '../data/enum/Path';
-import { PrivateRoute } from './PrivateRoute';
-import { PageTitle } from '../data/enum/PageTitle';
 import { TrackerDetails } from '../components/pages/TrackerDetails/TrackerDetails';
+import { PageTitle } from '../data/enum/PageTitle';
+import { Path } from '../data/enum/Path';
 
 export const Routes = (): ReactElement => {
   return (

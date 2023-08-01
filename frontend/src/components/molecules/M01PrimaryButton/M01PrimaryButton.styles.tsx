@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 
-import { typeStyles } from '../../../styles/typeStyles';
 import { StyledButtonProps } from './M01PrimaryButton';
+import { typeStyles } from '../../../styles/typeStyles';
 import { getContrastingTextColor } from '../../../utils/getContrastingTextColor';
 
 type ButtonProps = Omit<StyledButtonProps, 'animate'>;

@@ -1,10 +1,11 @@
 import styled, { css } from 'styled-components';
 import { typeStyles } from '../../../styles/typeStyles';
+import { Text } from '../../atoms/A03Text/A03Text.styles';
 
-export const Tooltip = styled.div`
+export const Tooltip = styled(Text)`
   position: absolute;
   top: 50%;
-  padding: 0.2rem 1rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 0.5rem;
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.background};
@@ -13,6 +14,7 @@ export const Tooltip = styled.div`
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
+  box-shadow: 0px 2px 4px ${({ theme }) => theme.hexToRgba(theme.colors.black, 0.2)};
 
   &:before {
     content: '';
@@ -27,7 +29,7 @@ export const Tooltip = styled.div`
   }
 `;
 
-export const IconWrapper = styled.div<{ $isText: boolean }>`
+export const IconWrapper = styled.div<{ $isText: boolean; $fill?: 'solid' | 'transparent' }>`
   position: relative;
   width: 3rem;
   height: 3rem;
@@ -35,14 +37,21 @@ export const IconWrapper = styled.div<{ $isText: boolean }>`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background-color: ${({ theme, $isText }) => ($isText ? theme.colors.alt1 : theme.colors.white)};
   color: ${({ theme, $isText }) => ($isText ? theme.colors.white : theme.colors.background)};
   border-radius: 3rem;
-  box-shadow: 0px 4px 4px ${({ theme }) => theme.colors.black};
-  transition: background-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  ${({ $fill, $isText, theme }) =>
+    $fill !== 'transparent' &&
+    css`
+      background-color: ${$isText ? theme.colors.alt1 : theme.colors.white};
+      box-shadow: 0px 4px 4px ${({ theme }) => theme.hexToRgba(theme.colors.black, 0.8)};
+    `};
 `;
 
-export const StyledM02IconButton = styled.button<{ $isText: boolean }>`
+export const StyledM02IconButton = styled.button<{ $isText: boolean; $fill?: 'solid' | 'transparent' }>`
   ${({ $isText }) =>
     $isText &&
     css`
@@ -53,11 +62,23 @@ export const StyledM02IconButton = styled.button<{ $isText: boolean }>`
       justify-content: center;
     `};
 
+  &:disabled {
+    opacity: 0.5;
+  }
+
   @media (hover: hover) {
-    &:hover {
+    &:hover:not([disabled]) {
       ${IconWrapper} {
-        background-color: ${({ theme, $isText }) => ($isText ? theme.colors.white : theme.colors.primary)};
-        color: ${({ theme, $isText }) => $isText && theme.colors.alt1};
+        ${({ $fill, theme, $isText }) =>
+          $fill === 'transparent'
+            ? css`
+                background-color: ${theme.colors.white};
+                box-shadow: 0px 4px 4px ${({ theme }) => theme.hexToRgba(theme.colors.black, 0.5)};
+              `
+            : css`
+                background-color: ${$isText ? theme.colors.white : theme.colors.primary};
+                color: ${$isText && theme.colors.alt1};
+              `}
       }
 
       ${Tooltip} {
@@ -67,7 +88,7 @@ export const StyledM02IconButton = styled.button<{ $isText: boolean }>`
   }
 `;
 
-export const Text = styled.span`
+export const Label = styled(Text)`
   ${typeStyles.button};
   text-decoration: underline;
   color: ${({ theme }) => theme.colors.alt1};

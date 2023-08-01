@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, createContext, ReactNode, useEffect } from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 import { UserData } from '../../components/atoms/LogoutButton/LogoutButton';
 
 type UserState = {
