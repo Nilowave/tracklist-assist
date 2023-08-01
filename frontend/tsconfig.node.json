@@ -6,7 +6,7 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "textFit": ["./node_modules/textfit/textFit.js"]
+      "textFit": ["./node_modules/textfit"]
     }
   },
   "include": ["vite.config.ts", "svg.d.ts"]
