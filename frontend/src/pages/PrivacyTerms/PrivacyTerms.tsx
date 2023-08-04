@@ -3,7 +3,7 @@ import { cookiePolicy } from './static/cookie';
 import { privacyHTML } from './static/privacy';
 import { styles } from './static/static.styles';
 import { terms } from './static/terms';
-import { Page } from '../../organisms/Page/Page';
+import { Page } from '../../components/organisms/Page/Page';
 
 interface PrivacyTermsProps {
   type: 'privacy' | 'terms' | 'cookie';

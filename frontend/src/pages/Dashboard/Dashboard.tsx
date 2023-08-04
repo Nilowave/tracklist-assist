@@ -4,18 +4,19 @@ import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
 import * as S from './Dashboard.styles';
-import { Path } from '../../../data/enum/Path';
-import { Trackwave } from '../../../data/enum/Trackwave';
-import { useDeviceState } from '../../../hooks/useDeviceState';
-import { DotGrid } from '../../../styles/ui';
-import { staggerChildren } from '../../../utils/motionTransitions';
-import { AdUnit } from '../../atoms/AdUnit/AdUnit';
-import { Logo } from '../../atoms/Icon/Icon';
-import { M06Dialog } from '../../molecules/M06Dialog/M06Dialog';
-import { Empty } from '../../organisms/Empty/Empty';
-import { ItemDetailsModal } from '../../organisms/ItemDetailsModal/ItemDetailsModal';
-import { ItemInput } from '../../organisms/ItemInput/ItemInput';
-import { CardData, O01DashboardCard } from '../../organisms/O01DashboardCard/O01DashboardCard';
+import { AdUnit } from '../../components/atoms/AdUnit/AdUnit';
+import { Logo } from '../../components/atoms/Icon/Icon';
+import { M06Dialog } from '../../components/molecules/M06Dialog/M06Dialog';
+import { Empty } from '../../components/organisms/Empty/Empty';
+import { ItemDetailsModal } from '../../components/organisms/ItemDetailsModal/ItemDetailsModal';
+import { ItemInput } from '../../components/organisms/ItemInput/ItemInput';
+import { CardData, O01DashboardCard } from '../../components/organisms/O01DashboardCard/O01DashboardCard';
+import { O04ActionMenu } from '../../components/organisms/O04ActionMenu/O04ActionMenu';
+import { Path } from '../../data/enum/Path';
+import { Trackwave } from '../../data/enum/Trackwave';
+import { useDeviceState } from '../../hooks/useDeviceState';
+import { DotGrid } from '../../styles/ui';
+import { staggerChildren } from '../../utils/motionTransitions';
 
 const basepath = '/';
 const endpoint = '/api/';
@@ -150,6 +151,7 @@ export const Dashboard = (): ReactElement => {
           <ItemDetailsModal data={detailsModal} onDelete={deleteItem} onClose={() => setDetailsModal(null)} onUpdate={setDetailsModal} />
         )}
       </AnimatePresence>
+      <O04ActionMenu count={items?.length} />
       <M06Dialog />
     </>
   );

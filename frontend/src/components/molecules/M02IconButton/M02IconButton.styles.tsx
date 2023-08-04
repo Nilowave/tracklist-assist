@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { ColorKey } from '../../../styles/theme/default';
 import { typeStyles } from '../../../styles/typeStyles';
 import { Text } from '../../atoms/A03Text/A03Text.styles';
 
@@ -29,7 +30,7 @@ export const Tooltip = styled(Text)`
   }
 `;
 
-export const IconWrapper = styled.div<{ $isText: boolean; $fill?: 'solid' | 'transparent' }>`
+export const IconWrapper = styled.div<{ $isText: boolean; $fill?: 'solid' | 'transparent'; $color?: ColorKey }>`
   position: relative;
   width: 3rem;
   height: 3rem;
@@ -38,6 +39,7 @@ export const IconWrapper = styled.div<{ $isText: boolean; $fill?: 'solid' | 'tra
   justify-content: center;
   cursor: pointer;
   color: ${({ theme, $isText }) => ($isText ? theme.colors.white : theme.colors.background)};
+  color: ${({ $color, theme }) => ($color ? theme.colors[$color] : 'initial')};
   border-radius: 3rem;
   transition:
     background-color 0.3s ease,
@@ -51,7 +53,7 @@ export const IconWrapper = styled.div<{ $isText: boolean; $fill?: 'solid' | 'tra
     `};
 `;
 
-export const StyledM02IconButton = styled.button<{ $isText: boolean; $fill?: 'solid' | 'transparent' }>`
+export const StyledM02IconButton = styled.button<{ $isText: boolean; $fill?: 'solid' | 'transparent'; $color?: ColorKey }>`
   ${({ $isText }) =>
     $isText &&
     css`
