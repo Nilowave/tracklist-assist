@@ -1,15 +1,28 @@
 import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { typeStyles } from '../../../styles/typeStyles';
 import { Flex, smoothCorners } from '../../../styles/ui';
 import { A03Text } from '../../atoms/A03Text/A03Text';
 import { M02IconButton } from '../../molecules/M02IconButton/M02IconButton';
+import { M07CardMenu } from '../../molecules/M07CardMenu/M07CardMenu';
 
-export const ExpandButton = styled(M02IconButton)`
+export const MenuButton = styled(M07CardMenu)<{ $persist?: boolean }>`
   align-self: flex-end;
-  margin-right: 0.7rem;
+  margin-right: 0.25rem;
   margin-top: 0.3rem;
-  opacity: 0;
+  opacity: ${({ $persist }) => ($persist ? '1 !important' : 0)};
+  transition: opacity 0.2s ease;
+
+  &:focus-within {
+    opacity: 0.8 !important;
+  }
+`;
+
+export const ExpandButton = styled(M02IconButton)<{ $persist?: boolean }>`
+  align-self: flex-end;
+  margin-right: 0.25rem;
+  margin-top: 0.3rem;
+  opacity: ${({ $persist }) => ($persist ? '1 !important' : 0)};
   transition: opacity 0.2s ease;
 `;
 
@@ -17,13 +30,14 @@ export const O01DashboardCard = styled(motion.div)`
   position: relative;
 
   &:hover {
+    ${MenuButton},
     ${ExpandButton} {
       opacity: 0.8;
     }
   }
 `;
 
-export const CardButton = styled.button<{ $isExpanded?: boolean }>`
+export const CardButton = styled.button<{ $isExpanded?: boolean; $isEditing?: boolean }>`
   --border-color: ${({ theme }) => theme.hexToRgba(theme.colors.white, 0.2)};
   all: unset;
   cursor: pointer;
@@ -33,11 +47,18 @@ export const CardButton = styled.button<{ $isExpanded?: boolean }>`
   height: ${({ $isExpanded }) => ($isExpanded ? 'auto' : '20.4rem')};
   filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
 
-  @media (hover: hover) {
-    &:hover {
-      --border-color: ${({ theme }) => theme.hexToRgba(theme.colors.primary, 0.5)};
-    }
-  }
+  ${({ $isEditing, theme }) =>
+    $isEditing
+      ? css`
+          --border-color: ${theme.hexToRgba(theme.colors.white, 0.5)};
+        `
+      : css`
+          @media (hover: hover) {
+            &:hover {
+              --border-color: ${theme.hexToRgba(theme.colors.primary, 0.5)};
+            }
+          }
+        `}
 
   & > div {
     grid-area: 1 / 1;
@@ -96,7 +117,7 @@ export const Content = styled(Flex)<{ $isExpanded: boolean }>`
   padding-block: ${({ $isExpanded }) => ($isExpanded ? '1.5rem 2.4rem' : '0.9rem 1.9rem')};
 `;
 
-export const TitleWrapper = styled.div<{ $isExpanded?: boolean }>`
+export const TitleWrapper = styled.div<{ $isExpanded?: boolean; $isEditing?: boolean }>`
   flex: 1;
   width: 100%;
   min-height: ${({ $isExpanded }) => ($isExpanded ? '10rem' : 'auto')};
@@ -109,7 +130,8 @@ export const TitleWrapper = styled.div<{ $isExpanded?: boolean }>`
   color: ${({ theme }) => theme.colors.background};
   filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
 
-  &:before {
+  &:before,
+  &:after {
     content: '';
     position: absolute;
     top: -1px;
@@ -118,14 +140,24 @@ export const TitleWrapper = styled.div<{ $isExpanded?: boolean }>`
     height: calc(100% + 2px);
     border-radius: 2.5rem 2.5rem 3rem 3rem;
     background: ${({ theme }) => `linear-gradient(110deg, #e8fced 0%, ${theme.colors.secondary} 35%)`};
-    transition: background-color 0.3s ease;
     z-index: -1;
     ${smoothCorners(9)};
   }
+
+  &:after {
+    opacity: ${({ $isEditing }) => ($isEditing ? 1 : 0)};
+    background: linear-gradient(110deg, #e8fced 0%, #e8fced 35%);
+    transition: opacity 0.5s ease;
+    border: ${({ theme }) => `dotted 3px ${theme.colors.secondary}`};
+  }
+`;
+
+export const TitleMotion = styled(motion.div)`
+  width: 100%;
 `;
 
 export const Title = styled(A03Text)`
-  padding: 1.4rem;
+  padding: 0 1.4rem;
   text-transform: capitalize;
   text-align: center;
   max-height: 7rem;
@@ -137,8 +169,13 @@ export const Title = styled(A03Text)`
   -webkit-box-orient: vertical;
 `;
 
-export const Date = styled.p`
+export const Date = styled.span<{ $isEditing?: boolean }>`
+  width: 100%;
+  height: ${({ $isEditing }) => ($isEditing ? '0' : '1.2em')};
+  text-align: center;
+  overflow: hidden;
   font-style: italic;
+  transition: height 0.5s ease;
 `;
 
 export const Count = styled.div`
@@ -185,4 +222,10 @@ export const FooterWrapper = styled(Flex)`
   & > * {
     pointer-events: all;
   }
+`;
+
+export const EditButton = styled.button`
+  min-height: 4.5rem;
+  margin-bottom: auto;
+  cursor: text;
 `;

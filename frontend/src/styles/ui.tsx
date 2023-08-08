@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 type FlexProps = {
   $row?: boolean;
   $gap?: string;
+  $self?: 'center' | 'flex-start' | 'flex-end';
   $align?: 'center' | 'flex-start' | 'flex-end';
   $justify?: 'space-between' | 'flex-start' | 'flex-end' | 'center';
 };
@@ -37,6 +38,12 @@ export const Flex = styled.div<FlexProps>`
     `};
 
   ${(props) =>
+    props.$self &&
+    css`
+      align-self: ${props.$self};
+    `};
+
+  ${(props) =>
     props.$justify &&
     css`
       justify-content: ${props.$justify};
@@ -61,9 +68,9 @@ export const Flex = styled.div<FlexProps>`
 export const LightTooltip = styled(({ className, ...props }: TooltipProps) => <Tooltip {...props} classes={{ popper: className }} />)(
   ({ theme }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: theme.palette.common.white,
+      backgroundColor: theme.colors.white,
       color: 'rgba(0, 0, 0, 0.87)',
-      boxShadow: theme.shadows[1],
+      // boxShadow: theme.shadows[1],
       fontSize: 11,
     },
   })

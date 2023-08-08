@@ -46,6 +46,25 @@ export const theme = {
 };
 
 export const muiTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: colors.primary, // Your custom primary color
+    },
+    secondary: {
+      main: colors.secondary, // Your custom secondary color
+    },
+    muted: {
+      main: colors.platinum,
+      light: colors.outerSpace,
+      dark: colors.platinum,
+    },
+    background: {
+      default: colors.background,
+      paper: colors.background,
+    },
+    // Add more custom colors if needed
+  },
   typography: {
     fontSize: 24,
     fontFamily: 'Roboto Flex',
@@ -81,4 +100,21 @@ export type ColorKey = keyof ThemeType['colors'];
 declare module 'styled-components' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface DefaultTheme extends ThemeType {}
+}
+
+declare module '@mui/material/styles' {
+  interface Palette {
+    muted: Palette['primary'];
+  }
+
+  interface PaletteOptions {
+    muted?: PaletteOptions['primary'];
+  }
+}
+
+// Update the Button's color options to include an muted option
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    muted: true;
+  }
 }

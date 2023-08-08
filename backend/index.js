@@ -1,15 +1,17 @@
 require('dotenv').config();
 
+const path = require('path');
+const http = require('http');
 const express = require('express');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
-const path = require('path');
 
 const app = express();
-const http = require('http');
+
 const server = http.createServer(app);
 const cors = require('cors');
 const { Server } = require('socket.io');
+
 const io = new Server(server);
 
 const sessionMiddleware = cookieSession({
@@ -62,7 +64,7 @@ app.get('/login', (req, res) => {
 app.use('/api', itemRouter(io));
 app.use('/auth', authRouter());
 
-app.get('*', function (req, res) {
+app.get('*', (req, res) => {
   res.redirect('/');
 });
 

@@ -13,5 +13,6 @@ interface TextFitOption {
   reProcess?: boolean;
   widthOnly?: boolean;
   alignVertWithFlexbox?: boolean;
+  maxLength?: number;
   // Add more properties as needed
 }

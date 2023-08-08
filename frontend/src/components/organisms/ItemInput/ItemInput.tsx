@@ -1,14 +1,14 @@
 import type { ReactElement } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import * as S from './ItemInput.styles';
+import { DBCardData } from '../../../api/api.types';
 import { M01PrimaryButton } from '../../molecules/M01PrimaryButton/M01PrimaryButton';
 import { Content } from '../ItemDetailsModal/ItemDetailsModal.styles';
 import { Modal } from '../Modal/Modal';
-import { CardData } from '../O01DashboardCard/O01DashboardCard';
 
 interface ItemInputProps {
   onClose: () => void;
-  submit: (item: CardData) => void;
+  submit: (item: DBCardData) => void;
 }
 
 export const ItemInput = ({ onClose, submit }: ItemInputProps): ReactElement => {
@@ -19,9 +19,9 @@ export const ItemInput = ({ onClose, submit }: ItemInputProps): ReactElement => 
   } = useForm();
 
   const onSubmit = (data: FieldValues) => {
-    const item: CardData = {
+    const item: DBCardData = {
       name: data.name,
-      tracks: [Date.now()],
+      id: '',
     };
 
     submit(item);

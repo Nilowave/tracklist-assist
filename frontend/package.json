@@ -7,14 +7,15 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "b": "tsc",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint-fix": "lint -- --fix",
     "preview": "vite preview"
   },
   "engines": {
     "node": "^18"
   },
   "dependencies": {
+    "@mui/icons-material": "^5.14.3",
     "@mui/material": "^5.14.2",
     "@mui/styled-engine-sc": "^5.12.0",
     "@types/textfit": "^2.4.2",
@@ -37,6 +38,7 @@
     "smooth-corners": "^1.0.8",
     "socket.io-client": "^4.7.1",
     "styled-components": "^5.3.1",
+    "text-fit": "^1.0.1",
     "textfit": "^2.4.0",
     "vite-plugin-svgr": "^3.2.0"
   },
