@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 type FlexProps = {
   $row?: boolean;
   $gap?: string;
+  $self?: 'center' | 'flex-start' | 'flex-end';
   $align?: 'center' | 'flex-start' | 'flex-end';
   $justify?: 'space-between' | 'flex-start' | 'flex-end' | 'center';
 };
@@ -33,6 +34,12 @@ export const Flex = styled.div<FlexProps>`
     props.$align &&
     css`
       align-items: ${props.$align};
+    `};
+
+  ${(props) =>
+    props.$self &&
+    css`
+      align-self: ${props.$self};
     `};
 
   ${(props) =>

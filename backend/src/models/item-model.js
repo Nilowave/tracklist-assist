@@ -1,13 +1,15 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const Item = new Schema(
   {
     name: { type: String, required: true },
-    tracks: { type: [Number], required: true },
+    archived: { type: Boolean },
     user: {
       type: Schema.Types.ObjectId,
       ref: 'users',
+      required: true,
     },
   },
   { timestamps: true },

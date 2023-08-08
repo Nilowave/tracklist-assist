@@ -86,4 +86,8 @@ export const GlobalStyles = createGlobalStyle`
   p {
     margin: 0;
   }
+
+  .uc {
+    text-transform: capitalize;
+  }
 `;

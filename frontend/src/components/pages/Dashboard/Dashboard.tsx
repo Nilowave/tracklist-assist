@@ -1,9 +1,13 @@
-import axios, { AxiosResponse } from 'axios';
-import { AnimatePresence, LayoutGroup } from 'framer-motion';
+import { LayoutGroup } from 'framer-motion';
+import { useAtom } from 'jotai';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import io from 'socket.io-client';
+import { cardsAtom, shouldFetchAtom } from './Dashboard.atoms';
 import * as S from './Dashboard.styles';
+import { DBCardData } from '../../../api/api.types';
+import { apiGetCards } from '../../../api/cards';
+import { Cards } from '../../../data/enum/Cards';
 import { Path } from '../../../data/enum/Path';
 import { Trackwave } from '../../../data/enum/Trackwave';
 import { useDeviceState } from '../../../hooks/useDeviceState';
@@ -11,123 +15,107 @@ import { DotGrid } from '../../../styles/ui';
 import { staggerChildren } from '../../../utils/motionTransitions';
 import { AdUnit } from '../../atoms/AdUnit/AdUnit';
 import { Logo } from '../../atoms/Icon/Icon';
-import { M06Dialog } from '../../molecules/M06Dialog/M06Dialog';
 import { Empty } from '../../organisms/Empty/Empty';
-import { ItemDetailsModal } from '../../organisms/ItemDetailsModal/ItemDetailsModal';
-import { ItemInput } from '../../organisms/ItemInput/ItemInput';
-import { CardData, O01DashboardCard } from '../../organisms/O01DashboardCard/O01DashboardCard';
-
-const basepath = '/';
-const endpoint = '/api/';
-
-type Func = () => void;
+import { O01DashboardCard } from '../../organisms/O01DashboardCard/O01DashboardCard';
 
 type SocketMessage = {
   id: string;
 };
 
 export const Dashboard = (): ReactElement => {
-  const [items, setItems] = useState<Array<CardData> | null>(null);
+  const [cards, setCards] = useAtom(cardsAtom);
+  const [shouldFetchCards, setShouldFetchCards] = useAtom(shouldFetchAtom);
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
-  const [detailsModal, setDetailsModal] = useState<CardData | null>(null);
-  const [addModal, setAddModal] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const { isMobile } = useDeviceState();
-
-  const itemsEndpoint = `${endpoint}items`;
-  const itemEndpoint = `${endpoint}item`;
 
   const socketListener = (message: SocketMessage) => {
     console.log('update', message);
     if (message.id === 'update') {
-      getItems();
+      getCards();
     }
   };
 
-  const onApiResponse = useCallback(
-    (response: AxiosResponse) => {
-      if (!response.data) {
+  const getCardsCallback = useCallback(
+    (cards?: Array<DBCardData>) => {
+      if (!cards) {
         setIsEmpty(true);
         return;
       }
 
-      setIsEmpty(!response.data.length);
-
-      setItems(response.data);
+      setIsEmpty(!cards.length);
+      setCards(cards);
     },
-    [refresh]
+    [shouldFetchCards]
   );
 
-  const submitNewItem = (item: CardData) => {
-    axios.post(itemEndpoint, item).then(() => setRefresh(!refresh));
-  };
+  const getCards = () => {
+    console.log('fetch cards');
 
-  const deleteItem = (id: string) => {
-    axios.delete(`${itemEndpoint}/${id}`).then(() => setRefresh(!refresh));
-  };
-
-  const getItems = () => {
-    axios
-      .get(itemsEndpoint)
-      .then((response) => onApiResponse(response.data))
+    apiGetCards()
+      .then((cards) => getCardsCallback(cards))
       .catch((error) => {
         setIsEmpty(true);
         console.log(error);
       });
   };
 
-  useEffect((): Func => {
-    const socket = io(basepath);
+  const onAddNewCard = () => {
+    // check if there is a card that is new
+    const hasNew = cards.filter((item) => item.id === Cards.NEW);
+
+    if (hasNew.length > 0) {
+      console.log('Already editing a new card');
+      return;
+    }
+
+    const newCard: DBCardData = {
+      id: Cards.NEW,
+      name: '',
+    };
+
+    const updateCards = [...cards, newCard];
+
+    setCards(updateCards);
+  };
+
+  useEffect((): (() => void) => {
+    const socket = io('/');
     socket.on('message', socketListener);
-
-    // // handle logout hide
-    // // let previousScrollPosition = window.pageYOffset;
-
-    // const handleScroll = debounce(() => {
-    //   const currentScrollPosition = window.pageYOffset;
-
-    //   // const variant = previousScrollPosition < currentScrollPosition && currentScrollPosition > 50;
-    //   // const variant = currentScrollPosition > 50;
-
-    //   // setHideHeader(variant);
-
-    //   // previousScrollPosition = currentScrollPosition;
-    // }, 66);
-
-    // window.addEventListener('scroll', handleScroll);
 
     return () => {
       socket.close();
-      // window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   useEffect(() => {
-    getItems();
-  }, [refresh]);
+    if (shouldFetchCards) {
+      getCards();
+      setShouldFetchCards(false);
+    }
+  }, [shouldFetchCards]);
 
   return (
     <>
-      <S.Dashboard $blur={!!addModal || !!detailsModal}>
+      <S.Dashboard>
         <DotGrid />
         <S.Content>
           <S.Heading>
             <Logo />
           </S.Heading>
           <LayoutGroup>
-            {items && !isEmpty && (
+            {cards && !isEmpty && (
               <S.ItemList layout {...staggerChildren()}>
-                {items.map((item) => (
-                  <div style={{ display: 'contents' }} key={item._id}>
-                    <O01DashboardCard onClick={() => setDetailsModal(item)} key={item._id} data={item} />
-                    {/* {index % 3 === 2 && index < items.length - 1 && <AdUnit slot={3271702308} format="square" />} */}
+                {cards.map((item) => (
+                  <div style={{ display: 'contents' }} key={item.id}>
+                    <O01DashboardCard onClick={(data) => console.log(data)} key={item.id} data={item} />
+                    {/* {index % 3 === 2 && index < cards.length - 1 && <AdUnit slot={3271702308} format="square" />} */}
                   </div>
                 ))}
               </S.ItemList>
             )}
           </LayoutGroup>
           {isEmpty && <Empty />}
-          <S.AddButton text={isMobile ? '' : 'Track Item'} icon="addLarge" color="primary" onClick={() => setAddModal(true)} />
+          <S.AddButton text={isMobile ? '' : 'Track Item'} icon="addLarge" color="primary" onClick={onAddNewCard} />
         </S.Content>
         <S.Footer>
           <AdUnit slot={6156885942} />
@@ -144,13 +132,6 @@ export const Dashboard = (): ReactElement => {
           </S.FooterWrapper>
         </S.Footer>
       </S.Dashboard>
-      <AnimatePresence mode="wait">
-        {addModal && <ItemInput submit={submitNewItem} onClose={() => setAddModal(false)} />}
-        {detailsModal && (
-          <ItemDetailsModal data={detailsModal} onDelete={deleteItem} onClose={() => setDetailsModal(null)} onUpdate={setDetailsModal} />
-        )}
-      </AnimatePresence>
-      <M06Dialog />
     </>
   );
 };
