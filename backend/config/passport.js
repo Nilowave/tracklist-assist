@@ -1,15 +1,15 @@
-const User = require('../src/models/user-model');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const keys = require('../config/keys.js');
-const sha256 = require('crypto-js/sha256');
+// const sha256 = require('crypto-js/sha256');
+const User = require('../src/models/user-model');
+const keys = require('./keys');
 
-const createApiKey = (data) => {
-  const copy = { ...data };
-  copy.today = new Date().toString();
-  const key = sha256(JSON.stringify(copy));
-  return key;
-};
+// const createApiKey = (data) => {
+//   const copy = { ...data };
+//   copy.today = new Date().toString();
+//   const key = sha256(JSON.stringify(copy));
+//   return key;
+// };
 
 passport.serializeUser((user, done) => {
   done(null, user.id);

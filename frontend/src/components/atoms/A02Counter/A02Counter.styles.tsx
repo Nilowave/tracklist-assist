@@ -10,4 +10,5 @@ export const A02Counter = styled.div`
   background-color: ${({ theme }) => theme.hexToRgba(theme.colors.background, 0.5)};
   border-radius: 0.8rem;
   text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
 `;

@@ -1,6 +1,6 @@
 const passport = require('passport');
 const express = require('express');
-const app = express();
+// const app = express();
 
 module.exports = () => {
   const router = express.Router();

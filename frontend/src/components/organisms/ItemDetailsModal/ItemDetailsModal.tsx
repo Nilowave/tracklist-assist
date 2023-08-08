@@ -1,44 +1,40 @@
 import { ReactElement, useState } from 'react';
-import { FieldValues, useForm } from 'react-hook-form';
-import { EditItem } from './components/EditItem/EditItem';
-import { ItemDetails } from './components/ItemDetails/ItemDetails';
+import { useForm } from 'react-hook-form';
 import * as S from './ItemDetailsModal.styles';
-import { trackNewItem, updateItem } from '../../../store/api';
+import { DBCardData } from '../../../api/api.types';
+import { trackNewItem } from '../../../api/cards';
 import { Flex } from '../../../styles/ui';
 import { M01PrimaryButton } from '../../molecules/M01PrimaryButton/M01PrimaryButton';
 import { Modal } from '../Modal/Modal';
-import { CardData } from '../O01DashboardCard/O01DashboardCard';
 
 interface ItemDetailsModalProps {
   onClose: () => void;
   onDelete: (id: string) => void;
-  onUpdate?: (data: CardData) => void;
-  data: CardData;
+  onUpdate?: (data: DBCardData) => void;
+  data: DBCardData;
 }
 
-type FormData = {
-  tracks: Array<string>;
-  name: string;
-};
+// type FormData = {
+//   tracks: Array<string>;
+//   name: string;
+// };
 
 export const ItemDetailsModal = ({ onClose, data, onDelete, onUpdate }: ItemDetailsModalProps): ReactElement => {
   const [editItem, setEditItem] = useState(false);
 
   const formMethods = useForm();
 
-  const handleEditSubmit = (formData: FieldValues) => {
-    const fields = formData as FormData;
+  const handleEditSubmit = () => {
+    // const tracks: Array<number> = Object.values(fields.tracks).map((date: string) => new Date(date).getTime());
 
-    const tracks: Array<number> = Object.values(fields.tracks).map((date: string) => new Date(date).getTime());
+    // const submitData: DBCardData = {
+    //   name: fields.name,
+    //   // tracks,
+    //   id: data.id,
+    // };
 
-    const submitData: CardData = {
-      name: fields.name,
-      tracks,
-      _id: data._id,
-    };
-
-    if (data._id) {
-      updateItem(submitData);
+    if (data.id) {
+      // apiUpdateCard(submitData);
     }
 
     onClose();
@@ -47,13 +43,13 @@ export const ItemDetailsModal = ({ onClose, data, onDelete, onUpdate }: ItemDeta
 
   const handleDelete = () => {
     if (confirm(`Sure you want to delete "${data.name}"?`)) {
-      data._id && onDelete(data._id);
+      data.id && onDelete(data.id);
       onClose();
     }
   };
 
   const handleTrackNew = () => {
-    if (data._id) {
+    if (data.id) {
       trackNewItem(data).then((updateData) => {
         if (onUpdate) {
           updateData && onUpdate(updateData);
@@ -66,9 +62,7 @@ export const ItemDetailsModal = ({ onClose, data, onDelete, onUpdate }: ItemDeta
     <Modal onClose={onClose}>
       <S.Content>
         {!editItem && <S.Title>{data.name}</S.Title>}
-        <S.Card layout>
-          {editItem ? <EditItem formMethods={formMethods} onCancel={() => setEditItem(false)} data={data} /> : <ItemDetails data={data} />}
-        </S.Card>
+
         <S.Menu>
           {editItem ? (
             <>
