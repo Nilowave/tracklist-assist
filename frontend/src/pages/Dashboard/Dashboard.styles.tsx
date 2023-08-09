@@ -46,7 +46,7 @@ export const ItemList = styled(motion.div)`
   margin-top: 3rem;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   grid-gap: 3rem;
   flex-wrap: wrap;
   flex-direction: column;
@@ -54,6 +54,7 @@ export const ItemList = styled(motion.div)`
 
   @media ${respondTo(MediaQuery.MIN_1024)} {
     margin-top: 8rem;
+    align-items: flex-start;
     flex-direction: row;
   }
 `;

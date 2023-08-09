@@ -3,6 +3,7 @@ import Menu from '@mui/material/Menu';
 import MenuList from '@mui/material/MenuList';
 import { MouseEvent, ReactElement, useState } from 'react';
 import * as S from './M07CardMenu.styles';
+import { useDeviceState } from '../../../hooks/useDeviceState';
 import { A01Icon } from '../../atoms/A01Icon/A01Icon';
 
 interface M07CardMenuProps {
@@ -16,13 +17,18 @@ interface M07CardMenuProps {
 
 export const M07CardMenu = ({ className, isExpanded, onEdit, onExpand, onArchive, onDelete }: M07CardMenuProps): ReactElement => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { isMobile } = useDeviceState();
+
   const open = Boolean(anchorEl);
+
   const onClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const onClose = () => {
     setAnchorEl(null);
   };
+
   const handleEdit = () => {
     onEdit();
     onClose();
@@ -55,10 +61,12 @@ export const M07CardMenu = ({ className, isExpanded, onEdit, onExpand, onArchive
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuList dense>
-          <S.StyledItem onClick={handleExpand}>
-            <A01Icon name={isExpanded ? 'minimize' : 'maximize'} size={20} />
-            {isExpanded ? 'Minimize' : 'Maximize'}
-          </S.StyledItem>
+          {!isMobile && (
+            <S.StyledItem onClick={handleExpand}>
+              <A01Icon name={isExpanded ? 'minimize' : 'maximize'} size={20} />
+              {isExpanded ? 'Minimize' : 'Maximize'}
+            </S.StyledItem>
+          )}
           <S.StyledItem onClick={handleEdit}>
             <A01Icon name="edit" size={20} />
             Rename

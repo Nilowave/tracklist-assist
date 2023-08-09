@@ -35,19 +35,21 @@ const all = (user, query) =>
   new Promise((resolve, reject) => {
     const props = { user, archived };
 
+    Item.collection.getIndexes((err, indexes) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(indexes);
+      }
+    });
+
     if (query) {
       const nameSearchRegex = new RegExp(query, 'i');
-
-      console.log(query);
       const parsedDate = parseMultipleDates(query);
-      console.log({ parsedDate });
 
       if (parsedDate) {
-        console.log('som', startOfMonth(parsedDate));
-        console.log('eom', endOfMonth(parsedDate));
         if (parsedDate.getMonth() === 0) {
           props.$or = [
-            { name: nameSearchRegex },
             {
               createdAt: {
                 $gte: startOfYear(parsedDate),
@@ -64,7 +66,6 @@ const all = (user, query) =>
         } else {
           // If the parsed date is a month, search for items created within the parsed date range
           props.$or = [
-            { name: nameSearchRegex },
             {
               createdAt: {
                 $gte: startOfMonth(parsedDate),
