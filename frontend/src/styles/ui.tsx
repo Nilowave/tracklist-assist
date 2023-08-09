@@ -1,5 +1,7 @@
 import Tooltip, { tooltipClasses, TooltipProps } from '@mui/material/Tooltip';
 import styled, { css } from 'styled-components';
+import { respondTo } from './helpers/respondTo';
+import { MediaQuery } from './mediaQuery';
 
 type FlexProps = {
   $row?: boolean;
@@ -10,9 +12,11 @@ type FlexProps = {
 };
 
 export const smoothCorners = (radius: number) => css`
-  --smooth-corners: ${radius};
-  mask-image: paint(smooth-corners);
-  -webkit-mask-image: paint(smooth-corners);
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    --smooth-corners: ${radius};
+    mask-image: paint(smooth-corners);
+    -webkit-mask-image: paint(smooth-corners);
+  }
 `;
 
 export const DotGrid = styled.div`

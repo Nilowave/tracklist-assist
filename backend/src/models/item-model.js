@@ -15,4 +15,7 @@ const Item = new Schema(
   { timestamps: true },
 );
 
+Item.index({ name: 'text' });
+Item.index({ createdAt: 1 });
+
 module.exports = mongoose.model('items', Item);

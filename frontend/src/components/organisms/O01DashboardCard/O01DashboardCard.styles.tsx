@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
+import { respondTo } from '../../../styles/helpers/respondTo';
+import { MediaQuery } from '../../../styles/mediaQuery';
 import { typeStyles } from '../../../styles/typeStyles';
 import { Flex, smoothCorners } from '../../../styles/ui';
 import { A03Text } from '../../atoms/A03Text/A03Text';
@@ -10,11 +12,14 @@ export const MenuButton = styled(M07CardMenu)<{ $persist?: boolean }>`
   align-self: flex-end;
   margin-right: 0.25rem;
   margin-top: 0.3rem;
-  opacity: ${({ $persist }) => ($persist ? '1 !important' : 0)};
   transition: opacity 0.2s ease;
 
   &:focus-within {
     opacity: 0.8 !important;
+  }
+
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    opacity: ${({ $persist }) => ($persist ? '1 !important' : 0)};
   }
 `;
 
@@ -43,22 +48,26 @@ export const CardButton = styled.button<{ $isExpanded?: boolean; $isEditing?: bo
   cursor: pointer;
   position: relative;
   display: grid;
-  width: ${({ $isExpanded }) => ($isExpanded ? '31.8rem' : '20.4rem')};
-  height: ${({ $isExpanded }) => ($isExpanded ? 'auto' : '20.4rem')};
+  width: 20.4rem;
+  height: 20.4rem;
   filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
 
-  ${({ $isEditing, theme }) =>
-    $isEditing
-      ? css`
-          --border-color: ${theme.hexToRgba(theme.colors.white, 0.5)};
-        `
-      : css`
-          @media (hover: hover) {
-            &:hover {
-              --border-color: ${theme.hexToRgba(theme.colors.primary, 0.5)};
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    width: ${({ $isExpanded }) => ($isExpanded ? '31.8rem' : '20.4rem')};
+    height: ${({ $isExpanded }) => ($isExpanded ? 'auto' : '20.4rem')};
+    ${({ $isEditing, theme }) =>
+      $isEditing
+        ? css`
+            --border-color: ${theme.hexToRgba(theme.colors.white, 0.5)};
+          `
+        : css`
+            @media (hover: hover) {
+              &:hover {
+                --border-color: ${theme.hexToRgba(theme.colors.primary, 0.5)};
+              }
             }
-          }
-        `}
+          `}
+  }
 
   & > div {
     grid-area: 1 / 1;
@@ -113,14 +122,19 @@ export const Border = styled.div`
 
 export const Content = styled(Flex)<{ $isExpanded: boolean }>`
   position: relative;
-  padding-inline: ${({ $isExpanded }) => ($isExpanded ? '1rem' : '0.7rem')};
-  padding-block: ${({ $isExpanded }) => ($isExpanded ? '1.5rem 2.4rem' : '0.9rem 1.9rem')};
+  padding-inline: 0.7rem;
+  padding-block: 0.9rem 1.9rem;
+
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    padding-inline: ${({ $isExpanded }) => ($isExpanded ? '1rem' : '0.7rem')};
+    padding-block: ${({ $isExpanded }) => ($isExpanded ? '1.5rem 2.4rem' : '0.9rem 1.9rem')};
+  }
 `;
 
 export const TitleWrapper = styled.div<{ $isExpanded?: boolean; $isEditing?: boolean }>`
   flex: 1;
   width: 100%;
-  min-height: ${({ $isExpanded }) => ($isExpanded ? '10rem' : 'auto')};
+  min-height: auto;
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
@@ -129,6 +143,10 @@ export const TitleWrapper = styled.div<{ $isExpanded?: boolean; $isEditing?: boo
   border-radius: 1.8rem;
   color: ${({ theme }) => theme.colors.background};
   filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    min-height: ${({ $isExpanded }) => ($isExpanded ? '10rem' : 'auto')};
+  }
 
   &:before,
   &:after {
