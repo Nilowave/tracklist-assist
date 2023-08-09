@@ -10,10 +10,10 @@ interface M05CardDetailFieldProps {
 export const M05CardDetailField = ({ title, detail }: M05CardDetailFieldProps): ReactElement => {
   return (
     <S.StyledM05CardDetailField>
-      <Text type="caption" as="span">
+      <Text $type="caption" as="span">
         {title}
       </Text>
-      <Text type="body">{detail}</Text>
+      <Text $type="body">{detail}</Text>
     </S.StyledM05CardDetailField>
   );
 };

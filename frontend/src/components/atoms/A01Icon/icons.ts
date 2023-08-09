@@ -6,7 +6,10 @@ import { ReactComponent as back } from '../../../assets/svg/back.svg';
 import { ReactComponent as calendar } from '../../../assets/svg/calendar.svg';
 import { ReactComponent as check } from '../../../assets/svg/check.svg';
 import { ReactComponent as close } from '../../../assets/svg/close.svg';
+import { ReactComponent as col1 } from '../../../assets/svg/col-1.svg';
+import { ReactComponent as col2 } from '../../../assets/svg/col-2.svg';
 import { ReactComponent as collab } from '../../../assets/svg/collab.svg';
+import { ReactComponent as dotsMenu } from '../../../assets/svg/dots-menu.svg';
 import { ReactComponent as edit } from '../../../assets/svg/edit.svg';
 import { ReactComponent as filter } from '../../../assets/svg/filter.svg';
 import { ReactComponent as googleIcon } from '../../../assets/svg/google-button.svg';
@@ -38,6 +41,9 @@ export const icons = {
   search,
   user,
   minimize,
+  col1,
+  col2,
+  dotsMenu,
   check,
   edit,
   more,

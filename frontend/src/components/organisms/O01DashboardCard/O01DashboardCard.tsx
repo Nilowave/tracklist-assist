@@ -6,11 +6,12 @@ import { type ReactElement, useCallback, useEffect, useMemo, useRef, useState } 
 import { expandedAtom } from './O01DashboardCard.atoms';
 import * as S from './O01DashboardCard.styles';
 import { DBCardData } from '../../../api/api.types';
-import { apiCreateNewCard, apiDeleteCard, apiUpdateCard } from '../../../api/cards';
+import { useCardsStore } from '../../../api/cards';
 import { apiCreateNewTrack, TrackReturnData } from '../../../api/tracks';
 import { Cards } from '../../../data/enum/Cards';
 import { useDialog } from '../../../hooks/useDialog';
 import useIsMounted from '../../../hooks/useIsMounted';
+import { cardsAtom, shouldFetchAtom } from '../../../pages/Dashboard/Dashboard.atoms';
 import { Flex } from '../../../styles/ui';
 import { limitDuration } from '../../../utils/limitDuration';
 import { slideFade } from '../../../utils/motionTransitions';
@@ -18,7 +19,6 @@ import { A02Counter } from '../../atoms/A02Counter/A02Counter';
 import { A04Tooltip } from '../../atoms/A04Tooltip/A04Tooltip';
 import { M02IconButton } from '../../molecules/M02IconButton/M02IconButton';
 import { M05CardDetailField } from '../../molecules/M05CardDetailField/M05CardDetailField';
-import { cardsAtom, shouldFetchAtom } from '../../pages/Dashboard/Dashboard.atoms';
 
 interface O01DashboardCardProps {
   data: DBCardData;
@@ -29,6 +29,10 @@ interface O01DashboardCardProps {
 export const O01DashboardCard = ({ data, isNew, onClick }: O01DashboardCardProps): ReactElement => {
   const elementRef = useRef<HTMLDivElement>(null);
   const nameInputRef = useRef<HTMLTextAreaElement>(null);
+
+  const updateCard = useCardsStore((state) => state.updateCard);
+  const deleteCard = useCardsStore((state) => state.deleteCard);
+  const createNewCard = useCardsStore((state) => state.createNewCard);
 
   const [, setShouldFetchCards] = useAtom(shouldFetchAtom);
   const [cards, setCards] = useAtom(cardsAtom);
@@ -69,7 +73,7 @@ export const O01DashboardCard = ({ data, isNew, onClick }: O01DashboardCardProps
         ...data,
         archived: true,
       };
-      apiUpdateCard(update).then(() => {
+      updateCard(update).then(() => {
         setShouldFetchCards(true);
         hideDialog();
       });
@@ -103,7 +107,7 @@ export const O01DashboardCard = ({ data, isNew, onClick }: O01DashboardCardProps
 
   const onDeleteClick = () => {
     const handleConfirm = () =>
-      apiDeleteCard(data.id).then(() => {
+      deleteCard(data.id).then(() => {
         setShouldFetchCards(true);
         hideDialog();
       });
@@ -195,7 +199,7 @@ export const O01DashboardCard = ({ data, isNew, onClick }: O01DashboardCardProps
 
       setIsLoading(true);
 
-      (cardData.id === Cards.NEW ? apiCreateNewCard({ name, id: '' }) : apiUpdateCard(update))
+      (cardData.id === Cards.NEW ? createNewCard({ name, id: '' }) : updateCard(update))
         .then((update) => {
           if (update) {
             setShouldFetchCards(true);

@@ -1,4 +1,4 @@
-import { Trackwave } from '../../../../data/enum/Trackwave';
+import { Trackwave } from '../../../data/enum/Trackwave';
 
 /* eslint-disable no-irregular-whitespace */
 export const privacyHTML = `

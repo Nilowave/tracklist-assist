@@ -12,9 +12,9 @@ export const typeStyles = {
     font-weight: 600;
   `,
   h3: css`
+    font-family: ${({ theme }) => theme.fonts.arialRounded};
     font-size: 2.8rem;
-    font-weight: 500;
-    letter-spacing: -0.03em;
+    font-weight: 600;
     line-height: 1.1;
   `,
   title: css`

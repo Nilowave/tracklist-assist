@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { respondTo } from '../../../styles/helpers/respondTo';
-import { MediaQuery } from '../../../styles/mediaQuery';
-import { typeStyles } from '../../../styles/typeStyles';
-import { M01PrimaryButton } from '../../molecules/M01PrimaryButton/M01PrimaryButton';
+import { M01PrimaryButton } from '../../components/molecules/M01PrimaryButton/M01PrimaryButton';
+import { respondTo } from '../../styles/helpers/respondTo';
+import { MediaQuery } from '../../styles/mediaQuery';
+import { typeStyles } from '../../styles/typeStyles';
 
 export const Dashboard = styled.section<{ $blur?: boolean }>`
   padding: ${({ theme }) => theme.sitePaddings.desktop};

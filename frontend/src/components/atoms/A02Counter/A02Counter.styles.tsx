@@ -1,6 +1,10 @@
 import styled from 'styled-components';
+import { typeStyles } from '../../../styles/typeStyles';
 
 export const A02Counter = styled.div`
+  ${typeStyles.bold};
+  font-size: 1.4rem;
+
   box-sizing: border-box;
   padding: 0.4rem 0.8rem;
   min-width: 3.2rem;

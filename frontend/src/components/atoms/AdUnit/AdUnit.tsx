@@ -10,7 +10,7 @@ interface AdUnitProps {
 export const AdUnit = ({ slot, format = 'leaderboard' }: AdUnitProps): ReactElement => {
   return (
     <S.Wrapper>
-      <S.Caption type="label">Advertisement</S.Caption>
+      <S.Caption $type="label">Advertisement</S.Caption>
       <S.AdUnit format={format}>
         <script
           async

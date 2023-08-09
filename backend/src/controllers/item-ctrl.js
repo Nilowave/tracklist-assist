@@ -84,10 +84,23 @@ const getItems = async (req, res) => {
     .catch((error) => res.status(400).json({ success: false, error }));
 };
 
+const find = async (req, res) => {
+  const user = req.user.id;
+  try {
+    const query = req.query.q;
+    const data = await ItemService.all(user, query);
+
+    res.json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({ success: false, error });
+  }
+};
+
 module.exports = {
   upsert,
   deleteItem,
   getItems,
   getItemById,
   validate,
+  find,
 };
