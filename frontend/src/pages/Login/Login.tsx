@@ -4,9 +4,10 @@ import { IAuthorizationOptions } from 'react-google-oauth2';
 
 import { Navigate } from 'react-router-dom';
 import * as S from './Login.styles';
+import { ReactComponent as Logo } from '../../assets/svg/logo.svg';
+import { A01Icon } from '../../components/atoms/A01Icon/A01Icon';
 import { Text } from '../../components/atoms/A03Text/A03Text.styles';
 import { AdUnit } from '../../components/atoms/AdUnit/AdUnit';
-import { GoogleIcon, Logo } from '../../components/atoms/Icon/Icon';
 import { UserContext } from '../../context/UserContext/UserContext';
 import { PageTitle } from '../../data/enum/PageTitle';
 import { Path } from '../../data/enum/Path';
@@ -42,11 +43,11 @@ export const Login = (): ReactElement => {
       </S.LogoWrapper>
       <S.StyledButtonWrapper>
         <S.StyledGoogleButton options={options} apiUrl={`${import.meta.env.VITE_REACT_APP_BASE_PATH}/auth/google`} defaultStyle={false}>
-          <GoogleIcon />
+          <A01Icon name="googleIcon" />
           Sign in with Google
         </S.StyledGoogleButton>
 
-        <Text type="disclaimer">
+        <Text $type="disclaimer">
           Click “Sign In” to agree to {Trackwave.NAME}’s <S.StyledLink to={Path.Terms}>Terms of Service</S.StyledLink> and acknowledge that
           {Trackwave.NAME}’s <S.StyledLink to={Path.PrivacyPolicy}>Privacy Policy</S.StyledLink> applies to you.
         </Text>

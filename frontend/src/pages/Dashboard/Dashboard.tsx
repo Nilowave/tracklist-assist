@@ -1,15 +1,13 @@
 import { LayoutGroup } from 'framer-motion';
 import { useAtom } from 'jotai';
-import { ReactElement, useCallback, useEffect, useState } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import io from 'socket.io-client';
-import { cardsAtom, shouldFetchAtom } from './Dashboard.atoms';
+import { shouldFetchAtom } from './Dashboard.atoms';
 import * as S from './Dashboard.styles';
 import { DBCardData } from '../../api/api.types';
-import { apiGetCards } from '../../api/cards';
+import { useCardsStore } from '../../api/cards';
+import { ReactComponent as Logo } from '../../assets/svg/logo.svg';
 import { AdUnit } from '../../components/atoms/AdUnit/AdUnit';
-import { Logo } from '../../components/atoms/Icon/Icon';
-import { Empty } from '../../components/organisms/Empty/Empty';
 import { O01DashboardCard } from '../../components/organisms/O01DashboardCard/O01DashboardCard';
 import { O04ActionMenu } from '../../components/organisms/O04ActionMenu/O04ActionMenu';
 import { Cards } from '../../data/enum/Cards';
@@ -19,46 +17,13 @@ import { useDeviceState } from '../../hooks/useDeviceState';
 import { DotGrid } from '../../styles/ui';
 import { staggerChildren } from '../../utils/motionTransitions';
 
-type SocketMessage = {
-  id: string;
-};
-
 export const Dashboard = (): ReactElement => {
-  const [cards, setCards] = useAtom(cardsAtom);
+  const cards = useCardsStore((state) => state.cards);
+  const fetchCards = useCardsStore((state) => state.fetchCards);
+  const setCards = useCardsStore((state) => state.setCards);
+
   const [shouldFetchCards, setShouldFetchCards] = useAtom(shouldFetchAtom);
-  const [isEmpty, setIsEmpty] = useState<boolean>(false);
   const { isMobile } = useDeviceState();
-
-  const socketListener = (message: SocketMessage) => {
-    console.log('update', message);
-    if (message.id === 'update') {
-      getCards();
-    }
-  };
-
-  const getCardsCallback = useCallback(
-    (cards?: Array<DBCardData>) => {
-      if (!cards) {
-        setIsEmpty(true);
-        return;
-      }
-
-      setIsEmpty(!cards.length);
-      setCards(cards);
-    },
-    [shouldFetchCards]
-  );
-
-  const getCards = () => {
-    console.log('fetch cards');
-
-    apiGetCards()
-      .then((cards) => getCardsCallback(cards))
-      .catch((error) => {
-        setIsEmpty(true);
-        console.log(error);
-      });
-  };
 
   const onAddNewCard = () => {
     // check if there is a card that is new
@@ -79,18 +44,9 @@ export const Dashboard = (): ReactElement => {
     setCards(updateCards);
   };
 
-  useEffect((): (() => void) => {
-    const socket = io('/');
-    socket.on('message', socketListener);
-
-    return () => {
-      socket.close();
-    };
-  }, []);
-
   useEffect(() => {
     if (shouldFetchCards) {
-      getCards();
+      fetchCards();
       setShouldFetchCards(false);
     }
   }, [shouldFetchCards]);
@@ -104,10 +60,10 @@ export const Dashboard = (): ReactElement => {
             <Logo />
           </S.Heading>
           <LayoutGroup>
-            {cards && !isEmpty && (
+            {cards.length > 0 && (
               <S.ItemList layout {...staggerChildren()}>
                 {cards.map((item) => (
-                  <div style={{ display: 'contents' }} key={item.id}>
+                  <div style={{ display: 'contents' }} key={`${item.id}-${item.name}`}>
                     <O01DashboardCard onClick={(data) => console.log(data)} key={item.id} data={item} />
                     {/* {index % 3 === 2 && index < cards.length - 1 && <AdUnit slot={3271702308} format="square" />} */}
                   </div>
@@ -115,7 +71,7 @@ export const Dashboard = (): ReactElement => {
               </S.ItemList>
             )}
           </LayoutGroup>
-          {isEmpty && <Empty />}
+          {cards.length === 0 && <>Nothing to see here </>}
           <S.AddButton text={isMobile ? '' : 'Track Item'} icon="addLarge" color="primary" onClick={onAddNewCard} />
         </S.Content>
         <S.Footer>

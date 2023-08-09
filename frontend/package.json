@@ -40,7 +40,8 @@
     "styled-components": "^5.3.1",
     "text-fit": "^1.0.1",
     "textfit": "^2.4.0",
-    "vite-plugin-svgr": "^3.2.0"
+    "vite-plugin-svgr": "^3.2.0",
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.8",

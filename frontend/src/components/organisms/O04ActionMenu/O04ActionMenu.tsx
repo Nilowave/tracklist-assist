@@ -7,6 +7,7 @@ import { Flex, LightTooltip } from '../../../styles/ui';
 import { A01Icon } from '../../atoms/A01Icon/A01Icon';
 import { A02Counter } from '../../atoms/A02Counter/A02Counter';
 import { M02IconButton } from '../../molecules/M02IconButton/M02IconButton';
+import { M03SearchInput } from '../../molecules/M03SearchInput/M03SearchInput';
 
 interface O04ActionMenuProps {
   count?: number;
@@ -30,7 +31,7 @@ export const O04ActionMenu = ({ count }: O04ActionMenuProps): ReactElement => {
           {count && <A02Counter count={count} />}
           <S.Separator />
           <Flex as="nav" $gap="1.2rem">
-            <M02IconButton tooltipPlacement="left" icon="search" tooltip="Search" />
+            <M03SearchInput />
             <M02IconButton tooltipPlacement="left" icon="filter" tooltip="Settings" />
             {isMobile && (
               <M02IconButton

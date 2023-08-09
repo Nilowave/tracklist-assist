@@ -1,63 +1,46 @@
-import axios, { AxiosResponse } from 'axios';
-import { DBCardData, GetItemResponse } from './api.types';
+import axios from 'axios';
+import { create } from 'zustand';
+import { DBCardData } from './api.types';
+import { Endpoints } from '../data/enum/Endpoints';
 
-const endpoint = '/api/';
-const itemEndpoint = `${endpoint}item/`;
-const itemsEndpoint = `${endpoint}items/`;
+interface CardsStoreState {
+  cards: Array<DBCardData>;
+  setCards: (cards: Array<DBCardData>) => void;
+  fetchCards: (query?: string) => Promise<DBCardData | void>;
+  deleteCard: (id: string) => Promise<void>;
+  updateCard: (data: DBCardData) => Promise<DBCardData | void>;
+  createNewCard: (data: DBCardData) => Promise<DBCardData | void>;
+}
 
-export const apiCreateNewCard = (data: DBCardData) => {
-  return new Promise<DBCardData>((resolve, reject) => {
-    axios
-      .post(itemEndpoint, data)
-      .then((response: AxiosResponse<DBCardData>) => {
-        const { data: card } = response;
-        resolve(card);
-      })
-      .catch((error) => reject(error));
-  });
-};
+export const useCardsStore = create<CardsStoreState>((set) => ({
+  cards: [],
 
-export const apiGetCards = () => {
-  return new Promise<Array<DBCardData> | undefined>((resolve, reject) => {
-    axios
-      .get(itemsEndpoint)
-      .then((response) => resolve(response.data.data))
-      .catch((error) => reject(error));
-  });
-};
+  setCards: (cards) => set({ cards }),
 
-export const apiDeleteCard = (cardId: string) => {
-  return axios.delete(`${itemEndpoint}${cardId}`);
-};
+  fetchCards: async (query?: string) => {
+    try {
+      const fetchEndpoint = query ? `${Endpoints.SEARCH}?q=${encodeURIComponent(query)}` : Endpoints.ITEMS;
+      const response = await axios.get(fetchEndpoint);
+      const cards = response.data.data || [];
+      set({ cards });
+      return cards;
+    } catch (error) {
+      console.error('Error fetching cards:', error);
+    }
+    return [];
+  },
 
-export const apiUpdateCard = async (data: DBCardData) => {
-  return new Promise<DBCardData | undefined>((resolve, reject) => {
-    axios
-      .put(`${itemEndpoint}${data.id}`, data)
-      .then((update) => resolve(update.data))
-      .catch((error) => reject(error));
-  });
-};
+  deleteCard: async (cardId: string) => {
+    return axios.delete(`${Endpoints.ITEM}${cardId}`);
+  },
 
-export const trackNewItem = async (data: DBCardData): Promise<DBCardData | undefined> => {
-  // const newDate = Date.now();
-  // const { tracks } = data;
+  createNewCard: async (data: DBCardData) => {
+    const response = await axios.post(Endpoints.ITEM, data);
+    return response.data;
+  },
 
-  // const update = [...tracks, newDate];
-  const submitData: DBCardData = {
-    name: data.name,
-    // tracks: update,
-    id: data.id,
-  };
-
-  if (data.id) {
-    await axios.put(`/api/item/${data.id}`, submitData);
-
-    const update = await axios.get<GetItemResponse>(`/api/item/${data.id}`);
-    const updateData = update.data.data;
-
-    return updateData;
-  }
-
-  return;
-};
+  updateCard: async (data: DBCardData) => {
+    const response = await axios.put(`${Endpoints.ITEM}${data.id}`, data);
+    return response.data;
+  },
+}));

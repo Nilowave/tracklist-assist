@@ -9,7 +9,7 @@ interface A02CounterProps {
 export const A02Counter = ({ count }: A02CounterProps): ReactElement => {
   return (
     <S.A02Counter>
-      <Text type="tinyTitle">{count}</Text>
+      <Text $type="tinyTitle">{count}</Text>
     </S.A02Counter>
   );
 };

@@ -9,8 +9,9 @@ export const StyledO04ActionMenu = styled(Flex)`
   min-width: 6rem;
   border-radius: 3rem;
   background-color: ${({ theme }) => theme.hexToRgba(theme.colors.background, 0.1)};
-  bottom: ${({ theme }) => `calc(${theme.sitePaddings.desktop} + 8rem)`};
-  right: ${({ theme }) => theme.sitePaddings.desktop};
+  top: 50%;
+  right: 1.8rem;
+  transform: translateY(-50%);
   backdrop-filter: blur(10px);
 
   @media ${respondTo(MediaQuery.MAX_1023)} {

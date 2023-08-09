@@ -10,7 +10,6 @@ module.exports = (io) => {
   const router = express.Router();
 
   const checkAuth = (req, res, next) => {
-    console.log('check auth', { user: req.user.id });
     if (!req.user) {
       return res.status(400).json({
         success: false,
@@ -49,6 +48,7 @@ module.exports = (io) => {
   router.delete('/track/:id', (req, res) => TrackCtrl.deleteTrack(req, res, io)); // delete track
   router.get('/track/:id', (req, res) => TrackCtrl.getTrackById(req, res, io)); // get item by id
   router.get('/track/:itemid', (req, res) => TrackCtrl.getTrackByItemId(req, res, io)); // get item by id
+  router.get('/track/find', (req, res) => TrackCtrl.find(req, res, io)); // search items
 
   // Item
   // router.post('/assistant', (req, res) => ItemCtrl.assistant(req, res, io));
@@ -59,8 +59,9 @@ module.exports = (io) => {
     ItemCtrl.upsert(req, res, io),
   ); // update exisitng item
   router.delete('/item/:id', (req, res) => ItemCtrl.deleteItem(req, res, io)); // delete item
-  router.get('/items', (req, res) => ItemCtrl.getItems(req, res, io)); // get all items
   router.get('/item/:id', (req, res) => ItemCtrl.getItemById(req, res, io)); // get item by id
+  router.get('/items', (req, res) => ItemCtrl.getItems(req, res, io)); // get all items
+  router.get('/items/find', (req, res) => ItemCtrl.find(req, res, io)); // search items
 
   // User
   router.get('/logout', (req, res) => UserCtrl.logout(req, res));
