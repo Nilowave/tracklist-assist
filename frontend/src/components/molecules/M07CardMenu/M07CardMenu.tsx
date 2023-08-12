@@ -1,5 +1,4 @@
 import Divider from '@mui/material/Divider';
-import Menu from '@mui/material/Menu';
 import MenuList from '@mui/material/MenuList';
 import { MouseEvent, ReactElement, useState } from 'react';
 import * as S from './M07CardMenu.styles';
@@ -49,7 +48,7 @@ export const M07CardMenu = ({ className, isExpanded, onEdit, onExpand, onArchive
   return (
     <S.StyledM07CardMenu className={className}>
       <S.MenuButton icon="more" tooltip="More" fill="transparent" onClick={onClick} />
-      <Menu
+      <S.StyledMenu
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
@@ -60,7 +59,7 @@ export const M07CardMenu = ({ className, isExpanded, onEdit, onExpand, onArchive
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuList dense>
+        <MenuList dense sx={{ minWidth: 150 }}>
           {!isMobile && (
             <S.StyledItem onClick={handleExpand}>
               <A01Icon name={isExpanded ? 'minimize' : 'maximize'} size={20} />
@@ -80,7 +79,7 @@ export const M07CardMenu = ({ className, isExpanded, onEdit, onExpand, onArchive
             Delete
           </S.StyledItem>
         </MenuList>
-      </Menu>
+      </S.StyledMenu>
     </S.StyledM07CardMenu>
   );
 };

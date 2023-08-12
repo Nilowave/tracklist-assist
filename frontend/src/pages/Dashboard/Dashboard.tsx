@@ -88,8 +88,8 @@ export const Dashboard = (): ReactElement => {
             </div>
           </S.FooterWrapper>
         </S.Footer>
+        <O04ActionMenu count={cards?.length} />
       </S.Dashboard>
-      <O04ActionMenu count={cards?.length} />
     </>
   );
 };

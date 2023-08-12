@@ -30,7 +30,12 @@ export const Tooltip = styled(Text)`
   }
 `;
 
-export const IconWrapper = styled.div<{ $isText: boolean; $fill?: 'solid' | 'transparent'; $color?: ColorKey }>`
+export const IconWrapper = styled.div<{
+  $isText: boolean;
+  $fill?: 'solid' | 'transparent';
+  $color?: ColorKey;
+  $size?: 'small' | 'medium' | 'large';
+}>`
   position: relative;
   width: 3rem;
   height: 3rem;
@@ -51,6 +56,13 @@ export const IconWrapper = styled.div<{ $isText: boolean; $fill?: 'solid' | 'tra
       background-color: ${$isText ? theme.colors.alt1 : theme.colors.white};
       box-shadow: 0px 4px 4px ${({ theme }) => theme.hexToRgba(theme.colors.black, 0.8)};
     `};
+
+  ${({ $size }) =>
+    $size === 'medium' &&
+    css`
+      width: 4rem;
+      height: 4rem;
+    `}
 `;
 
 export const StyledM02IconButton = styled.button<{ $isText: boolean; $fill?: 'solid' | 'transparent'; $color?: ColorKey }>`

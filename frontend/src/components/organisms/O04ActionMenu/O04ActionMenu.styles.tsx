@@ -5,18 +5,24 @@ import { Flex } from '../../../styles/ui';
 
 export const StyledO04ActionMenu = styled(Flex)`
   position: fixed;
+  bottom: 1.5rem;
+  width: calc(100% - 3rem);
+  height: 6rem;
+  right: ${({ theme }) => theme.sitePaddings.mobile};
   padding: 1.5rem;
-  min-width: 6rem;
+  flex-direction: row;
   border-radius: 3rem;
   background-color: ${({ theme }) => theme.hexToRgba(theme.colors.background, 0.1)};
-  top: 50%;
-  right: 1.8rem;
-  transform: translateY(-50%);
   backdrop-filter: blur(10px);
 
-  @media ${respondTo(MediaQuery.MAX_1023)} {
-    bottom: ${({ theme }) => `calc(${theme.sitePaddings.mobile} + 8rem)`};
-    right: ${({ theme }) => theme.sitePaddings.mobile};
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    width: 6rem;
+    height: auto;
+    top: 50%;
+    bottom: auto;
+    right: 1.8rem;
+    flex-direction: column;
+    transform: translateY(-50%);
   }
 `;
 
@@ -38,11 +44,16 @@ export const Background = styled.div`
 `;
 
 export const Separator = styled.div`
-  width: 1.5rem;
-  height: 2px;
+  width: 2px;
+  height: 1.5rem;
   opacity: 0.1;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 3px;
+
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    width: 1.5rem;
+    height: 2px;
+  }
 `;
 
 export const ActionMenuButton = styled.button`
@@ -59,5 +70,14 @@ export const ActionMenuButton = styled.button`
     &:hover {
       background-color: ${({ theme }) => theme.hexToRgba(theme.colors.white, 0.1)};
     }
+  }
+`;
+
+export const Nav = styled(Flex)`
+  flex-direction: row;
+  gap: 1.5rem;
+
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    flex-direction: column;
   }
 `;
