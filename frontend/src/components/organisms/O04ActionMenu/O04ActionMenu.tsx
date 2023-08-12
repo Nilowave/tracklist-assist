@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { columnDisplayAtom, openActionsAtom } from './O04ActionMenu.atoms';
 import * as S from './O04ActionMenu.styles';
 import { useDeviceState } from '../../../hooks/useDeviceState';
-import { Flex, LightTooltip } from '../../../styles/ui';
+import { LightTooltip } from '../../../styles/ui';
 import { A01Icon } from '../../atoms/A01Icon/A01Icon';
 import { A02Counter } from '../../atoms/A02Counter/A02Counter';
 import { M02IconButton } from '../../molecules/M02IconButton/M02IconButton';
@@ -30,18 +30,19 @@ export const O04ActionMenu = ({ count }: O04ActionMenuProps): ReactElement => {
         <>
           {count && <A02Counter count={count} />}
           <S.Separator />
-          <Flex as="nav" $gap="1.2rem">
+          <S.Nav as="nav" $gap="1.2rem">
             <M03SearchInput />
-            <M02IconButton tooltipPlacement="left" icon="filter" tooltip="Settings" />
+            <M02IconButton iconSize={22} size="medium" tooltipPlacement="left" icon="filter" tooltip="Settings" />
             {isMobile && (
               <M02IconButton
+                size="medium"
                 onClick={onSwitchColumnDisplay}
                 tooltipPlacement="left"
                 icon={columnDisplay === 'double' ? 'col1' : 'col2'}
                 tooltip={columnDisplay === 'double' ? '1 column' : '2 columns'}
               />
             )}
-          </Flex>
+          </S.Nav>
           <S.Separator />
           <LightTooltip title="Close Actions" placement="left" describeChild>
             <S.ActionMenuButton onClick={() => setOpenActions(false)}>

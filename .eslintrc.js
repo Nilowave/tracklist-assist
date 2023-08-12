@@ -6,6 +6,7 @@ module.exports = {
   },
   extends: ['airbnb-base', 'prettier'],
   plugins: ['prettier'],
+  root: true,
   overrides: [
     {
       env: {
@@ -33,6 +34,36 @@ module.exports = {
         optionalDependencies: false,
         peerDependencies: false,
         packageDir: './',
+      },
+    ],
+    'import/order': [
+      1,
+      {
+        groups: ['external', 'builtin', 'internal', 'sibling', 'parent', 'index'],
+        pathGroups: [
+          {
+            pattern: 'components',
+            group: 'internal',
+          },
+          {
+            pattern: 'common',
+            group: 'internal',
+          },
+          {
+            pattern: 'routes/ **',
+            group: 'internal',
+          },
+          {
+            pattern: 'assets/**',
+            group: 'internal',
+            position: 'after',
+          },
+        ],
+        pathGroupsExcludedImportTypes: ['internal'],
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
       },
     ],
   },

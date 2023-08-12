@@ -53,12 +53,12 @@ export const M03SearchInput = (): ReactElement => {
 
   return (
     <S.StyledM03SearchInput>
-      <M02IconButton icon="search" onClick={onToggleClick} />
+      <M02IconButton size="medium" iconSize={24} tooltipPlacement="left" tooltip="Search" icon="search" onClick={onToggleClick} />
       {isActive && (
         <ClickAwayListener onClickAway={hideSearch}>
           <S.SearchWrapper $row $gap="0.5rem" $align="center">
             <S.SearchInput type="text" name="search" defaultValue={query} onChange={onChange} autoFocus placeholder="Search" />
-            <S.SearchIcon name="search" size={19} />
+            <S.SearchIcon name="search" size={22} />
           </S.SearchWrapper>
         </ClickAwayListener>
       )}

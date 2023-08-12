@@ -17,6 +17,7 @@ interface M02iconbuttonProps {
   disabled?: boolean;
   fill?: 'solid' | 'transparent';
   color?: ColorKey;
+  size?: 'small' | 'medium' | 'large';
 }
 
 export const M02IconButton = ({
@@ -26,6 +27,7 @@ export const M02IconButton = ({
   className,
   disabled,
   fill,
+  size,
   color,
   tooltipPlacement = 'top',
   iconSize = 19,
@@ -35,7 +37,7 @@ export const M02IconButton = ({
     <S.StyledM02IconButton disabled={disabled} onClick={onClick} $isText={!!text} className={className} $fill={fill}>
       <A04Tooltip title={tooltip} placement={tooltipPlacement} describeChild>
         <span>
-          <S.IconWrapper $isText={!!text} $fill={fill} $color={color}>
+          <S.IconWrapper $isText={!!text} $fill={fill} $color={color} $size={size}>
             <A01Icon name={icon} size={iconSize} />
           </S.IconWrapper>
           {text && <S.Label $type="body">{text}</S.Label>}
