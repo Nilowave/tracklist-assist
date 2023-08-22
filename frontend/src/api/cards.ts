@@ -1,46 +1,66 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { create } from 'zustand';
 import { DBCardData } from './api.types';
 import { Endpoints } from '../data/enum/Endpoints';
 
+interface RequestController<T> {
+  controller: AbortController;
+  request: Promise<T>;
+}
+
 interface CardsStoreState {
   cards: Array<DBCardData>;
   setCards: (cards: Array<DBCardData>) => void;
-  fetchCards: (query?: string) => Promise<DBCardData | void>;
-  deleteCard: (id: string) => Promise<void>;
+  fetchCards: (query?: string) => RequestController<void>;
+  deleteCard: (id: string) => RequestController<AxiosResponse>;
   updateCard: (data: DBCardData) => Promise<DBCardData | void>;
   createNewCard: (data: DBCardData) => Promise<DBCardData | void>;
 }
 
-export const useCardsStore = create<CardsStoreState>((set) => ({
+export const useCardStore = create<CardsStoreState>((set) => ({
   cards: [],
 
   setCards: (cards) => set({ cards }),
 
-  fetchCards: async (query?: string) => {
-    try {
-      const fetchEndpoint = query ? `${Endpoints.SEARCH}?q=${encodeURIComponent(query)}` : Endpoints.ITEMS;
-      const response = await axios.get(fetchEndpoint);
-      const cards = response.data.data || [];
-      set({ cards });
-      return cards;
-    } catch (error) {
-      console.error('Error fetching cards:', error);
-    }
-    return [];
+  fetchCards: (query?: string) => {
+    const controller = new AbortController();
+    const fetchEndpoint = query ? `${Endpoints.SEARCH}?q=${encodeURIComponent(query)}` : Endpoints.ITEMS;
+    const request = axios
+      .get(fetchEndpoint, { signal: controller.signal })
+      .then((response) => {
+        const cards = response.data.data || [];
+        set({ cards });
+      })
+      .catch((error) => {
+        console.error('Error fetching cards:', error);
+      });
+
+    return { controller, request };
   },
 
-  deleteCard: async (cardId: string) => {
-    return axios.delete(`${Endpoints.ITEM}${cardId}`);
+  deleteCard: (cardId: string) => {
+    const controller = new AbortController();
+    const request = axios.delete(`${Endpoints.ITEM}${cardId}`, { signal: controller.signal });
+    return { controller, request };
   },
 
   createNewCard: async (data: DBCardData) => {
-    const response = await axios.post(Endpoints.ITEM, data);
-    return response.data;
+    // const controller = new AbortController();
+    try {
+      const response = await axios.post(Endpoints.ITEM, data);
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+    // return { controller, request };
   },
 
   updateCard: async (data: DBCardData) => {
-    const response = await axios.put(`${Endpoints.ITEM}${data.id}`, data);
-    return response.data;
+    try {
+      const response = await axios.put(`${Endpoints.ITEM}${data.id}`, data);
+      return response.data;
+    } catch (error) {
+      return error;
+    }
   },
 }));

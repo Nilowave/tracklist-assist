@@ -20,6 +20,7 @@
     "@mui/styled-engine-sc": "^5.12.0",
     "@types/textfit": "^2.4.2",
     "axios": "^1.4.0",
+    "body-scroll-lock": "^4.0.0-beta.0",
     "date-fns": "^2.30.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^5.0.0",
@@ -31,6 +32,8 @@
     "polished": "^4.2.2",
     "prettier": "^3.0.0",
     "react": "^18.2.0",
+    "react-aria": "^3.27.0",
+    "react-datepicker": "^4.16.0",
     "react-dom": "^18.2.0",
     "react-google-oauth2": "github:Nilowave/react-google-oauth2.0",
     "react-hook-form": "^7.45.2",
@@ -44,8 +47,10 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "@types/body-scroll-lock": "^3.1.0",
     "@types/lodash-es": "^4.17.8",
     "@types/react": "^18.2.14",
+    "@types/react-datepicker": "^4.15.0",
     "@types/react-dom": "^18.2.6",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.61.0",

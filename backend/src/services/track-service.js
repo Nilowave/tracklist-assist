@@ -15,13 +15,18 @@ const update = (id, data) =>
     });
 
 const remove = (id) => Track.findOneAndDelete({ _id: id }).exec();
+const removeAll = (item) => Track.deleteMany({ item }).exec();
 
 const get = (id) => Track.findOne({ _id: id }).exec();
 
 const all = (user, item) =>
   new Promise((resolve, reject) => {
-    Track.find({ user, item })
-      .then((tracks) => resolve(tracks))
+    Track.find({ user, item }, null, { sort: { date: 1 } })
+      .then((tracks) => {
+        const returnValues = tracks.map((track) => ({ ...track._doc, id: track.id }));
+        resolve(returnValues);
+      })
+
       .catch((error) => reject(error));
   });
 
@@ -37,6 +42,7 @@ module.exports = {
   create,
   update,
   remove,
+  removeAll,
   get,
   all,
   count,

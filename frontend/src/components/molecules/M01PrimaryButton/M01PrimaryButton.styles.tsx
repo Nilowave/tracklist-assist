@@ -8,7 +8,7 @@ import { getContrastingTextColor } from '../../../utils/getContrastingTextColor'
 type ButtonProps = Omit<StyledButtonProps, 'animate'>;
 
 export const StyledButton = styled(motion.button)<ButtonProps>`
-  --size: ${({ size }) => (size === 'small' ? '3rem' : '6rem')};
+  --size: ${({ size }) => (size === 'small' ? '3rem' : size === 'medium' ? '4rem' : '6rem')};
 
   display: flex;
   gap: 1rem;

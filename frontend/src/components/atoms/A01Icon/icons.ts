@@ -19,6 +19,7 @@ import { ReactComponent as maximize } from '../../../assets/svg/maximize.svg';
 import { ReactComponent as menu } from '../../../assets/svg/menu.svg';
 import { ReactComponent as minimize } from '../../../assets/svg/minimize.svg';
 import { ReactComponent as more } from '../../../assets/svg/more.svg';
+import { ReactComponent as rewind } from '../../../assets/svg/rewind.svg';
 import { ReactComponent as search } from '../../../assets/svg/search.svg';
 import { ReactComponent as spinner } from '../../../assets/svg/spinner.svg';
 import { ReactComponent as user } from '../../../assets/svg/user.svg';
@@ -48,6 +49,7 @@ export const icons = {
   edit,
   more,
   archive,
+  rewind,
 };
 
 export type Icon = keyof typeof icons;

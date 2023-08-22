@@ -1,6 +1,6 @@
 import { ReactNode, useContext } from 'react';
 import { Navigate, Outlet } from 'react-router';
-import { UserContext } from '../context/UserContext/UserContext';
+import { UserContext } from '../components/organisms/SideMenu/context/UserContext/UserContext';
 import { Path } from '../data/enum/Path';
 
 interface PrivateRouteProps {

@@ -6,13 +6,13 @@ import { type ReactElement, useCallback, useEffect, useMemo, useRef, useState } 
 import { expandedAtom } from './O01DashboardCard.atoms';
 import * as S from './O01DashboardCard.styles';
 import { DBCardData } from '../../../api/api.types';
-import { useCardsStore } from '../../../api/cards';
-import { apiCreateNewTrack, TrackReturnData } from '../../../api/tracks';
+import { useCardStore } from '../../../api/cards';
+import { TrackReturnData, useTrackStore } from '../../../api/tracks';
 import { Cards } from '../../../data/enum/Cards';
+import { Path } from '../../../data/enum/Path';
 import { useDialog } from '../../../hooks/useDialog';
 import useIsMounted from '../../../hooks/useIsMounted';
 import { cardsAtom, shouldFetchAtom } from '../../../pages/Dashboard/Dashboard.atoms';
-import { Flex } from '../../../styles/ui';
 import { limitDuration } from '../../../utils/limitDuration';
 import { slideFade } from '../../../utils/motionTransitions';
 import { A02Counter } from '../../atoms/A02Counter/A02Counter';
@@ -30,9 +30,10 @@ export const O01DashboardCard = ({ data, isNew, onClick }: O01DashboardCardProps
   const elementRef = useRef<HTMLDivElement>(null);
   const nameInputRef = useRef<HTMLTextAreaElement>(null);
 
-  const updateCard = useCardsStore((state) => state.updateCard);
-  const deleteCard = useCardsStore((state) => state.deleteCard);
-  const createNewCard = useCardsStore((state) => state.createNewCard);
+  const updateCard = useCardStore((state) => state.updateCard);
+  const deleteCard = useCardStore((state) => state.deleteCard);
+  const createNewCard = useCardStore((state) => state.createNewCard);
+  const createNewTrack = useTrackStore((state) => state.createNewTrack);
 
   const [, setShouldFetchCards] = useAtom(shouldFetchAtom);
   const [cards, setCards] = useAtom(cardsAtom);
@@ -106,11 +107,13 @@ export const O01DashboardCard = ({ data, isNew, onClick }: O01DashboardCardProps
   };
 
   const onDeleteClick = () => {
-    const handleConfirm = () =>
-      deleteCard(data.id).then(() => {
+    const handleConfirm = () => {
+      const { request } = deleteCard(data.id);
+      request.then(() => {
         setShouldFetchCards(true);
         hideDialog();
       });
+    };
 
     const title = (
       <>
@@ -170,11 +173,7 @@ export const O01DashboardCard = ({ data, isNew, onClick }: O01DashboardCardProps
 
   const onQuickAddClick = () => {
     setIsLoading(true);
-    const data = {
-      item: cardData.id,
-      date: Date.now(),
-    };
-    apiCreateNewTrack(data)
+    createNewTrack(cardData.id)
       .then(onQuickAddCallback)
       .finally(() => {
         setIsLoading(false);
@@ -277,10 +276,13 @@ export const O01DashboardCard = ({ data, isNew, onClick }: O01DashboardCardProps
       transition={{ layout: { duration: 0.5, ease: 'easeInOut' } }}
       variants={{ ...slideFade('y', 0.7).variants }}
     >
-      <S.CardButton onClick={onCardClick} $isExpanded={isExpanded} $isEditing={isEditing}>
-        <S.Border>
-          <div />
-        </S.Border>
+      <S.CardButton
+        to={Path.Tracker}
+        state={{ id: data.id, card: data }}
+        onClick={onCardClick}
+        $isExpanded={isExpanded}
+        $isEditing={isEditing}
+      >
         <S.Content $justify="center" $align="center" $gap="1.8rem" $isExpanded={isExpanded}>
           <S.TitleWrapper $isExpanded={isExpanded} $isEditing={isEditing}>
             <S.TitleMotion layout="position" transition={{ layout: { duration: 0.5, ease: 'backInOut' } }}>
@@ -310,16 +312,7 @@ export const O01DashboardCard = ({ data, isNew, onClick }: O01DashboardCardProps
 
       <S.InteractiveOverlay $justify="space-between" $isExpanded={isExpanded}>
         {isEditing ? (
-          <Flex $self="flex-end" $gap="5.5rem">
-            <S.ExpandButton
-              iconSize={12}
-              fill="transparent"
-              onClick={onCancelChange}
-              icon="close"
-              disabled={isLoading}
-              tooltip="Cancel"
-              $persist
-            />
+          <S.EditWrapper $self="flex-end" $gap="5.5rem" $row $justify="space-between">
             <S.ExpandButton
               iconSize={isLoading ? 30 : 12}
               fill="transparent"
@@ -329,7 +322,16 @@ export const O01DashboardCard = ({ data, isNew, onClick }: O01DashboardCardProps
               tooltip={isLoading ? 'Loading...' : 'Save'}
               $persist
             />
-          </Flex>
+            <S.ExpandButton
+              iconSize={12}
+              fill="transparent"
+              onClick={onCancelChange}
+              icon="close"
+              disabled={isLoading}
+              tooltip="Cancel"
+              $persist
+            />
+          </S.EditWrapper>
         ) : (
           <S.MenuButton
             isExpanded={isExpanded}

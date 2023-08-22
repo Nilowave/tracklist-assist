@@ -14,7 +14,7 @@ export interface StyledButtonProps {
   color?: ColorKey;
   textColor?: ColorKey;
   disable?: boolean;
-  size?: 'small' | 'regular';
+  size?: 'small' | 'regular' | 'medium';
   icon?: Icon;
 }
 

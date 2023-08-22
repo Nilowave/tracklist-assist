@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 import { respondTo } from '../../../styles/helpers/respondTo';
 import { MediaQuery } from '../../../styles/mediaQuery';
 import { typeStyles } from '../../../styles/typeStyles';
-import { Flex, smoothCorners } from '../../../styles/ui';
+import { Flex } from '../../../styles/ui';
 import { A03Text } from '../../atoms/A03Text/A03Text';
 import { M02IconButton } from '../../molecules/M02IconButton/M02IconButton';
 import { M07CardMenu } from '../../molecules/M07CardMenu/M07CardMenu';
@@ -42,15 +43,30 @@ export const O01DashboardCard = styled(motion.div)`
   }
 `;
 
-export const CardButton = styled.button<{ $isExpanded?: boolean; $isEditing?: boolean }>`
+export const CardButton = styled(Link)<{ $isExpanded?: boolean; $isEditing?: boolean }>`
   --border-color: ${({ theme }) => theme.hexToRgba(theme.colors.white, 0.2)};
   all: unset;
   cursor: pointer;
   position: relative;
   display: grid;
   width: 20.4rem;
-  height: 20.4rem;
+  min-height: 20.4rem;
+  border-radius: 2.5rem 2.5rem 3rem 3rem;
+  border: solid 1px var(--border-color);
+  background: linear-gradient(129deg, #404457 0%, #282a36 50%);
+  transition: border-color 0.3s ease;
+
   filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    border-radius: 2.5rem 2.5rem 3rem 3rem;
+    background: linear-gradient(107deg, rgba(255, 255, 255, 0) 0%, #fff 100%);
+  }
 
   @media ${respondTo(MediaQuery.MIN_1024)} {
     width: ${({ $isExpanded }) => ($isExpanded ? '31.8rem' : '20.4rem')};
@@ -74,52 +90,6 @@ export const CardButton = styled.button<{ $isExpanded?: boolean; $isEditing?: bo
   }
 `;
 
-export const Border = styled.div`
-  position: relative;
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: -1px;
-    left: -1px;
-    width: calc(100% + 2px);
-    height: calc(100% + 2px);
-    border-radius: 2.5rem 2.5rem 3rem 3rem;
-    background-color: var(--border-color);
-    transition: background-color 0.3s ease;
-
-    ${smoothCorners(8)};
-  }
-
-  & > div {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 2.5rem 2.5rem 3rem 3rem;
-    overflow: hidden;
-    ${smoothCorners(8)};
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(129deg, #404457 0%, #282a36 50%);
-    }
-
-    &:after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      opacity: 0.1;
-      background: linear-gradient(107deg, rgba(255, 255, 255, 0) 0%, #fff 100%);
-    }
-  }
-`;
-
 export const Content = styled(Flex)<{ $isExpanded: boolean }>`
   position: relative;
   padding-inline: 0.7rem;
@@ -134,7 +104,7 @@ export const Content = styled(Flex)<{ $isExpanded: boolean }>`
 export const TitleWrapper = styled.div<{ $isExpanded?: boolean; $isEditing?: boolean }>`
   flex: 1;
   width: 100%;
-  min-height: auto;
+  min-height: 10rem;
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
@@ -143,30 +113,23 @@ export const TitleWrapper = styled.div<{ $isExpanded?: boolean; $isEditing?: boo
   border-radius: 1.8rem;
   color: ${({ theme }) => theme.colors.background};
   filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+  background: ${({ theme }) => `linear-gradient(110deg, #e8fced 0%, ${theme.colors.secondary} 35%)`};
 
   @media ${respondTo(MediaQuery.MIN_1024)} {
     min-height: ${({ $isExpanded }) => ($isExpanded ? '10rem' : 'auto')};
   }
 
-  &:before,
   &:after {
     content: '';
     position: absolute;
-    top: -1px;
-    left: -1px;
-    width: calc(100% + 2px);
-    height: calc(100% + 2px);
-    border-radius: 2.5rem 2.5rem 3rem 3rem;
-    background: ${({ theme }) => `linear-gradient(110deg, #e8fced 0%, ${theme.colors.secondary} 35%)`};
-    z-index: -1;
-    ${smoothCorners(9)};
-  }
-
-  &:after {
+    width: 100%;
+    height: 100%;
     opacity: ${({ $isEditing }) => ($isEditing ? 1 : 0)};
     background: linear-gradient(110deg, #e8fced 0%, #e8fced 35%);
-    transition: opacity 0.5s ease;
     border: ${({ theme }) => `dotted 3px ${theme.colors.secondary}`};
+    border-radius: 1.8rem;
+    z-index: -1;
+    transition: opacity 0.5s ease;
   }
 `;
 
@@ -180,7 +143,6 @@ export const Title = styled(A03Text)`
   text-align: center;
   max-height: 7rem;
   width: 100%;
-
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -246,4 +208,8 @@ export const EditButton = styled.button`
   min-height: 4.5rem;
   margin-bottom: auto;
   cursor: text;
+`;
+
+export const EditWrapper = styled(Flex)`
+  width: 100%;
 `;
