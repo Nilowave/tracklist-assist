@@ -23,7 +23,7 @@ export const ValueInput = ({ register, value }: ValueInputProps): ReactElement =
           <S.TypeField type="button">#</S.TypeField>
         </S.TypeWrapper>
         <S.FieldWrapper>
-          <S.FieldInput as="input" type="number" {...register('value')} defaultValue={value}></S.FieldInput>
+          <S.FieldInput as="input" step="0.01" type="number" {...register('value')} defaultValue={value}></S.FieldInput>
           <EditIcon name="edit" size={19} />
         </S.FieldWrapper>
       </S.InputWrapper>
