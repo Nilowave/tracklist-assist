@@ -9,10 +9,11 @@ export const StyledO04ActionMenu = styled(Flex)`
   width: calc(100% - 3rem);
   height: 6rem;
   right: ${({ theme }) => theme.sitePaddings.mobile};
-  padding: 1.5rem;
+  padding: 1.5rem 2.2rem;
   flex-direction: row;
+  justify-content: flex-start;
   border-radius: 3rem;
-  background-color: ${({ theme }) => theme.hexToRgba(theme.colors.background, 0.1)};
+  background-color: ${({ theme }) => theme.hexToRgba(theme.colors.background, 0.5)};
   backdrop-filter: blur(10px);
 
   @media ${respondTo(MediaQuery.MIN_1024)} {
@@ -21,6 +22,7 @@ export const StyledO04ActionMenu = styled(Flex)`
     top: 50%;
     bottom: auto;
     right: 1.8rem;
+    padding: 2.2rem 1.5rem;
     flex-direction: column;
     transform: translateY(-50%);
   }

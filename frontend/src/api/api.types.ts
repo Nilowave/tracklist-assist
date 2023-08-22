@@ -21,6 +21,7 @@ export type Location = {
 };
 
 export type DBTrackData = Timestamps & {
+  id: string;
   date: number;
   item: string;
   value?: number;
@@ -29,6 +30,7 @@ export type DBTrackData = Timestamps & {
   audio?: string;
   location?: Location;
   collab?: Array<UserID>;
+  archived?: boolean;
 };
 
 export type DataResponse<T> = {

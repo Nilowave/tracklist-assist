@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { DialogContext } from '../context/DialogContext/DialogContext';
+import { DialogContext } from '../components/organisms/SideMenu/context/DialogContext/DialogContext';
 
 export const useDialog = () => {
   const context = useContext(DialogContext);

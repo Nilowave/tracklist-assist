@@ -80,7 +80,10 @@ const getItemById = async (req, res) => {
 const getItems = async (req, res) => {
   const user = req.user.id;
   ItemService.all(user)
-    .then((items) => res.status(200).json({ success: true, data: items }))
+    .then((items) => {
+      ItemService.migrateTracks(items);
+      return res.status(200).json({ success: true, data: items });
+    })
     .catch((error) => res.status(400).json({ success: false, error }));
 };
 

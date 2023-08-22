@@ -4,9 +4,10 @@ const { Schema } = mongoose;
 
 const Track = new Schema(
   {
-    date: { type: Number, required: true },
+    date: { type: Number, required: true, unique: true },
     value: { type: Number },
     notes: { type: String },
+    archived: { type: Boolean },
     item: {
       type: Schema.Types.ObjectId,
       ref: 'items',

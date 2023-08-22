@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
 import { ColorKey } from '../../../styles/theme/default';
-import { typeStyles } from '../../../styles/typeStyles';
 import { Text } from '../../atoms/A03Text/A03Text.styles';
 
 export const Tooltip = styled(Text)`
@@ -31,6 +30,7 @@ export const Tooltip = styled(Text)`
 `;
 
 export const IconWrapper = styled.div<{
+  $border?: boolean;
   $isText: boolean;
   $fill?: 'solid' | 'transparent';
   $color?: ColorKey;
@@ -45,6 +45,8 @@ export const IconWrapper = styled.div<{
   cursor: pointer;
   color: ${({ theme, $isText }) => ($isText ? theme.colors.white : theme.colors.background)};
   color: ${({ $color, theme }) => ($color ? theme.colors[$color] : 'initial')};
+  border: ${({ theme, $fill, $border }) => $border && $fill !== 'transparent' && `solid 1px ${theme.colors.outerSpace}`};
+
   border-radius: 3rem;
   transition:
     background-color 0.3s ease,
@@ -54,7 +56,7 @@ export const IconWrapper = styled.div<{
     $fill !== 'transparent' &&
     css`
       background-color: ${$isText ? theme.colors.alt1 : theme.colors.white};
-      box-shadow: 0px 4px 4px ${({ theme }) => theme.hexToRgba(theme.colors.black, 0.8)};
+      box-shadow: 0px 4px 4px ${({ theme }) => theme.hexToRgba(theme.colors.black, 0.2)};
     `};
 
   ${({ $size }) =>
@@ -103,7 +105,6 @@ export const StyledM02IconButton = styled.button<{ $isText: boolean; $fill?: 'so
 `;
 
 export const Label = styled(Text)`
-  ${typeStyles.button};
   text-decoration: underline;
   color: ${({ theme }) => theme.colors.alt1};
 `;

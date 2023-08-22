@@ -8,7 +8,7 @@ import { ReactComponent as Logo } from '../../assets/svg/logo.svg';
 import { A01Icon } from '../../components/atoms/A01Icon/A01Icon';
 import { Text } from '../../components/atoms/A03Text/A03Text.styles';
 import { AdUnit } from '../../components/atoms/AdUnit/AdUnit';
-import { UserContext } from '../../context/UserContext/UserContext';
+import { UserContext } from '../../components/organisms/SideMenu/context/UserContext/UserContext';
 import { PageTitle } from '../../data/enum/PageTitle';
 import { Path } from '../../data/enum/Path';
 import { Trackwave } from '../../data/enum/Trackwave';

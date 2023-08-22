@@ -1,11 +1,11 @@
 import { ClickAwayListener, debounce } from '@mui/material';
 import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 import * as S from './M03SearchInput.styles';
-import { useCardsStore } from '../../../api/cards';
+import { useCardStore } from '../../../api/cards';
 import { M02IconButton } from '../M02IconButton/M02IconButton';
 
 export const M03SearchInput = (): ReactElement => {
-  const fetchCards = useCardsStore((state) => state.fetchCards);
+  const fetchCards = useCardStore((state) => state.fetchCards);
 
   const [isActive, setIsActive] = useState<boolean>(false);
   const [query, setQuery] = useState<string>();
@@ -32,7 +32,7 @@ export const M03SearchInput = (): ReactElement => {
   };
 
   useEffect(() => {
-    debouncedSearch(query);
+    if (query) debouncedSearch(query);
 
     return () => {
       debouncedSearch.clear();

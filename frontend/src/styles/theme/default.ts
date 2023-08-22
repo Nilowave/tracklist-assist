@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material';
 import hexToRgba from 'hex-to-rgba';
+import hexToHSLA from '../../utils/hexToHSLA';
 
 export const colors = {
   white: '#ffffff',
@@ -43,6 +44,7 @@ export const theme = {
     desktop: '10.2rem',
   },
   hexToRgba,
+  hexToHSLA,
 };
 
 export const muiTheme = createTheme({

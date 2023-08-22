@@ -2,8 +2,8 @@ const express = require('express');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { validationResult } = require('express-validator');
 
-const TrackCtrl = require('../controllers/track-ctrl');
 const ItemCtrl = require('../controllers/item-ctrl');
+const TrackCtrl = require('../controllers/track-ctrl');
 const UserCtrl = require('../controllers/user-ctrl');
 
 module.exports = (io) => {
@@ -47,7 +47,7 @@ module.exports = (io) => {
   router.put('/track/:id', (req, res) => TrackCtrl.upsert(req, res, io)); // update exisitng track
   router.delete('/track/:id', (req, res) => TrackCtrl.deleteTrack(req, res, io)); // delete track
   router.get('/track/:id', (req, res) => TrackCtrl.getTrackById(req, res, io)); // get item by id
-  router.get('/track/:itemid', (req, res) => TrackCtrl.getTrackByItemId(req, res, io)); // get item by id
+  router.get('/tracks/:itemid', (req, res) => TrackCtrl.getTrackByItemId(req, res, io)); // get item by id
   router.get('/track/find', (req, res) => TrackCtrl.find(req, res, io)); // search items
 
   // Item

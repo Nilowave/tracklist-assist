@@ -3,7 +3,7 @@ import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { menuData } from './SideMenu.data';
 import * as S from './SideMenu.styles';
-import { UserContext } from '../../../context/UserContext/UserContext';
+import { UserContext } from './context/UserContext/UserContext';
 import { Path } from '../../../data/enum/Path';
 
 export const SideMenu = (): ReactElement => {

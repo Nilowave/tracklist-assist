@@ -6,7 +6,7 @@ import { Path } from '../data/enum/Path';
 import { Dashboard } from '../pages/Dashboard/Dashboard';
 import { Login } from '../pages/Login/Login';
 import { PrivacyTerms } from '../pages/PrivacyTerms/PrivacyTerms';
-import { TrackerDetails } from '../pages/TrackerDetails/TrackerDetails';
+import { Tracker } from '../pages/Tracker/Tracker';
 
 export const Routes = (): ReactElement => {
   return (
@@ -16,8 +16,8 @@ export const Routes = (): ReactElement => {
       <Route path={Path.Terms} element={<PrivacyTerms title="Terms of Service" type="terms" pageTitle={PageTitle.TERMS} />} />
       <Route path={Path.CookiePolicy} element={<PrivacyTerms title="Cookie Policy" type="cookie" pageTitle={PageTitle.COOKIE} />} />
       <Route element={<PrivateRoute />}>
-        <Route path={Path.Home} element={<Dashboard />} />
-        <Route path={Path.Tracker} element={<TrackerDetails />} />
+        <Route path="*" element={<Dashboard />} />
+        <Route path={Path.Tracker} element={<Tracker />} />
       </Route>
     </Switch>
   );

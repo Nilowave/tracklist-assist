@@ -23,6 +23,11 @@ export const typeStyles = {
     color: ${({ theme }) => theme.colors.outerSpace};
     text-shadow: 0.3rem 0.3rem 0 ${({ theme }) => theme.hexToRgba(theme.colors.secondary, 0.3)};
   `,
+  smallTitle: css`
+    font-size: 1.4rem;
+    font-family: ${({ theme }) => theme.fonts.arialRounded};
+    font-weight: 400;
+  `,
   tinyTitle: css`
     font-size: 1.2rem;
     font-family: ${({ theme }) => theme.fonts.arialRounded};
@@ -41,6 +46,13 @@ export const typeStyles = {
   `,
   body: css`
     font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 0.32px;
+  `,
+  bodySmall: css`
+    font-size: 1.2rem;
     font-style: normal;
     font-weight: 300;
     line-height: normal;

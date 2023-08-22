@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const {
   startOfMonth,
   endOfMonth,
@@ -7,8 +6,10 @@ const {
   startOfYear,
   endOfYear,
 } = require('date-fns');
+const mongoose = require('mongoose');
 
 const { ObjectId } = mongoose.Types;
+const TrackService = require('./track-service');
 const Item = require('../models/item-model');
 const Tracks = require('../models/track-model');
 const parseMultipleDates = require('../utils/parseMultipleDates');
@@ -27,6 +28,16 @@ const update = (id, data) =>
       return item.save();
     });
 
+const unsetTracks = (id, data) =>
+  Item.findOne({ _id: id })
+    .exec()
+    .then((itemData) => {
+      const item = itemData;
+      item.set('tracks', undefined, { strict: false });
+      item.set(data);
+      return item.save();
+    });
+
 const remove = (id) => Item.findOneAndDelete({ _id: id }).exec();
 
 const get = (id) => Item.findOne({ _id: id, archived }).exec();
@@ -34,14 +45,6 @@ const get = (id) => Item.findOne({ _id: id, archived }).exec();
 const all = (user, query) =>
   new Promise((resolve, reject) => {
     const props = { user, archived };
-
-    Item.collection.getIndexes((err, indexes) => {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log(indexes);
-      }
-    });
 
     if (query) {
       const nameSearchRegex = new RegExp(query, 'i');
@@ -114,10 +117,54 @@ const all = (user, query) =>
       .catch((error) => reject(error));
   });
 
+const migrateTracks = async (cards) => {
+  // cards.forEach((card) => {
+  //   const tracks = imports[card.id];
+  //   if (tracks) {
+  //     console.log('delete all');
+  //     TrackService.removeAll(card.id);
+  //   }
+  // });
+  // cards.forEach((card) => {
+  //   const tracks = imports[card.id];
+  //   if (tracks) {
+  //     console.log('IMPORT', tracks);
+  //     const itemData = {
+  //       name: card.name,
+  //       user: card.user,
+  //       tracks,
+  //     };
+  //     update(card.id, itemData);
+  //   }
+  // });
+  const items = cards.filter((card) => card.tracks);
+  console.log('MIGRATE >>>', items.length);
+  items.forEach((item) => {
+    item.tracks?.forEach((date) => {
+      const data = {
+        date,
+        user: item.user,
+        item: item.id,
+      };
+      // console.log('create', data);
+
+      TrackService.create(data).catch(() => console.log('its okay'));
+    });
+    const itemData = {
+      name: item.name,
+      user: item.user,
+      tracks: undefined,
+    };
+    // console.log('UPDTEA', itemData);
+    unsetTracks(item.id, itemData);
+  });
+};
+
 module.exports = {
   create,
   update,
   remove,
   get,
   all,
+  migrateTracks,
 };

@@ -3,6 +3,7 @@ import { MouseEvent, ReactElement } from 'react';
 import * as S from './M02IconButton.styles';
 import { ColorKey } from '../../../styles/theme/default';
 import { A01Icon } from '../../atoms/A01Icon/A01Icon';
+import { Flex } from '../../../styles/ui';
 import { Icon } from '../../atoms/A01Icon/icons';
 import { A04Tooltip } from '../../atoms/A04Tooltip/A04Tooltip';
 
@@ -18,6 +19,7 @@ interface M02iconbuttonProps {
   fill?: 'solid' | 'transparent';
   color?: ColorKey;
   size?: 'small' | 'medium' | 'large';
+  border?: boolean;
 }
 
 export const M02IconButton = ({
@@ -36,12 +38,12 @@ export const M02IconButton = ({
   return (
     <S.StyledM02IconButton disabled={disabled} onClick={onClick} $isText={!!text} className={className} $fill={fill}>
       <A04Tooltip title={tooltip} placement={tooltipPlacement} describeChild>
-        <span>
+        <Flex $row $align="center" $gap="1rem">
           <S.IconWrapper $isText={!!text} $fill={fill} $color={color} $size={size}>
             <A01Icon name={icon} size={iconSize} />
           </S.IconWrapper>
           {text && <S.Label $type="body">{text}</S.Label>}
-        </span>
+        </Flex>
       </A04Tooltip>
     </S.StyledM02IconButton>
   );
