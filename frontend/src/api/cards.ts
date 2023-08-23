@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import { create } from 'zustand';
-import { DBCardData } from './api.types';
+import { DBCardData, Sorting } from './api.types';
 import { Endpoints } from '../data/enum/Endpoints';
+import { sortCards } from '../utils/sortCards';
 
 interface RequestController<T> {
   controller: AbortController;
@@ -22,13 +23,13 @@ export const useCardStore = create<CardsStoreState>((set) => ({
 
   setCards: (cards) => set({ cards }),
 
-  fetchCards: (query?: string) => {
+  fetchCards: (query?: string, sort?: Sorting) => {
     const controller = new AbortController();
     const fetchEndpoint = query ? `${Endpoints.SEARCH}?q=${encodeURIComponent(query)}` : Endpoints.ITEMS;
     const request = axios
       .get(fetchEndpoint, { signal: controller.signal })
       .then((response) => {
-        const cards = response.data.data || [];
+        const cards = sortCards(response.data.data, sort || 'last') || [];
         set({ cards });
       })
       .catch((error) => {

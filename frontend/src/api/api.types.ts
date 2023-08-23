@@ -49,3 +49,6 @@ export type PutResponse = {
   message: string;
   success: boolean;
 };
+
+export type Sorting = 'name' | 'last' | 'createdAt';
+export type SortingDirection = 'asc' | 'desc';

@@ -50,7 +50,7 @@ export const Dashboard = (): ReactElement => {
         {cards.length > 0 && (
           <S.ItemList layout {...staggerChildren()}>
             {cards.map((item) => (
-              <O01DashboardCard onClick={(data) => console.log(data)} key={item.id} data={item} />
+              <O01DashboardCard key={item.id} data={item} />
             ))}
           </S.ItemList>
         )}

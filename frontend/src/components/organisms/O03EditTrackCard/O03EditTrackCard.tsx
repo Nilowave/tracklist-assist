@@ -60,23 +60,21 @@ export const O03EditTrackCard = ({ data, number, className, onClose }: O03EditTr
 
   const onDateChange = (event: ChangeEvent<HTMLInputElement>) => {
     const date = new Date(event.target.value);
-    setValue('date', date.getTime(), { shouldValidate: true });
-    setSelectedDate(event.target.value);
+    if (date instanceof Date && !isNaN(date.getTime())) {
+      setValue('date', date.getTime(), { shouldValidate: true });
+      setSelectedDate(event.target.value);
+    }
   };
 
   const onCloseCard = () => {
-    if (elementRef.current) enableBodyScroll(elementRef.current);
     onClose();
   };
 
-  const onArchive = () => {
+  const onDelete = () => {
     const handleConfirm = () => {
       hideDialog();
-
-      setTimeout(() => {
-        deleteTrack(data.id);
-        onCloseCard();
-      }, 200);
+      deleteTrack(data.id);
+      onCloseCard();
     };
 
     const title = 'Archiving track';
@@ -102,7 +100,7 @@ export const O03EditTrackCard = ({ data, number, className, onClose }: O03EditTr
       </Button>,
     ];
 
-    showDialog(title, content, actions);
+    showDialog(title, content, actions, { disableScrollLock: true });
   };
 
   useEffect(() => {
@@ -158,8 +156,8 @@ export const O03EditTrackCard = ({ data, number, className, onClose }: O03EditTr
 
         <S.ButtonWrapper $justify="space-between" $row>
           <S.SaveButton text="Save" color="tertiary" size="medium" />
-          <S.ArchiveButton type="button" onClick={onArchive}>
-            Archive
+          <S.ArchiveButton type="button" onClick={onDelete}>
+            Delete
           </S.ArchiveButton>
         </S.ButtonWrapper>
       </S.Card>

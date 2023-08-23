@@ -38,7 +38,6 @@ export const Card = styled(Flex)`
   width: 100%;
   max-width: 34rem;
   min-height: 34rem;
-  /* aspect-ratio: 1 / 1; */
   color: ${({ theme }) => theme.colors.background};
   background-color: ${({ theme }) => theme.colors.secondary};
   border-radius: 1.8rem;
@@ -73,7 +72,7 @@ export const ArchiveButton = styled.button`
   ${typeStyles.button};
   text-decoration: underline;
   font-size: 1.4rem;
-  color: ${({ theme }) => theme.colors.alt1};
+  color: ${({ theme }) => theme.colors.red};
 `;
 
 export const EditIcon = styled(A01Icon)<{ $top?: string; $bottom?: string; $right?: string }>`
@@ -115,6 +114,7 @@ export const Input = styled.div`
 export const DateWrapper = styled.div`
   border-radius: 5px;
   padding: 1.2rem;
+  padding-top: 0.8rem;
   width: 50%;
   background-color: transparent;
   background-color: ${({ theme }) => theme.hexToRgba(theme.colors.white, 0.25)};

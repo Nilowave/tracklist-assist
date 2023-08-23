@@ -1,3 +1,4 @@
+import { useAtom } from 'jotai';
 import { ReactElement, useEffect, useMemo } from 'react';
 import * as S from './Tracker.styles';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -9,6 +10,7 @@ import { add, Duration, formatDistance, formatDistanceToNow, formatDuration, int
 import { limitDuration } from '../../utils/limitDuration';
 import { DBCardData } from '../../api/api.types';
 import { M02IconButton } from '../../components/molecules/M02IconButton/M02IconButton';
+import { shouldFetchAtom } from '../Dashboard/Dashboard.atoms';
 
 interface LocationState {
   id: string;
@@ -23,6 +25,7 @@ export const Tracker = ({}: TracksProps): ReactElement => {
   const tracks = useTrackStore((store) => store.tracks);
   const fetchTracks = useTrackStore((store) => store.fetchTracks);
   const createNewTrack = useTrackStore((store) => store.createNewTrack);
+  const [, setShouldFetchCards] = useAtom(shouldFetchAtom);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -66,7 +69,9 @@ export const Tracker = ({}: TracksProps): ReactElement => {
   };
 
   const onFabClick = () => {
-    createNewTrack(id);
+    createNewTrack(id).then(() => {
+      setShouldFetchCards(true);
+    });
   };
 
   useEffect(() => {

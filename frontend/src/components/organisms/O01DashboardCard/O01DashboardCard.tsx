@@ -23,10 +23,9 @@ import { M05CardDetailField } from '../../molecules/M05CardDetailField/M05CardDe
 interface O01DashboardCardProps {
   data: DBCardData;
   isNew?: boolean;
-  onClick: (data: DBCardData) => void;
 }
 
-export const O01DashboardCard = ({ data, isNew, onClick }: O01DashboardCardProps): ReactElement => {
+export const O01DashboardCard = ({ data, isNew }: O01DashboardCardProps): ReactElement => {
   const elementRef = useRef<HTMLDivElement>(null);
   const nameInputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -52,8 +51,6 @@ export const O01DashboardCard = ({ data, isNew, onClick }: O01DashboardCardProps
 
   const onCardClick = useCallback(() => {
     if (isEditing) return;
-
-    cardData.id && onClick(cardData);
   }, [isEditing]);
 
   const onExpandClick = useCallback(() => {
@@ -149,6 +146,7 @@ export const O01DashboardCard = ({ data, isNew, onClick }: O01DashboardCardProps
       last: update.track.date,
     };
     setCardData(updateCount);
+    setShouldFetchCards(true);
 
     const title = 'Tracked Date!';
     const content = (
