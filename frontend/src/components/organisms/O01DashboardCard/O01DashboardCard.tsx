@@ -12,7 +12,7 @@ import { Cards } from '../../../data/enum/Cards';
 import { Path } from '../../../data/enum/Path';
 import { useDialog } from '../../../hooks/useDialog';
 import useIsMounted from '../../../hooks/useIsMounted';
-import { cardsAtom, shouldFetchAtom } from '../../../pages/Dashboard/Dashboard.atoms';
+import { shouldFetchAtom } from '../../../pages/Dashboard/Dashboard.atoms';
 import { limitDuration } from '../../../utils/limitDuration';
 import { slideFade } from '../../../utils/motionTransitions';
 import { A02Counter } from '../../atoms/A02Counter/A02Counter';
@@ -33,9 +33,11 @@ export const O01DashboardCard = ({ data, isNew }: O01DashboardCardProps): ReactE
   const deleteCard = useCardStore((state) => state.deleteCard);
   const createNewCard = useCardStore((state) => state.createNewCard);
   const createNewTrack = useTrackStore((state) => state.createNewTrack);
+  const cards = useCardStore((state) => state.cards);
+  const setCards = useCardStore((state) => state.setCards);
 
   const [, setShouldFetchCards] = useAtom(shouldFetchAtom);
-  const [cards, setCards] = useAtom(cardsAtom);
+  // const [cards, setCards] = useAtom(cardsAtom);
   const [expandedId, setExpandedId] = useAtom(expandedAtom);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(isNew || false);

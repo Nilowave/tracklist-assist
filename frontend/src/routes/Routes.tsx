@@ -15,8 +15,8 @@ export const Routes = (): ReactElement => {
       <Route path={Path.PrivacyPolicy} element={<PrivacyTerms title="Privacy Policy" type="privacy" pageTitle={PageTitle.PRIVACY} />} />
       <Route path={Path.Terms} element={<PrivacyTerms title="Terms of Service" type="terms" pageTitle={PageTitle.TERMS} />} />
       <Route path={Path.CookiePolicy} element={<PrivacyTerms title="Cookie Policy" type="cookie" pageTitle={PageTitle.COOKIE} />} />
+      <Route path="*" element={<Dashboard />} />
       <Route element={<PrivateRoute />}>
-        <Route path="*" element={<Dashboard />} />
         <Route path={Path.Tracker} element={<Tracker />} />
       </Route>
     </Switch>
