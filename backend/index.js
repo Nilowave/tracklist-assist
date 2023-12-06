@@ -4,15 +4,27 @@ const axios = require('axios');
 const cookieSession = require('cookie-session');
 const cors = require('cors');
 const express = require('express');
+const rateLimit = require('express-rate-limit');
+const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const { Server } = require('socket.io');
 const http = require('http');
 const path = require('path');
+require('dotenv').config();
 
 const app = express();
 
 const server = http.createServer(app);
 const io = new Server(server);
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+app.use(limiter);
 
 const sessionMiddleware = cookieSession({
   maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -24,6 +36,7 @@ app.use(sessionMiddleware);
 const db = require('./db');
 const authRouter = require('./src/routes/auth-router');
 const itemRouter = require('./src/routes/item-router');
+const PixelService = require('./src/services/pixel-service');
 
 const apiPort = process.env.PORT;
 
@@ -64,10 +77,6 @@ app.get('/login', (req, res) => {
 app.use('/api', itemRouter(io));
 app.use('/auth', authRouter());
 
-app.get('*', (req, res) => {
-  res.redirect('/');
-});
-
 /**
  * Tracking Pixel implementation used for Ashley's Light Media E-mail tracking
  */
@@ -87,14 +96,55 @@ app.get('/pixel/track/:hash', async (req, res) => {
     });
   }
 
-  try {
-    const postData = { hash };
-    await axios.post('https://hook.us1.make.com/6iplwxi8dcybs1pdl2erlbscbwecujrq', postData);
-  } catch (error) {
-    console.error('Error making POST request to webhook:', error);
+  const pixel = await PixelService.get(hash);
+
+  if (pixel?.hash) {
+    try {
+      const postData = { hash: pixel.hash };
+      await axios.post('https://hook.us1.make.com/6iplwxi8dcybs1pdl2erlbscbwecujrq', postData);
+      PixelService.remove(pixel.hash);
+    } catch (error) {
+      console.error('Error making POST request to webhook:', error);
+    }
   }
 
   res.end(trackImg);
+});
+
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1];
+  if (token == null) return res.sendStatus(401); // if there's no token
+
+  jwt.verify(token, process.env.PIXEL_TOKEN_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403); // if the token is invalid
+    req.user = user;
+    next();
+    return null;
+  });
+
+  return null;
+};
+
+app.post('/pixel/create', authenticateToken, async (req, res) => {
+  const { hash } = req.body;
+
+  if (!hash) {
+    return res.status(400).send('Hash is required');
+  }
+
+  try {
+    await PixelService.create(hash);
+
+    return res.status(201).send('Pixel created successfully');
+  } catch (error) {
+    console.error('Error creating pixel:', error);
+    return res.status(500).send('Internal Server Error');
+  }
+});
+
+app.get('*', (req, res) => {
+  res.redirect('/');
 });
 
 server.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
