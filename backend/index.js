@@ -1,18 +1,17 @@
 require('dotenv').config();
 
-const path = require('path');
+const axios = require('axios');
+const cookieSession = require('cookie-session');
+const cors = require('cors');
 const express = require('express');
 const passport = require('passport');
-const cookieSession = require('cookie-session');
+const { Server } = require('socket.io');
+const http = require('http');
+const path = require('path');
 
 const app = express();
 
 const server = http.createServer(app);
-const axios = require('axios');
-const cors = require('cors');
-const { Server } = require('socket.io');
-const http = require('http');
-
 const io = new Server(server);
 
 const sessionMiddleware = cookieSession({
