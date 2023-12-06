@@ -1,9 +1,9 @@
-import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { typeStyles } from '../../../styles/typeStyles';
 import { respondTo } from '../../../styles/helpers/respondTo';
 import { MediaQuery } from '../../../styles/mediaQuery';
+import { typeStyles } from '../../../styles/typeStyles';
 
 export const Fade = styled.div`
   position: fixed;

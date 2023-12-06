@@ -1,6 +1,10 @@
 import styled from 'styled-components';
+import { typeStyles } from '../../../styles/typeStyles';
 
 export const A02Counter = styled.div`
+  ${typeStyles.bold};
+  font-size: 1.4rem;
+
   box-sizing: border-box;
   padding: 0.4rem 0.8rem;
   min-width: 3.2rem;
@@ -10,4 +14,5 @@ export const A02Counter = styled.div`
   background-color: ${({ theme }) => theme.hexToRgba(theme.colors.background, 0.5)};
   border-radius: 0.8rem;
   text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
 `;

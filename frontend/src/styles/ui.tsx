@@ -1,35 +1,66 @@
+import Tooltip, { tooltipClasses, TooltipProps } from '@mui/material/Tooltip';
 import styled, { css } from 'styled-components';
+import { respondTo } from './helpers/respondTo';
+import { MediaQuery } from './mediaQuery';
 
 type FlexProps = {
-  row?: boolean;
-  gap?: string;
-  align?: 'center' | 'start' | 'end';
-  justify?: 'space-between' | 'start' | 'end';
+  $row?: boolean;
+  $gap?: string;
+  $self?: 'center' | 'flex-start' | 'flex-end';
+  $align?: 'center' | 'flex-start' | 'flex-end';
+  $justify?: 'space-between' | 'flex-start' | 'flex-end' | 'center';
 };
+
+export const smoothCorners = (radius: number) => css`
+  @media ${respondTo(MediaQuery.MIN_1024)} {
+    --smooth-corners: ${radius};
+    mask-image: paint(smooth-corners);
+    -webkit-mask-image: paint(smooth-corners);
+  }
+`;
+
+export const DotGrid = styled.div`
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-image: radial-gradient(${({ theme }) => theme.hexToRgba(theme.colors.primary, 0.2)} 1px, transparent 0);
+  background-size: 40px 40px;
+  background-position: -19px -19px;
+  pointer-events: none;
+  z-index: -1;
+`;
 
 export const Flex = styled.div<FlexProps>`
   display: flex;
 
   ${(props) =>
-    props.align &&
+    props.$align &&
     css`
-      align-items: ${props.align};
+      align-items: ${props.$align};
     `};
 
   ${(props) =>
-    props.justify &&
+    props.$self &&
     css`
-      justify-content: ${props.justify};
+      align-self: ${props.$self};
     `};
 
   ${(props) =>
-    props.gap &&
+    props.$justify &&
     css`
-      gap: ${props.gap};
+      justify-content: ${props.$justify};
     `};
 
   ${(props) =>
-    props.row
+    props.$gap &&
+    css`
+      gap: ${props.$gap};
+    `};
+
+  ${(props) =>
+    props.$row
       ? css`
           flex-direction: row;
         `
@@ -37,3 +68,14 @@ export const Flex = styled.div<FlexProps>`
           flex-direction: column;
         `};
 `;
+
+export const LightTooltip = styled(({ className, ...props }: TooltipProps) => <Tooltip {...props} classes={{ popper: className }} />)(
+  ({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: theme.colors.white,
+      color: 'rgba(0, 0, 0, 0.87)',
+      // boxShadow: theme.shadows[1],
+      fontSize: 11,
+    },
+  })
+);

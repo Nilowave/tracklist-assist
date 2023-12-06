@@ -7,6 +7,8 @@
     "plugin:prettier/recommended",
     "prettier"
   ],
+  "root": true,
+  "plugins": ["import"],
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module",
@@ -21,8 +23,16 @@
         "singleQuote": true
       }
     ],
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true
+      }
+    ],
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
+    "no-empty-function": "off",
     "@typescript-eslint/no-explicit-any": "error"
   },
   "settings": {

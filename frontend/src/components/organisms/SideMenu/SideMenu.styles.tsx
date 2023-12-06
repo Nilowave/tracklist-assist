@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
-import { typeStyles } from '../../../styles/typeStyles';
 import { respondTo } from '../../../styles/helpers/respondTo';
 import { MediaQuery } from '../../../styles/mediaQuery';
+import { typeStyles } from '../../../styles/typeStyles';
 
 export const StyledSideMenu = styled.nav<{ $isOpen: boolean }>`
   position: fixed;

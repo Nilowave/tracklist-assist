@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-shadow
 export enum Path {
   Home = '/',
   Login = '/login',
@@ -11,5 +10,6 @@ export enum Path {
   Pricing = '/pricing',
   FAQ = '/faq',
   Contact = '/contact',
-  Tracker = '/tracker/:id',
+  TrackerDetail = '/tracker/:id',
+  Tracker = '/tracker',
 }

@@ -14,3 +14,21 @@ declare global {
     beforeinstallprompt: BeforeInstallPromptEvent;
   }
 }
+
+declare module 'textFit' {
+  interface TextFitSettings {
+    alignVert?: boolean;
+    alignHoriz?: boolean;
+    multiLine?: boolean;
+    detectMultiLine?: boolean;
+    minFontSize?: number;
+    maxFontSize?: number;
+    reProcess?: boolean;
+    widthOnly?: boolean;
+    alignVertWithFlexbox?: boolean;
+  }
+
+  function textFit(els: HTMLElement | NodeList | HTMLCollection | HTMLElement[], options?: TextFitSettings): void;
+
+  export = textFit;
+}

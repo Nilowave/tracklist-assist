@@ -1,137 +1,59 @@
-const Item = require('../models/item-model');
-
+// eslint-disable-next-line import/no-extraneous-dependencies
+const { body } = require('express-validator');
+const ItemService = require('../services/item-service');
+const TrackService = require('../services/track-service');
 const parseItemDates = require('../utils/parseItemDates');
 
-upsert = (req, res, io) => {
-  if (!req.user) {
-    return res.status(400).json({
-      success: false,
-      error: 'User not authenticated',
-    });
-  }
+const validate = [body('name').notEmpty().withMessage('Name field is required.').trim()];
 
-  const body = req.body;
-
-  if (!body) {
-    return res.status(400).json({
-      success: false,
-      error: 'You must provide a body to update',
-    });
-  }
-
-  const { name } = req.body;
-  // const date = new Date().toString();
+const upsert = async (req, res) => {
+  const user = req.user.id;
+  const { name, archived } = req.body;
+  const { count, last } = req.body;
+  const isNew = !req.params.id;
+  const firstCount = 1;
   const date = Date.now();
 
-  Item.updateOne({ name }, { $push: { tracks: date }, user: req.user.id }, { upsert: true })
-    .then((item) => {
-      io.to(req.user.id).emit('message', { id: 'update', data: item });
+  let props;
 
-      return res.status(200).json({
-        success: true,
-        id: item._id,
-        message: 'Item updated!',
-      });
-    })
-    .catch((error) => {
-      return res.status(404).json({
-        error,
-        message: 'Item not updated!',
-      });
-    });
-};
-
-assistant = (req, res, io) => {
-  const body = req.body;
-
-  if (!body || !body.id) {
-    return res.status(400).json({
-      success: false,
-      error: 'You must provide a body with id to update',
-    });
+  if (isNew) {
+    props = [{ name, user }];
+  } else {
+    props = [req.params.id, { name, archived }];
   }
 
-  const { name, id } = req.body;
-  // const date = new Date().toString();
-  const date = Date.now();
-
-  Item.updateOne({ name, user: id }, { $push: { tracks: date } }, { upsert: true })
-    .then((item) => {
-      io.to(id).emit('message', { id: 'update', data: item });
-      return res.status(200).json({
-        success: true,
-        id: item._id,
-        message: 'Item updated!',
-      });
-    })
-    .catch((error) => {
-      console.log('track error', error);
-      return res.status(404).json({
-        error,
-        message: 'Item not updated!',
-      });
-    });
-};
-
-updateItem = async (req, res, io) => {
-  if (!req.user) {
-    res.redirect('/');
-  }
-
-  const body = req.body;
-
-  if (!body) {
-    return res.status(400).json({
-      success: false,
-      error: 'You must provide a body to update',
-    });
-  }
-
-  Item.findOne({ _id: req.params.id })
-    .exec()
-    .then((item) => {
-      item.name = body.name;
-
-      const { tracks } = body;
-      const updateTracks = tracks.map((date) => {
-        return new Date(date).getTime();
-      });
-      item.tracks = updateTracks;
-
-      item
-        .save()
-        .then(() => {
-          io.to(req.user.id).emit('message', { id: 'update', data: item });
-          return res.status(200).json({
-            success: true,
-            id: item._id,
-            message: 'Item updated!',
-          });
-        })
-        .catch((error) => {
-          return res.status(404).json({
-            error,
-            message: 'Item not updated!',
-          });
+  ItemService[isNew ? 'create' : 'update'](...props)
+    .then(async (item) => {
+      if (isNew) {
+        await TrackService.create({
+          date,
+          item: item.id,
+          user,
         });
+      }
+
+      const data = {
+        id: item.id,
+        name,
+        count: count || firstCount,
+        last: last || date,
+      };
+
+      return res.status(200).json(data);
     })
-    .catch((err) =>
+    .catch((error) =>
       res.status(404).json({
-        message: 'Item not found!',
+        error,
+        message: 'Item not updated!',
       }),
     );
 };
 
-deleteItem = async (req, res, io) => {
-  if (!req.user) {
-    res.redirect('/');
-  }
-
-  await Item.findOneAndDelete({ _id: req.params.id })
-    .exec()
+const deleteItem = async (req, res, io) => {
+  await ItemService.remove(req.params.id)
     .then((item) => {
       if (!item) {
-        return res.status(404).json({ success: false, error: `Item not found` });
+        return res.status(404).json({ success: false, error: 'Item not found' });
       }
 
       io.to(req.user.id).emit('message', { id: 'update', data: item });
@@ -141,64 +63,47 @@ deleteItem = async (req, res, io) => {
     .catch((err) => res.status(400).json({ success: false, error: err }));
 };
 
-getItemByName = async (req, res) => {
-  if (!req.user) {
-    res.redirect('/');
-  }
+const getItemById = async (req, res) => {
+  ItemService.get(req.params.id)
+    .then((item) => {
+      if (!item) {
+        return res.status(404).json({ success: false, error: 'Item not found' });
+      }
 
-  await Item.findOne({ name: req.params.name }, (err, item) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err });
-    }
+      const parsedItem = parseItemDates([item]);
 
-    if (!item) {
-      return res.status(404).json({ success: false, error: `Item not found` });
-    }
-    return res.status(200).json({ success: true, data: item });
-  }).catch((err) => console.log(err));
-};
-
-getItemById = async (req, res) => {
-  if (!req.user) {
-    res.redirect('/');
-  }
-
-  await Item.findOne({ _id: req.params.id }, (err, item) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err });
-    }
-
-    if (!item) {
-      return res.status(404).json({ success: false, error: `Item not found` });
-    }
-
-    const parsedItem = parseItemDates([item]);
-
-    return res.status(200).json({ success: true, data: parsedItem[0] });
-  }).catch((err) => console.log(err));
-};
-
-getItems = async (req, res) => {
-  if (!req.user) {
-    res.redirect('/');
-  }
-
-  await Item.find({ user: req.user.id })
-    .exec()
-    .then((items) => {
-      const allItems = parseItemDates(items);
-
-      return res.status(200).json({ success: true, data: allItems });
+      return res.status(200).json({ success: true, data: parsedItem[0] });
     })
-    .catch((err) => res.status(400).json({ success: false, error: err }));
+    .catch((error) => res.status(400).json({ success: false, error }));
+};
+
+const getItems = async (req, res) => {
+  const user = req.user.id;
+  ItemService.all(user)
+    .then((items) => {
+      ItemService.migrateTracks(items);
+      return res.status(200).json({ success: true, data: items });
+    })
+    .catch((error) => res.status(400).json({ success: false, error }));
+};
+
+const find = async (req, res) => {
+  const user = req.user.id;
+  try {
+    const query = req.query.q;
+    const data = await ItemService.all(user, query);
+
+    res.json({ success: true, data });
+  } catch (error) {
+    res.status(500).json({ success: false, error });
+  }
 };
 
 module.exports = {
-  updateItem,
+  upsert,
   deleteItem,
   getItems,
-  getItemByName,
   getItemById,
-  upsert,
-  assistant,
+  validate,
+  find,
 };

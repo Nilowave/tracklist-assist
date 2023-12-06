@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 import { respondTo } from '../../../styles/helpers/respondTo';
 import { MediaQuery } from '../../../styles/mediaQuery';
-import { Button } from '../../atoms/Button/Button';
+import { M01PrimaryButton } from '../../molecules/M01PrimaryButton/M01PrimaryButton';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -41,16 +41,15 @@ export const Background = styled(motion.div)`
     background-color: ${({ theme }) => theme.colors.secondary};
     opacity: 0.7;
 
-    /* ${({ theme }) =>
-      css`
-        background: transparent
-          linear-gradient(117deg, ${theme.colors.cerulean} 0%, ${theme.colors.secondary} 51%, ${theme.colors.primary} 100%) 0% 0% no-repeat
-          padding-box;
-      `} */
+    /* ${({ theme }) => css`
+      background: transparent
+        linear-gradient(117deg, ${theme.colors.cerulean} 0%, ${theme.colors.secondary} 51%, ${theme.colors.primary} 100%) 0% 0% no-repeat
+        padding-box;
+    `} */
   }
 `;
 
-export const CloseButton = styled(Button)`
+export const CloseButton = styled(M01PrimaryButton)`
   position: absolute;
   top: 4rem;
   right: ${({ theme }) => theme.sitePaddings.desktop};

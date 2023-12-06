@@ -1,7 +1,10 @@
-const { formatDistance, intervalToDuration, formatDuration, add } = require('date-fns');
+const { formatDistance, intervalToDuration, add } = require('date-fns');
 
-module.exports = (items) => {
-  return items.map((item) => {
+module.exports = (items) =>
+  items.map((item) => {
+    if (item.tracks.length === 0) {
+      return item;
+    }
     const date = new Date(item.tracks.slice(-1)[0]);
     const lastTrack = formatDistance(date || new Date(), new Date(), { addSuffix: true });
 
@@ -9,7 +12,7 @@ module.exports = (items) => {
 
     const intervals = [];
     let average = 0;
-    item.tracks.map((d, index) => {
+    item.tracks.forEach((d, index) => {
       if (item.tracks && item.tracks[index + 1]) {
         const next = item.tracks[index + 1];
         const interval = intervalToDuration({
@@ -23,7 +26,7 @@ module.exports = (items) => {
       }
     });
 
-    average = average / (item.tracks.length - 1);
+    average /= item.tracks.length - 1;
 
     if (average > 0) {
       average = intervalToDuration({
@@ -39,4 +42,3 @@ module.exports = (items) => {
       average,
     };
   });
-};

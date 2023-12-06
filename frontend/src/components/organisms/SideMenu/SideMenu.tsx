@@ -1,9 +1,9 @@
-import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import * as S from './SideMenu.styles';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { ReactElement, useContext, useEffect, useRef, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { menuData } from './SideMenu.data';
-import { UserContext } from '../../../context/UserContext/UserContext';
+import * as S from './SideMenu.styles';
+import { UserContext } from './context/UserContext/UserContext';
 import { Path } from '../../../data/enum/Path';
 
 export const SideMenu = (): ReactElement => {

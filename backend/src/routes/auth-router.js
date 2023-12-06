@@ -1,6 +1,6 @@
-const passport = require('passport');
 const express = require('express');
-const app = express();
+const passport = require('passport');
+// const app = express();
 
 module.exports = () => {
   const router = express.Router();
@@ -15,10 +15,7 @@ module.exports = () => {
     }),
   );
 
-  router.get('/google/callback', passport.authenticate('google'), (req, res) => {
-    console.log('google callback');
-    res.redirect('/');
-  });
+  router.get('/google/callback', passport.authenticate('google'), (req, res) => res.redirect('/'));
 
   return router;
 };
