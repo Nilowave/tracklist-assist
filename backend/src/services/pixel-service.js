@@ -1,6 +1,6 @@
 const Pixel = require('../models/pixel-model');
 
-const create = (data) => Pixel.create(data);
+const create = (hash) => Pixel.create({ hash });
 
 const get = (hash) => Pixel.findOne({ hash }).exec();
 
