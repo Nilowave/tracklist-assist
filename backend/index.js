@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 const path = require('path');
-const http = require('http');
 const express = require('express');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
@@ -9,8 +8,10 @@ const cookieSession = require('cookie-session');
 const app = express();
 
 const server = http.createServer(app);
+const axios = require('axios');
 const cors = require('cors');
 const { Server } = require('socket.io');
+const http = require('http');
 
 const io = new Server(server);
 
@@ -22,8 +23,8 @@ const sessionMiddleware = cookieSession({
 app.use(sessionMiddleware);
 
 const db = require('./db');
-const itemRouter = require('./src/routes/item-router');
 const authRouter = require('./src/routes/auth-router');
+const itemRouter = require('./src/routes/item-router');
 
 const apiPort = process.env.PORT;
 
@@ -66,6 +67,35 @@ app.use('/auth', authRouter());
 
 app.get('*', (req, res) => {
   res.redirect('/');
+});
+
+/**
+ * Tracking Pixel implementation used for Ashley's Light Media E-mail tracking
+ */
+
+const trackImg = Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', 'base64');
+
+app.get('/pixel/track/:hash', async (req, res) => {
+  const { hash } = req.params;
+
+  if (!hash) {
+    res.status(404).send('Not Found');
+    res.end(trackImg);
+  } else {
+    res.writeHead(200, {
+      'Content-Type': 'image/gif',
+      'Content-Length': trackImg.length,
+    });
+  }
+
+  try {
+    const postData = { hash };
+    await axios.post('https://hook.us1.make.com/6iplwxi8dcybs1pdl2erlbscbwecujrq', postData);
+  } catch (error) {
+    console.error('Error making POST request to webhook:', error);
+  }
+
+  res.end(trackImg);
 });
 
 server.listen(apiPort, () => console.log(`Server running on port ${apiPort}`));
